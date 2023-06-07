@@ -1,4 +1,4 @@
-package com.myapplication
+package com.seiko.greenscanner.app
 
 import MainView
 import android.os.Bundle
