@@ -4,12 +4,12 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.seiko.greenqrscanner.scene.HomeScene
+import com.seiko.greenqrscanner.RouteScene
 
 @Composable
 fun App() {
     AppTheme {
-        HomeScene()
+        RouteScene()
     }
 }
 

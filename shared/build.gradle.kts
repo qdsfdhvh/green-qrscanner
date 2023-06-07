@@ -32,11 +32,11 @@ kotlin {
                 implementation(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-
+                api("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
                 api("moe.tlaster:precompose:1.4.2")
                 api("moe.tlaster:precompose-molecule:1.4.2")
                 api("app.cash.molecule:molecule-runtime:0.9.0")
-
+                // See https://tabler-icons.io/
                 api("br.com.devsrsouza.compose.icons:tabler-icons:1.1.0")
             }
         }
@@ -63,7 +63,6 @@ android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     namespace = "com.seiko.greenqrscanner"
 
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
