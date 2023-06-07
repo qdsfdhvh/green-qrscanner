@@ -29,9 +29,15 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+
+                api("moe.tlaster:precompose:1.4.2")
+                api("moe.tlaster:precompose-molecule:1.4.2")
+                api("app.cash.molecule:molecule-runtime:0.9.0")
+
+                api("br.com.devsrsouza.compose.icons:tabler-icons:1.1.0")
             }
         }
         val androidMain by getting {
