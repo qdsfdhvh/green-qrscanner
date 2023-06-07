@@ -1,4 +1,4 @@
-rootProject.name = "green-scanner"
+rootProject.name = "green-qrscanner"
 
 include(":androidApp")
 include(":shared")
