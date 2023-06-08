@@ -34,7 +34,7 @@ kotlin {
                 implementation(compose.material3)
                 api(libs.bundles.kotlinx)
                 api(libs.bundles.precompose)
-                api(libs.tabler.icons)
+                implementation(libs.tabler.icons)
             }
         }
         val androidMain by getting {
@@ -62,10 +62,6 @@ kotlin {
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     namespace = "com.seiko.greenqrscanner"
-
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
-
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
     }
