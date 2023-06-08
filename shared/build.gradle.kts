@@ -25,6 +25,7 @@ kotlin {
             "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
+    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         val commonMain by getting {
             dependencies {
