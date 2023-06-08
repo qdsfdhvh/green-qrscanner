@@ -54,6 +54,7 @@ fun RouteScene(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
             navigator = navigator,
             initialRoute = Route.initial,
+            navTransition = noneTransition,
         ) {
             initRoute(navigator)
         }

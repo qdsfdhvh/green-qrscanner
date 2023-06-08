@@ -8,37 +8,46 @@ import com.seiko.greenqrscanner.ui.scene.scan.ScanScene
 import com.seiko.greenqrscanner.ui.scene.settings.SettingsScene
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
+import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.transition.NavTransition
 
 object Route {
     const val Home = "Home"
     const val Scan = "Scan"
     const val Settings = "Settings"
-    const val Detail = "Detail"
+
+    object Detail {
+        const val paramQrCode = "qrCode"
+        const val path = "Detail/{$paramQrCode}"
+        operator fun invoke(qrCode: String) = "Detail/$qrCode"
+    }
 
     const val initial = Scan
 }
 
 fun RouteBuilder.initRoute(navigator: Navigator) {
-    scene(Route.Home, navTransition = noneTransition) {
+    scene(Route.Home) {
         HomeScene(
             navigator = navigator,
         )
     }
-    scene(Route.Scan, navTransition = noneTransition) {
-        ScanScene()
+    scene(Route.Scan) {
+        ScanScene(
+            navigator = navigator,
+        )
     }
-    scene(Route.Settings, navTransition = noneTransition) {
+    scene(Route.Settings) {
         SettingsScene()
     }
-    scene(Route.Detail) {
+    scene(Route.Detail.path) {
         DetailScene(
             navigator = navigator,
+            qrCode = it.path(Route.Detail.paramQrCode)!!,
         )
     }
 }
 
-private val noneTransition = NavTransition(
+val noneTransition = NavTransition(
     createTransition = EnterTransition.None,
     destroyTransition = ExitTransition.None,
     pauseTransition = ExitTransition.None,
