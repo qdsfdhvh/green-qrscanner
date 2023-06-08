@@ -23,6 +23,7 @@ import com.google.zxing.DecodeHintType
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.PlanarYUVLuminanceSource
 import com.google.zxing.common.HybridBinarizer
+import com.seiko.greenqrscanner.model.PermissionPlace
 import com.seiko.greenqrscanner.util.toAndroidxLifecycleOwner
 import moe.tlaster.precompose.lifecycle.LocalLifecycleOwner
 import java.nio.ByteBuffer
@@ -33,8 +34,7 @@ actual fun BarcodeScanner(
     modifier: Modifier,
 ) {
     PermissionRequiredContent(
-        feature = "Scan",
-        permission = android.Manifest.permission.CAMERA,
+        permissionPlace = PermissionPlace.QrScan,
         modifier = modifier,
     ) {
         val lifecycleOwner = LocalLifecycleOwner.current

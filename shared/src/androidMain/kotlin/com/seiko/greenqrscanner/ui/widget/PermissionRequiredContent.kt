@@ -16,38 +16,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionStatus
-import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.seiko.greenqrscanner.model.PermissionPlace
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionRequiredContent(
-    feature: String,
-    permission: String,
+    permissionPlace: PermissionPlace,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    val permissionsState = rememberPermissionState(permission)
+    val permissionsState = rememberMultiplePermissionsState(permissionPlace.permissions)
     Box(modifier) {
-        when (val status = permissionsState.status) {
-            PermissionStatus.Granted -> {
+        when {
+            permissionsState.allPermissionsGranted -> {
                 content()
             }
-            is PermissionStatus.Denied -> {
+            else -> {
                 val context = LocalContext.current
                 PermissionDeniedContent(
-                    feature = feature,
-                    permission = permission,
+                    permissionPlace = permissionPlace,
+                    shouldShowRationale = permissionsState.shouldShowRationale,
                     onRequest = {
-                        if (!status.shouldShowRationale) {
-                            permissionsState.launchPermissionRequest()
-                        } else {
+                        if (permissionsState.shouldShowRationale) {
                             context.startActivity(
                                 Intent(
                                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                                     Uri.fromParts("package", context.packageName, null),
                                 ),
                             )
+                        } else {
+                            permissionsState.launchMultiplePermissionRequest()
                         }
                     },
                     modifier = Modifier.matchParentSize(),
@@ -59,8 +58,8 @@ fun PermissionRequiredContent(
 
 @Composable
 private fun PermissionDeniedContent(
-    feature: String,
-    permission: String,
+    permissionPlace: PermissionPlace,
+    shouldShowRationale: Boolean,
     onRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -69,20 +68,18 @@ private fun PermissionDeniedContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text("Allow ${permission.permissionName} Access")
+        Text(permissionPlace.title)
         Spacer(Modifier.height(8.dp))
-        Text("We need your permission to $feature")
+        Text(permissionPlace.desc)
         Spacer(Modifier.height(16.dp))
         Button(onClick = onRequest) {
-            Text("OK")
+            Text(
+                if (shouldShowRationale) {
+                    "Go to Settings"
+                } else {
+                    "OK"
+                }
+            )
         }
     }
 }
-
-private val String.permissionName: String
-    get() = when (this) {
-        android.Manifest.permission.CAMERA -> "Camera"
-        // add other used permission
-        else -> this
-    }
-
