@@ -38,7 +38,6 @@ fun RouteBuilder.initRoute(navigator: Navigator) {
     }
 }
 
-
 private val noneTransition = NavTransition(
     createTransition = EnterTransition.None,
     destroyTransition = ExitTransition.None,

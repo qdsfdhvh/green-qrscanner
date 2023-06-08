@@ -78,7 +78,7 @@ private fun PermissionDeniedContent(
                     "Go to Settings"
                 } else {
                     "OK"
-                }
+                },
             )
         }
     }

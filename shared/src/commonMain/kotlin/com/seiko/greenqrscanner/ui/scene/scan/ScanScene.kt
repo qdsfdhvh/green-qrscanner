@@ -21,7 +21,7 @@ fun ScanScene() {
     Scaffold(
         snackbarHost = {
             SnackbarHost(snackbarHostState)
-        }
+        },
     ) { innerPadding ->
         BarcodeScanner(
             onResult = {
@@ -29,7 +29,7 @@ fun ScanScene() {
                     snackbarHostState.showSnackbar(it)
                 }
             },
-            modifier = Modifier.padding(innerPadding).fillMaxSize()
+            modifier = Modifier.padding(innerPadding).fillMaxSize(),
         )
     }
 }

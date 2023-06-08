@@ -26,7 +26,7 @@ fun DetailScene(
                     BackButton {
                         navigator.goBack()
                     }
-                }
+                },
             )
         },
     ) { innerPadding ->

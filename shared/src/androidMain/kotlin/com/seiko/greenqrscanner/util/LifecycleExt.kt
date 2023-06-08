@@ -15,13 +15,13 @@ fun LifecycleOwner.toAndroidxLifecycleOwner(): androidx.lifecycle.LifecycleOwner
                     override fun onStateChanged(state: Lifecycle.State) {
                         when (state) {
                             Lifecycle.State.Initialized -> lifecycleRegistry.handleLifecycleEvent(
-                                androidx.lifecycle.Lifecycle.Event.ON_CREATE
+                                androidx.lifecycle.Lifecycle.Event.ON_CREATE,
                             )
                             Lifecycle.State.Active -> lifecycleRegistry.handleLifecycleEvent(
-                                androidx.lifecycle.Lifecycle.Event.ON_RESUME
+                                androidx.lifecycle.Lifecycle.Event.ON_RESUME,
                             )
                             Lifecycle.State.InActive -> lifecycleRegistry.handleLifecycleEvent(
-                                androidx.lifecycle.Lifecycle.Event.ON_PAUSE
+                                androidx.lifecycle.Lifecycle.Event.ON_PAUSE,
                             )
                             Lifecycle.State.Destroyed -> {
                                 lifecycleRegistry.handleLifecycleEvent(androidx.lifecycle.Lifecycle.Event.ON_DESTROY)
@@ -29,7 +29,7 @@ fun LifecycleOwner.toAndroidxLifecycleOwner(): androidx.lifecycle.LifecycleOwner
                             }
                         }
                     }
-                }
+                },
             )
         }
 

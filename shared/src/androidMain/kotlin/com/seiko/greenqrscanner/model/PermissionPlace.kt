@@ -8,6 +8,6 @@ enum class PermissionPlace(
     QrScan(
         permissions = listOf(android.Manifest.permission.CAMERA),
         title = "Allow Camera Access",
-        desc = "We need your permission to QR Scan"
-    );
+        desc = "We need your permission to QR Scan",
+    )
 }

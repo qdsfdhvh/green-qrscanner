@@ -26,7 +26,6 @@ import compose.icons.tablericons.Scan
 import compose.icons.tablericons.Settings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
@@ -97,7 +96,7 @@ private fun HomeBottomBar(
                         tab.icon,
                         contentDescription = tab.name,
                     )
-                }
+                },
             )
         }
     }
@@ -106,7 +105,7 @@ private fun HomeBottomBar(
 private enum class HomeTab {
     Home,
     Scan,
-    Settings;
+    Settings
 }
 
 private val HomeTab.route: String

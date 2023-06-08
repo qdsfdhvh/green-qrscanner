@@ -54,10 +54,10 @@ actual fun BarcodeScanner(
                                 .setResolutionStrategy(
                                     ResolutionStrategy(
                                         Size(it.width, it.height),
-                                        FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER
-                                    )
+                                        FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER,
+                                    ),
                                 )
-                                .build()
+                                .build(),
                         )
                         .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
                         .build()
@@ -65,14 +65,14 @@ actual fun BarcodeScanner(
                         ContextCompat.getMainExecutor(context),
                         QRCodeAnalyzer { result ->
                             onResult(result)
-                        }
+                        },
                     )
                     try {
                         cameraProviderFeature.get().bindToLifecycle(
                             lifecycleOwner.toAndroidxLifecycleOwner(),
                             selector,
                             preview,
-                            imageAnalysis
+                            imageAnalysis,
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -84,7 +84,6 @@ actual fun BarcodeScanner(
     }
 }
 
-
 class QRCodeAnalyzer(
     private val onQrCodeScanned: (String) -> Unit,
 ) : ImageAnalysis.Analyzer {
@@ -92,7 +91,7 @@ class QRCodeAnalyzer(
     private val supportedImageFormats = listOf(
         ImageFormat.YUV_420_888,
         ImageFormat.YUV_422_888,
-        ImageFormat.YUV_444_888
+        ImageFormat.YUV_444_888,
     )
 
     override fun analyze(image: ImageProxy) {
@@ -101,9 +100,12 @@ class QRCodeAnalyzer(
 
             val source = PlanarYUVLuminanceSource(
                 bytes,
-                image.width, image.height,
-                0, 0,
-                image.width, image.height,
+                image.width,
+                image.height,
+                0,
+                0,
+                image.width,
+                image.height,
                 false,
             )
             val binaryBmp = BinaryBitmap(HybridBinarizer(source))
@@ -111,8 +113,8 @@ class QRCodeAnalyzer(
                 val result = MultiFormatReader().apply {
                     setHints(
                         mapOf(
-                            DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE)
-                        )
+                            DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE),
+                        ),
                     )
                 }.decode(binaryBmp)
                 onQrCodeScanned(result.text)
