@@ -31,26 +31,19 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
-                api("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
-                api("moe.tlaster:precompose:1.4.2")
-                api("moe.tlaster:precompose-molecule:1.4.2")
-                api("app.cash.molecule:molecule-runtime:0.9.0")
-                // See https://tabler-icons.io/
-                api("br.com.devsrsouza.compose.icons:tabler-icons:1.1.0")
+                api(libs.bundles.kotlinx)
+                api(libs.bundles.precompose)
+                api(libs.tabler.icons)
             }
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.activity:activity-compose:1.7.2")
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
-                implementation("com.google.accompanist:accompanist-permissions:0.28.0")
-                implementation("androidx.camera:camera-camera2:1.2.3")
-                implementation("androidx.camera:camera-lifecycle:1.2.3")
-                implementation("androidx.camera:camera-view:1.3.0-alpha07")
-                implementation("com.google.zxing:core:3.4.1")
+                api(libs.androidx.core.ktx)
+                api(libs.androidx.appcompat)
+                api(libs.androidx.activity.compose)
+                implementation(libs.accompanist.permissions)
+                implementation(libs.bundles.androidx.camera)
+                implementation(libs.zxing.core)
             }
         }
         val iosX64Main by getting
@@ -74,7 +67,6 @@ android {
 
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
-        targetSdk = (findProperty("android.targetSdk") as String).toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

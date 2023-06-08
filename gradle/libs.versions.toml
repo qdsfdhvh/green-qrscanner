@@ -1,0 +1,60 @@
+[versions]
+agp = "8.0.2"
+kotlin = "1.8.20"
+compose-multiplatform = "1.5.0-dev1049"
+spotless = "6.19.0"
+ktlint = "0.49.1"
+androidx-core-ktx = "1.10.1"
+androidx-appcompat = "1.6.1"
+androidx-activity-compose = "1.7.2"
+androidx-camera = "1.2.3"
+androidx-camera-view = "1.3.0-alpha07"
+kotlinx-collections-immutable = "0.3.5"
+precompose-molecule = "1.4.2"
+molecule-runtime = "0.9.0"
+accompanist-permissions = "0.28.0"
+zxing-core = "3.4.1"
+tabler-icons = "1.1.0"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+
+[libraries]
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidx-camera-view" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidx-camera" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidx-camera" }
+
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+
+precompose-runtime = { module = "moe.tlaster:precompose", version.ref = "precompose-molecule" }
+precompose-molecule = { module = "moe.tlaster:precompose-molecule", version.ref = "precompose-molecule" }
+molecule-runtime = { module = "app.cash.molecule:molecule-runtime", version.ref = "molecule-runtime" }
+
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
+zxing-core = { module = "com.google.zxing:core", version.ref = "zxing-core" }
+# See https://tabler-icons.io/
+tabler-icons = { module = "br.com.devsrsouza.compose.icons:tabler-icons", version.ref = "tabler-icons" }
+
+[bundles]
+androidx-camera = [
+    "androidx-camera-view",
+    "androidx-camera-camera2",
+    "androidx-camera-lifecycle",
+]
+kotlinx = [
+    "kotlinx-collections-immutable",
+]
+precompose = [
+    "precompose-runtime",
+    "precompose-molecule",
+    "molecule-runtime",
+]
