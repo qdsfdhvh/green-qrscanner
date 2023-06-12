@@ -1,8 +1,11 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
-    id("com.android.library")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -21,13 +24,12 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] =
-            "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     @Suppress("UNUSED_VARIABLE")
     sourceSets {
         val commonMain by getting {
+            kotlin.srcDir("src/commonMain/third")
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -35,6 +37,9 @@ kotlin {
                 api(libs.bundles.kotlinx)
                 api(libs.bundles.precompose)
                 implementation(libs.tabler.icons)
+                api(libs.bundles.sqldelight)
+                api(libs.koject.core)
+                implementation(libs.multiplatform.paging)
             }
         }
         val androidMain by getting {
@@ -42,9 +47,11 @@ kotlin {
                 api(libs.androidx.core.ktx)
                 api(libs.androidx.appcompat)
                 api(libs.androidx.activity.compose)
+                implementation(libs.kotlinx.coroutines.android)
+                implementation(libs.sqldelight.android.driver)
                 implementation(libs.accompanist.permissions)
                 implementation(libs.bundles.androidx.camera)
-                implementation(libs.zxing.core)
+                implementation(libs.mlkit.barcode.scanning)
             }
         }
         val iosX64Main by getting
@@ -55,6 +62,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.sqldelight.native.driver)
+            }
         }
     }
 }
@@ -72,4 +82,25 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+}
+
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("com.seiko.greenqrscanner.data.model")
+        }
+    }
+}
+
+dependencies {
+    // kspAll(libs.koject.processor.lib)
+    kspAll(libs.koject.processor.app)
+}
+
+fun DependencyHandlerScope.kspAll(dependencyNotation: Any) {
+    add("kspCommonMainMetadata", dependencyNotation)
+    add("kspAndroid", dependencyNotation)
+    add("kspIosX64", dependencyNotation)
+    add("kspIosArm64", dependencyNotation)
+    add("kspIosSimulatorArm64", dependencyNotation)
 }

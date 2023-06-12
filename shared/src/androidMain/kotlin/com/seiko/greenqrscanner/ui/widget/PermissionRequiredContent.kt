@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.seiko.greenqrscanner.model.PermissionPlace
+import com.seiko.greenqrscanner.option.PermissionPlace
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable

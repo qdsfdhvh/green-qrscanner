@@ -3,6 +3,10 @@ import SwiftUI
 import shared
 
 struct ComposeView: UIViewControllerRepresentable {
+    init() {
+        KojectHelper_iosKt.startKoject()
+    }
+    
     func makeUIViewController(context: Context) -> UIViewController {
         Main_iosKt.MainViewController()
     }

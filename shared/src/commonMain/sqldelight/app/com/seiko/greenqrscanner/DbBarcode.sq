@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS DbBarcode (
+    raw_value TEXT NOT NULL PRIMARY KEY,
+    is_star INTEGER NOT NULL,
+    update_time INTEGER NOT NULL,
+    create_time INTEGER NOT NULL
+);
+
+upset {
+UPDATE DbBarcode
+  SET update_time = :update_time
+  WHERE raw_value = :barcode;
+
+INSERT OR IGNORE INTO DbBarcode(raw_value, is_star, update_time, create_time)
+VALUES (:barcode, 0, :update_time, :update_time);
+}
+
+count:
+SELECT count(1) FROM DbBarcode;
+
+star:
+UPDATE DbBarcode SET is_star = :isStar WHERE raw_value = :rawValue;
+
+getHistory:
+SELECT *
+FROM DbBarcode
+ORDER BY update_time DESC
+LIMIT :limit OFFSET :offset;
+
+getStars:
+SELECT *
+FROM DbBarcode WHERE is_star = 1
+ORDER BY update_time DESC
+LIMIT :limit OFFSET :offset;

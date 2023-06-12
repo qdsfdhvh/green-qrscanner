@@ -24,11 +24,18 @@ private fun AppTheme(
         )
     } else {
         lightColorScheme(
-            surface = Color.Black,
-            onSurface = Color.White,
+            primary = Color(0xFFCAE4E9),
+            onPrimary = Color.Black,
+            secondary = Color(0xFFCAE5EA),
+            onSecondary = Color.Black,
+            tertiary = Color(0xFF1A1A1A),
+            onTertiary = Color.White,
+            surface = Color(0xFFFBFBFB),
+            onSurface = Color.Black,
             secondaryContainer = Color(0xFFCAE4E9),
             onSecondaryContainer = Color.Black,
-            onSurfaceVariant = Color.White,
+            surfaceVariant = Color.White,
+            onSurfaceVariant = Color.Black,
         )
     }
     MaterialTheme(

@@ -2,10 +2,13 @@ package com.seiko.greenqrscanner
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.runtime.remember
 import com.seiko.greenqrscanner.ui.scene.detail.DetailScene
 import com.seiko.greenqrscanner.ui.scene.home.HomeScene
 import com.seiko.greenqrscanner.ui.scene.scan.ScanScene
 import com.seiko.greenqrscanner.ui.scene.settings.SettingsScene
+import com.seiko.greenqrscanner.util.decodeUrl
+import com.seiko.greenqrscanner.util.encodeUrl
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
 import moe.tlaster.precompose.navigation.path
@@ -17,9 +20,9 @@ object Route {
     const val Settings = "Settings"
 
     object Detail {
-        const val paramQrCode = "qrCode"
-        const val path = "Detail/{$paramQrCode}"
-        operator fun invoke(qrCode: String) = "Detail/$qrCode"
+        const val paramBarcode = "barcode"
+        const val path = "Detail/{$paramBarcode}"
+        operator fun invoke(barcode: String) = "Detail/${barcode.encodeUrl()}"
     }
 
     const val initial = Scan
@@ -42,7 +45,9 @@ fun RouteBuilder.initRoute(navigator: Navigator) {
     scene(Route.Detail.path) {
         DetailScene(
             navigator = navigator,
-            qrCode = it.path(Route.Detail.paramQrCode)!!,
+            barcode = remember {
+                it.path<String>(Route.Detail.paramBarcode)!!.decodeUrl()
+            },
         )
     }
 }

@@ -18,15 +18,19 @@ fun ScanScene(
 ) {
     Scaffold { innerPadding ->
         BarcodeScanner(
-            onResult = {
-                navigator.navigate(
-                    Route.Detail(it),
-                    NavOptions(
-                        launchSingleTop = true,
-                    ),
-                )
+            onResult = { result ->
+                result.firstOrNull()?.let {
+                    navigator.navigate(
+                        Route.Detail(it.rawValue),
+                        NavOptions(
+                            launchSingleTop = true,
+                        ),
+                    )
+                }
             },
-            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
         )
     }
 }

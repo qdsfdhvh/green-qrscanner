@@ -1,4 +1,4 @@
-package com.seiko.greenqrscanner.model
+package com.seiko.greenqrscanner.option
 
 enum class PermissionPlace(
     val permissions: List<String>,
