@@ -15,6 +15,7 @@ multiplatform-paging = "1.0.5"
 kotlinx-coroutines = "1.7.1"
 kotlinx-datetime = "0.4.0"
 kotlinx-collections-immutable = "0.3.5"
+kotlinx-serialization-json = "1.5.1"
 sqldelight = "2.0.0-rc01"
 precompose = "1.4.2"
 molecule-runtime = "0.9.0"
@@ -48,9 +49,11 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-datatime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
 koject-core = { group = "com.moriatsushi.koject", name = "koject-core", version.ref = "koject" }
@@ -77,10 +80,15 @@ androidx-camera = [
     "androidx-camera-camera2",
     "androidx-camera-lifecycle",
 ]
+android-barcode = [
+    "accompanist-permissions",
+    "mlkit-barcode-scanning",
+]
 kotlinx = [
     "kotlinx-coroutines-core",
     "kotlinx-datatime",
     "kotlinx-collections-immutable",
+    "kotlinx-serialization-json",
 ]
 precompose = [
     "precompose-runtime",
@@ -89,5 +97,4 @@ precompose = [
 ]
 sqldelight = [
     "sqldelight-coroutines-extensions",
-    #    "sqldelight-androidx-paging3-extensions",
 ]

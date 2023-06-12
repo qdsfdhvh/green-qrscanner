@@ -45,7 +45,7 @@ private fun MlkitBarcode.toFormat(): BarcodeFormat {
     }
 }
 
-private fun MlkitBarcode.toType(): BarcodeType? {
+private fun MlkitBarcode.toType(): BarcodeType {
     return when (valueType) {
         MlkitBarcode.TYPE_TEXT -> BarcodeType.Text
         MlkitBarcode.TYPE_WIFI -> BarcodeType.Wifi(
@@ -83,7 +83,7 @@ private fun MlkitBarcode.toType(): BarcodeType? {
         MlkitBarcode.TYPE_ISBN -> BarcodeType.ISBN
         MlkitBarcode.TYPE_PRODUCT -> BarcodeType.Product
         else -> null
-    }
+    } ?: BarcodeType.UnKnown
 }
 
 private fun MlkitBarcodeContactInfo.toCommon(): BarcodeType.ContactInfo {

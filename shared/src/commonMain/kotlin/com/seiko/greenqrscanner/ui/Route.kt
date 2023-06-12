@@ -1,4 +1,4 @@
-package com.seiko.greenqrscanner
+package com.seiko.greenqrscanner.ui
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition

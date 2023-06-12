@@ -26,10 +26,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import androidx.paging.map
 import com.moriatsushi.koject.compose.rememberInject
-import com.seiko.greenqrscanner.Route
 import com.seiko.greenqrscanner.data.mapper.toUi
 import com.seiko.greenqrscanner.data.model.UiBarcode
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
+import com.seiko.greenqrscanner.ui.Route
 import kotlinx.coroutines.flow.map
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavOptions

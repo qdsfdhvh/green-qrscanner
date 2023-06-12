@@ -4,12 +4,16 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.seiko.greenqrscanner.RouteScene
+import com.seiko.greenqrscanner.ui.RouteScene
+import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.navigation.rememberNavigator
 
 @Composable
-fun App() {
+fun App(
+    navigator: Navigator = rememberNavigator(),
+) {
     AppTheme {
-        RouteScene()
+        RouteScene(navigator)
     }
 }
 

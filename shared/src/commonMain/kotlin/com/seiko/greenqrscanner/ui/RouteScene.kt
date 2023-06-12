@@ -1,4 +1,4 @@
-package com.seiko.greenqrscanner
+package com.seiko.greenqrscanner.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -29,12 +29,13 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.mapNotNull
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
-import moe.tlaster.precompose.navigation.rememberNavigator
+import moe.tlaster.precompose.navigation.Navigator
 
 @Composable
-fun RouteScene(modifier: Modifier = Modifier) {
-    val navigator = rememberNavigator()
-
+fun RouteScene(
+    navigator: Navigator,
+    modifier: Modifier = Modifier,
+) {
     val homeTabs = remember { persistentListOf(*HomeTab.values()) }
     val selectedTabIndex by remember {
         navigator.currentEntry.mapNotNull { backStackEntry ->

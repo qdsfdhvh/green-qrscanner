@@ -6,7 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.seiko.greenqrscanner.Route
+import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.BarcodeScanner
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator

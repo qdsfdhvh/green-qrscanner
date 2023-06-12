@@ -10,6 +10,7 @@ plugins {
 
 kotlin {
     android()
+    jvm("desktop")
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -36,22 +37,37 @@ kotlin {
                 implementation(compose.material3)
                 api(libs.bundles.kotlinx)
                 api(libs.bundles.precompose)
-                implementation(libs.tabler.icons)
-                api(libs.bundles.sqldelight)
+                implementation(libs.bundles.sqldelight)
                 api(libs.koject.core)
+                implementation(libs.tabler.icons)
                 implementation(libs.multiplatform.paging)
             }
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+        val jvmMain by creating {
+            dependsOn(commonMain)
+        }
+        // not build desktop app, just easy to test
+        val desktopMain by getting {
+            dependsOn(jvmMain)
+            dependencies {
+                implementation(libs.sqldelight.sqlite.driver)
+            }
+        }
         val androidMain by getting {
+            dependsOn(jvmMain)
             dependencies {
                 api(libs.androidx.core.ktx)
                 api(libs.androidx.appcompat)
                 api(libs.androidx.activity.compose)
+                implementation(libs.bundles.androidx.camera)
+                implementation(libs.bundles.android.barcode)
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.sqldelight.android.driver)
-                implementation(libs.accompanist.permissions)
-                implementation(libs.bundles.androidx.camera)
-                implementation(libs.mlkit.barcode.scanning)
             }
         }
         val iosX64Main by getting
@@ -93,7 +109,6 @@ sqldelight {
 }
 
 dependencies {
-    // kspAll(libs.koject.processor.lib)
     kspAll(libs.koject.processor.app)
 }
 
