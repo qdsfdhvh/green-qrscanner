@@ -30,7 +30,6 @@ kotlin {
     @Suppress("UNUSED_VARIABLE")
     sourceSets {
         val commonMain by getting {
-            kotlin.srcDir("src/commonMain/third")
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -81,6 +80,11 @@ kotlin {
             dependencies {
                 implementation(libs.sqldelight.native.driver)
             }
+        }
+    }
+    sourceSets.forEach {
+        if (it.name.endsWith("Main")) {
+            it.kotlin.srcDir("src/${it.name}/third")
         }
     }
 }

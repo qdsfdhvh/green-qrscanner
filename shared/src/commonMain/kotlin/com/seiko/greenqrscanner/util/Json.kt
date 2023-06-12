@@ -1,6 +1,6 @@
 package com.seiko.greenqrscanner.util
 
-import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -15,9 +15,15 @@ val JSON by lazy {
     }
 }
 
+fun <T> T.encodeJson(serializer: KSerializer<T>): String =
+    JSON.encodeToString(serializer, this)
+
 inline fun <reified T> T.encodeJson(): String = JSON.encodeToString(this)
 
 inline fun <reified T> T.encodeJsonElement(): JsonElement = JSON.encodeToJsonElement(this)
+
+fun <T> String.decodeJson(serializer: KSerializer<T>): T =
+    JSON.decodeFromString(serializer, this)
 
 inline fun <reified T> String.decodeJson(): T = JSON.decodeFromString(this)
 

@@ -1,5 +1,11 @@
+import com.seiko.greenqrscanner.data.model.BarcodeFormat;
+import com.seiko.greenqrscanner.data.model.BarcodeType;
+
+
 CREATE TABLE IF NOT EXISTS DbBarcode (
     raw_value TEXT NOT NULL PRIMARY KEY,
+    format TEXT AS BarcodeFormat NOT NULL,
+    type TEXT AS BarcodeType NOT NULL,
     is_star INTEGER NOT NULL,
     update_time INTEGER NOT NULL,
     create_time INTEGER NOT NULL
@@ -7,12 +13,23 @@ CREATE TABLE IF NOT EXISTS DbBarcode (
 
 upset {
 UPDATE DbBarcode
-  SET update_time = :update_time
+  SET update_time = :update_time,
+  format = :barcode_format,
+  type = :barcode_type
   WHERE raw_value = :barcode;
 
-INSERT OR IGNORE INTO DbBarcode(raw_value, is_star, update_time, create_time)
-VALUES (:barcode, 0, :update_time, :update_time);
+INSERT OR IGNORE INTO DbBarcode(
+  raw_value, format, type,
+  is_star, update_time, create_time
+)
+VALUES (
+  :barcode, :barcode_format, :barcode_type,
+  0, :update_time, :update_time
+);
 }
+
+load:
+SELECT * FROM DbBarcode WHERE raw_value = :barcode;
 
 count:
 SELECT count(1) FROM DbBarcode;

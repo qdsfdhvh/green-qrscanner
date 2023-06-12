@@ -62,7 +62,7 @@ koject-processor-app = { group = "com.moriatsushi.koject", name = "koject-proces
 koject-processor-lib = { group = "com.moriatsushi.koject", name = "koject-processor-lib", version.ref = "koject" }
 
 precompose-runtime = { module = "moe.tlaster:precompose", version.ref = "precompose" }
-precompose-molecule = { module = "moe.tlaster:precompose-molecule", version.ref = "precompose" }
+#precompose-molecule = { module = "moe.tlaster:precompose-molecule", version.ref = "precompose" }
 molecule-runtime = { module = "app.cash.molecule:molecule-runtime", version.ref = "molecule-runtime" }
 
 multiplatform-paging = { module = "io.github.qdsfdhvh:paging", version.ref = "multiplatform-paging" }
@@ -92,7 +92,7 @@ kotlinx = [
 ]
 precompose = [
     "precompose-runtime",
-    "precompose-molecule",
+#    "precompose-molecule",
     "molecule-runtime",
 ]
 sqldelight = [
