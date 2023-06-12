@@ -83,7 +83,7 @@ private fun MlkitBarcode.toType(): BarcodeType {
         MlkitBarcode.TYPE_ISBN -> BarcodeType.ISBN
         MlkitBarcode.TYPE_PRODUCT -> BarcodeType.Product
         else -> null
-    } ?: BarcodeType.UnKnown
+    } ?: BarcodeType.Unknown
 }
 
 private fun MlkitBarcodeContactInfo.toCommon(): BarcodeType.ContactInfo {
