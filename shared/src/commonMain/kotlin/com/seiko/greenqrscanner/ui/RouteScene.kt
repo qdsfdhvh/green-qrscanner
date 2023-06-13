@@ -20,10 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import compose.icons.TablerIcons
-import compose.icons.tablericons.Home
-import compose.icons.tablericons.Scan
-import compose.icons.tablericons.Settings
+import com.seiko.greenqrscanner.ui.icon.rememberHome
+import com.seiko.greenqrscanner.ui.icon.rememberQrCodeScanner
+import com.seiko.greenqrscanner.ui.icon.rememberSettings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.mapNotNull
@@ -118,8 +117,9 @@ private val HomeTab.route: String
     }
 
 private val HomeTab.icon: ImageVector
+    @Composable
     get() = when (this) {
-        HomeTab.Home -> TablerIcons.Home
-        HomeTab.Scan -> TablerIcons.Scan
-        HomeTab.Settings -> TablerIcons.Settings
+        HomeTab.Home -> rememberHome()
+        HomeTab.Scan -> rememberQrCodeScanner()
+        HomeTab.Settings -> rememberSettings()
     }

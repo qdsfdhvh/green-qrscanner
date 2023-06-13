@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
+    // alias(libs.plugins.moko.resources)
     alias(libs.plugins.ksp)
 }
 
@@ -38,7 +39,6 @@ kotlin {
                 api(libs.bundles.precompose)
                 implementation(libs.bundles.sqldelight)
                 api(libs.koject.core)
-                implementation(libs.tabler.icons)
                 implementation(libs.multiplatform.paging)
             }
         }
@@ -111,6 +111,10 @@ sqldelight {
         }
     }
 }
+
+// multiplatformResources {
+//     multiplatformResourcesPackage = "com.seiko.greenqrscanner"
+// }
 
 dependencies {
     kspAll(libs.koject.processor.app)

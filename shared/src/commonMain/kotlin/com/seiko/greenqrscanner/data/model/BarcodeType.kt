@@ -170,3 +170,20 @@ sealed interface BarcodeType {
         }
     }
 }
+
+val BarcodeType.title: String
+    get() = when (this) {
+        BarcodeType.Text -> "Text"
+        BarcodeType.ISBN -> "ISBN"
+        BarcodeType.Product -> "Product"
+        is BarcodeType.Wifi -> "Wifi"
+        is BarcodeType.UrlBookmark -> "Url"
+        is BarcodeType.Email -> "Email"
+        is BarcodeType.Phone -> "Phone"
+        is BarcodeType.Sms -> "SMS"
+        is BarcodeType.GeoPoint -> "GEO"
+        is BarcodeType.ContactInfo -> "Contact Info"
+        is BarcodeType.DriverLicense -> "Driver License"
+        is BarcodeType.CalendarEvent -> "Calendar Event"
+        BarcodeType.Unknown -> "Unknown"
+    }
