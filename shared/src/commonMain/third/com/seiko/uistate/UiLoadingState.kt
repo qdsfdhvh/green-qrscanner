@@ -16,7 +16,7 @@ data class CombinedUiLoadingState(
     val remote: UiLoadingState,
 )
 
-internal inline fun UiLoadingState.toCombined() = CombinedUiLoadingState(
+internal fun UiLoadingState.toCombined() = CombinedUiLoadingState(
     refresh = this,
     remote = UiLoadingState.NotLoading,
 )
