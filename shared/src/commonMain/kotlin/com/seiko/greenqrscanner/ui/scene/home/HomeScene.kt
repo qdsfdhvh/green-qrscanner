@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.seiko.greenqrscanner.data.model.UiBarcode
 import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeHistoryContent
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeStarContent
@@ -34,6 +35,18 @@ fun HomeScene(
 ) {
     val status by producePresenter { HomePresenter() }
     val scope = rememberCoroutineScope()
+    val clickable = remember {
+        HomeSceneClickable(
+            onBarcodeClicked = {
+                navigator.navigate(
+                    Route.Detail(it.rawValue),
+                    NavOptions(
+                        launchSingleTop = true,
+                    ),
+                )
+            },
+        )
+    }
     Scaffold { innerPadding ->
         Column(Modifier.padding(innerPadding).fillMaxSize()) {
             val pagerState = rememberPagerState(status.initialSelectIndex)
@@ -66,25 +79,11 @@ fun HomeScene(
             ) { page ->
                 when (status.homeTabs[page]) {
                     HomeTab.History -> HomeHistoryContent(
-                        onBarcodeClick = {
-                            navigator.navigate(
-                                Route.Detail(it.rawValue),
-                                NavOptions(
-                                    launchSingleTop = true,
-                                ),
-                            )
-                        },
+                        onBarcodeClick = clickable.onBarcodeClicked,
                         modifier = Modifier.fillMaxSize(),
                     )
                     HomeTab.Star -> HomeStarContent(
-                        onBarcodeClick = {
-                            navigator.navigate(
-                                Route.Detail(it.rawValue),
-                                NavOptions(
-                                    launchSingleTop = true,
-                                ),
-                            )
-                        },
+                        onBarcodeClick = clickable.onBarcodeClicked,
                         modifier = Modifier.fillMaxSize(),
                     )
                 }
@@ -112,3 +111,7 @@ private enum class HomeTab {
     History,
     Star
 }
+
+private data class HomeSceneClickable(
+    val onBarcodeClicked: (UiBarcode) -> Unit,
+)
