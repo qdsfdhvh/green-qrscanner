@@ -1,8 +1,10 @@
 package com.seiko.greenqrscanner.data.repo
 
+import androidx.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneNotNull
 import app.cash.sqldelight.paging3.QueryPagingSource
+import app.com.seiko.greenqrscanner.DbBarcode
 import app.com.seiko.greenqrscanner.DbBarcodeQueries
 import com.moriatsushi.koject.Provides
 import com.moriatsushi.koject.Singleton
@@ -42,12 +44,21 @@ class BarcodeRepository(
             .map { it.toUi() }
     }
 
-    fun getHistory() = QueryPagingSource(
-        countQuery = dbBarcodeQueries.count(),
+    fun getHistory(): PagingSource<Int, DbBarcode> = QueryPagingSource(
+        countQuery = dbBarcodeQueries.getHistoryCount(),
         transacter = dbBarcodeQueries,
         context = appCoroutineDispatcher.io,
         queryProvider = { limit, offset ->
             dbBarcodeQueries.getHistory(limit, offset)
+        },
+    )
+
+    fun getStars(): PagingSource<Int, DbBarcode> = QueryPagingSource(
+        countQuery = dbBarcodeQueries.getStarsCount(),
+        transacter = dbBarcodeQueries,
+        context = appCoroutineDispatcher.io,
+        queryProvider = { limit, offset ->
+            dbBarcodeQueries.getStars(limit, offset)
         },
     )
 }
