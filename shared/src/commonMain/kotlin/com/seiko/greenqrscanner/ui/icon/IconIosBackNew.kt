@@ -1,6 +1,5 @@
 package com.seiko.greenqrscanner.ui.icon
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -20,7 +19,7 @@ fun rememberArrowBackIosNew(): ImageVector {
             defaultWidth = 24.0.dp,
             defaultHeight = 24.0.dp,
             viewportWidth = 24.0f,
-            viewportHeight = 24.0f
+            viewportHeight = 24.0f,
         ).apply {
             path(
                 fill = SolidColor(Color.Black),
@@ -31,7 +30,7 @@ fun rememberArrowBackIosNew(): ImageVector {
                 strokeLineCap = StrokeCap.Butt,
                 strokeLineJoin = StrokeJoin.Miter,
                 strokeLineMiter = 1f,
-                pathFillType = PathFillType.NonZero
+                pathFillType = PathFillType.NonZero,
             ) {
                 moveTo(15.125f, 21.1f)
                 lineTo(6.7f, 12.7f)

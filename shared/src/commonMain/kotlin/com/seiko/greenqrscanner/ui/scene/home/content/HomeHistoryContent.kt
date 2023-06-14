@@ -34,7 +34,6 @@ fun HomeHistoryContent(
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-
         items(status.pagingItems) { item ->
             item?.let {
                 BarcodeItem(

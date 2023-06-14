@@ -41,7 +41,7 @@ fun HomeScene(
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                     )
                 },
                 divider = {},
@@ -51,9 +51,9 @@ fun HomeScene(
                     Tab(
                         selected = index == pagerState.currentPage,
                         onClick = {
-                             scope.launch {
-                                 pagerState.animateScrollToPage(index)
-                             }
+                            scope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
                         },
                         text = { Text(tab.name) },
                     )
