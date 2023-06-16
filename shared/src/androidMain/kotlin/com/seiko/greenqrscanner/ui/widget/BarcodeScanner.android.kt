@@ -12,14 +12,14 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.option.PermissionPlace
 import com.seiko.greenqrscanner.util.MlKitBarcodeAnalyzer
-import com.seiko.greenqrscanner.util.toAndroidxLifecycleOwner
-import moe.tlaster.precompose.lifecycle.LocalLifecycleOwner
 
 @Composable
 actual fun BarcodeScanner(
@@ -30,7 +30,7 @@ actual fun BarcodeScanner(
         permissionPlace = PermissionPlace.QrScan,
         modifier = modifier,
     ) {
-        val lifecycleOwner = LocalLifecycleOwner.current
+        val lifecycleOwner = rememberCameraLifecycleOwner()
         AndroidView(
             factory = { context ->
                 PreviewView(context).also {
@@ -62,7 +62,7 @@ actual fun BarcodeScanner(
                     )
                     try {
                         cameraProviderFeature.get().bindToLifecycle(
-                            lifecycleOwner.toAndroidxLifecycleOwner(),
+                            lifecycleOwner,
                             selector,
                             preview,
                             imageAnalysis,
@@ -75,4 +75,32 @@ actual fun BarcodeScanner(
             modifier = Modifier.fillMaxSize(),
         )
     }
+}
+
+@Composable
+private fun rememberCameraLifecycleOwner(): CameraLifecycleOwner {
+    val lifecycleOwner = remember { CameraLifecycleOwner() }
+    DisposableEffect(lifecycleOwner) {
+        lifecycleOwner.bind()
+        onDispose {
+            lifecycleOwner.unbind()
+        }
+    }
+    return lifecycleOwner
+}
+
+private class CameraLifecycleOwner : androidx.lifecycle.LifecycleOwner {
+
+    private val lifecycleRegistry = androidx.lifecycle.LifecycleRegistry(this)
+
+    fun bind() {
+        lifecycleRegistry.currentState = androidx.lifecycle.Lifecycle.State.RESUMED
+    }
+
+    fun unbind() {
+        lifecycleRegistry.currentState = androidx.lifecycle.Lifecycle.State.DESTROYED
+    }
+
+    override val lifecycle: androidx.lifecycle.Lifecycle
+        get() = lifecycleRegistry
 }
