@@ -5,6 +5,8 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.remember
+import com.seiko.greenqrscanner.data.model.AddBarcodeType
+import com.seiko.greenqrscanner.ui.scene.add.AddBarcodeScene
 import com.seiko.greenqrscanner.ui.scene.add.AddBottomSheet
 import com.seiko.greenqrscanner.ui.scene.detail.DetailScene
 import com.seiko.greenqrscanner.ui.scene.home.HomeScene
@@ -16,13 +18,13 @@ import com.seiko.greenqrscanner.util.encodeUrl
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.RouteBuilder
 import moe.tlaster.precompose.navigation.path
+import moe.tlaster.precompose.navigation.query
 import moe.tlaster.precompose.navigation.transition.NavTransition
 
 object Route {
     const val Home = "Home"
     const val Scan = "Scan"
     const val Settings = "Settings"
-    const val Add = "Add"
 
     object Popup {
         object BarcodeSettings {
@@ -36,9 +38,17 @@ object Route {
         operator fun invoke(barcode: String) = "Detail/${barcode.encodeUrl()}"
     }
 
+    const val SelectAdd = "SelectAdd"
+
+    object Add {
+        const val path = "Add"
+        operator fun invoke(type: AddBarcodeType) = "Add?$paramType=${type.name}"
+    }
+
     const val initial = Scan
 
     const val paramBarcode = "barcode"
+    const val paramType = "type"
 }
 
 fun RouteBuilder.initRoute(navigator: Navigator) {
@@ -63,9 +73,19 @@ fun RouteBuilder.initRoute(navigator: Navigator) {
             },
         )
     }
-    floating(Route.Add) {
+    floating(Route.SelectAdd) {
         AddBottomSheet(
             navigator = navigator,
+        )
+    }
+    scene(Route.Add.path) {
+        AddBarcodeScene(
+            navigator = navigator,
+            type = remember {
+                it.query<String>(Route.paramType)?.let {
+                    AddBarcodeType.valueOf(it)
+                } ?: AddBarcodeType.Text
+            },
         )
     }
     floating(Route.Popup.BarcodeSettings.path) {

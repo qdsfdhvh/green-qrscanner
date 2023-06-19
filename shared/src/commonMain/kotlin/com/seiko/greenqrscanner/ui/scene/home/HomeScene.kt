@@ -64,7 +64,7 @@ fun HomeScene(
         floatingActionButton = {
             IconButton(
                 onClick = {
-                    navigator.navigate(Route.Add)
+                    navigator.navigate(Route.SelectAdd)
                 },
             ) {
                 Icon(

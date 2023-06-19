@@ -172,6 +172,7 @@ private fun StandardBottomSheet(
                     Expanded -> if (sheetSize.height == peekHeightPx.roundToInt()) {
                         null
                     } else {
+                        // 0f
                         max(0f, layoutHeight - sheetSize.height)
                     }
                     Hidden -> if (state.skipHiddenState) null else layoutHeight

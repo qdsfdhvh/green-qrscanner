@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
@@ -17,7 +18,11 @@ fun BottomSheet(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val bottomSheetState = rememberStandardBottomSheetState()
+    val bottomSheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Expanded,
+        confirmValueChange = { it == SheetValue.Expanded },
+        skipHiddenState = true,
+    )
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = bottomSheetState,
     )
