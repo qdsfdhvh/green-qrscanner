@@ -9,4 +9,5 @@ data class UiBarcode(
     // val time: String,
     // val icon: ImageVector,
     val title: String,
+    val isStar: Boolean,
 )

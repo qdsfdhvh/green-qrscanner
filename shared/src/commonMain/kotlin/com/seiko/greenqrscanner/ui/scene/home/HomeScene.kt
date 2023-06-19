@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -19,10 +21,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.model.UiBarcode
+import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.Route
+import com.seiko.greenqrscanner.ui.icon.rememberAdd
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeHistoryContent
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeStarContent
+import com.seiko.greenqrscanner.ui.widget.BarcodeItemClickable
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavOptions
@@ -35,19 +41,39 @@ fun HomeScene(
 ) {
     val status by producePresenter { HomePresenter() }
     val scope = rememberCoroutineScope()
-    val clickable = remember {
+    val clickable = remember(status.event) {
         HomeSceneClickable(
-            onBarcodeClicked = {
-                navigator.navigate(
-                    Route.Detail(it.rawValue),
-                    NavOptions(
-                        launchSingleTop = true,
-                    ),
-                )
-            },
+            barcodeItemClickable = BarcodeItemClickable(
+                onItemClicked = {
+                    navigator.navigate(
+                        Route.Detail(it.rawValue),
+                        NavOptions(
+                            launchSingleTop = true,
+                        ),
+                    )
+                },
+                onStarClicked = {
+                    status.event(HomeEvent.SetStar(it))
+                },
+                onSettingClicked = {
+                },
+            ),
         )
     }
-    Scaffold { innerPadding ->
+    Scaffold(
+        floatingActionButton = {
+            IconButton(
+                onClick = {
+                    navigator.navigate(Route.Add)
+                },
+            ) {
+                Icon(
+                    rememberAdd(),
+                    contentDescription = "add barcode",
+                )
+            }
+        },
+    ) { innerPadding ->
         Column(Modifier.padding(innerPadding).fillMaxSize()) {
             val pagerState = rememberPagerState(status.initialSelectIndex)
             TabRow(
@@ -79,11 +105,11 @@ fun HomeScene(
             ) { page ->
                 when (status.homeTabs[page]) {
                     HomeTab.History -> HomeHistoryContent(
-                        onBarcodeClick = clickable.onBarcodeClicked,
+                        barcodeItemClickable = clickable.barcodeItemClickable,
                         modifier = Modifier.fillMaxSize(),
                     )
                     HomeTab.Star -> HomeStarContent(
-                        onBarcodeClick = clickable.onBarcodeClicked,
+                        barcodeItemClickable = clickable.barcodeItemClickable,
                         modifier = Modifier.fillMaxSize(),
                     )
                 }
@@ -93,18 +119,34 @@ fun HomeScene(
 }
 
 @Composable
-private fun HomePresenter(): HomeStatus {
+private fun HomePresenter(
+    barcodeRepository: BarcodeRepository = rememberInject(),
+): HomeStatus {
     val homeTabs = remember { HomeTab.values().toList() }
     val initialSelectIndex = remember { homeTabs.indexOf(HomeTab.History) }
     return HomeStatus(
         initialSelectIndex = initialSelectIndex,
         homeTabs = homeTabs,
-    )
+    ) { event ->
+        when (event) {
+            is HomeEvent.SetStar -> {
+                barcodeRepository.setStar(
+                    barcode = event.item.rawValue,
+                    isStar = !event.item.isStar,
+                )
+            }
+        }
+    }
+}
+
+private sealed interface HomeEvent {
+    data class SetStar(val item: UiBarcode) : HomeEvent
 }
 
 private data class HomeStatus(
     val initialSelectIndex: Int,
     val homeTabs: List<HomeTab>,
+    val event: (HomeEvent) -> Unit,
 )
 
 private enum class HomeTab {
@@ -113,5 +155,5 @@ private enum class HomeTab {
 }
 
 private data class HomeSceneClickable(
-    val onBarcodeClicked: (UiBarcode) -> Unit,
+    val barcodeItemClickable: BarcodeItemClickable,
 )

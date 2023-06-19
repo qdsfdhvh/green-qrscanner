@@ -9,5 +9,4 @@ actual fun BarcodeScanner(
     onResult: (result: List<Barcode>) -> Unit,
     modifier: Modifier,
 ) {
-    // TODO support BarcodeScanner in desktop
 }

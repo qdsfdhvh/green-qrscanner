@@ -38,6 +38,10 @@ class BarcodeRepository(
         )
     }
 
+    fun setStar(barcode: String, isStar: Boolean) {
+        dbBarcodeQueries.setStar(if (isStar) 1 else 0, barcode)
+    }
+
     fun load(barcode: String): Flow<UiBarcode> {
         return dbBarcodeQueries.load(barcode).asFlow()
             .mapToOneNotNull(appCoroutineDispatcher.io)

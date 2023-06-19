@@ -2,9 +2,13 @@ package com.seiko.greenqrscanner.ui
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.remember
+import com.seiko.greenqrscanner.ui.scene.add.AddBottomSheet
 import com.seiko.greenqrscanner.ui.scene.detail.DetailScene
 import com.seiko.greenqrscanner.ui.scene.home.HomeScene
+import com.seiko.greenqrscanner.ui.scene.popup.BarcodeSettingsBottomSheet
 import com.seiko.greenqrscanner.ui.scene.scan.ScanScene
 import com.seiko.greenqrscanner.ui.scene.settings.SettingsScene
 import com.seiko.greenqrscanner.util.decodeUrl
@@ -18,14 +22,23 @@ object Route {
     const val Home = "Home"
     const val Scan = "Scan"
     const val Settings = "Settings"
+    const val Add = "Add"
+
+    object Popup {
+        object BarcodeSettings {
+            const val path = "Popup/BarcodeSettings/$paramBarcode"
+            operator fun invoke(barcode: String) = "Popup/BarcodeSettings/${barcode.encodeUrl()}"
+        }
+    }
 
     object Detail {
-        const val paramBarcode = "barcode"
         const val path = "Detail/{$paramBarcode}"
         operator fun invoke(barcode: String) = "Detail/${barcode.encodeUrl()}"
     }
 
     const val initial = Scan
+
+    const val paramBarcode = "barcode"
 }
 
 fun RouteBuilder.initRoute(navigator: Navigator) {
@@ -46,7 +59,20 @@ fun RouteBuilder.initRoute(navigator: Navigator) {
         DetailScene(
             navigator = navigator,
             barcode = remember {
-                it.path<String>(Route.Detail.paramBarcode)!!.decodeUrl()
+                it.path<String>(Route.paramBarcode)!!.decodeUrl()
+            },
+        )
+    }
+    floating(Route.Add) {
+        AddBottomSheet(
+            navigator = navigator,
+        )
+    }
+    floating(Route.Popup.BarcodeSettings.path) {
+        BarcodeSettingsBottomSheet(
+            navigator = navigator,
+            barcode = remember {
+                it.path<String>(Route.paramBarcode)!!.decodeUrl()
             },
         )
     }
@@ -57,4 +83,11 @@ val noneTransition = NavTransition(
     destroyTransition = ExitTransition.None,
     pauseTransition = ExitTransition.None,
     resumeTransition = EnterTransition.None,
+)
+
+val bottomSheetTransition = NavTransition(
+    createTransition = fadeIn(),
+    destroyTransition = fadeOut(),
+    pauseTransition = fadeOut(),
+    resumeTransition = fadeIn(),
 )

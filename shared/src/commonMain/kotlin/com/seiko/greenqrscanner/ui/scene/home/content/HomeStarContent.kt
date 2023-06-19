@@ -20,12 +20,13 @@ import com.seiko.greenqrscanner.data.mapper.toUi
 import com.seiko.greenqrscanner.data.model.UiBarcode
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.BarcodeItem
+import com.seiko.greenqrscanner.ui.widget.BarcodeItemClickable
 import kotlinx.coroutines.flow.map
 import moe.tlaster.precompose.molecule.producePresenter
 
 @Composable
 fun HomeStarContent(
-    onBarcodeClick: (UiBarcode) -> Unit,
+    barcodeItemClickable: BarcodeItemClickable,
     modifier: Modifier = Modifier,
 ) {
     val status by producePresenter { HomeStarPresenter() }
@@ -38,7 +39,7 @@ fun HomeStarContent(
             item?.let {
                 BarcodeItem(
                     item = it,
-                    onClick = { onBarcodeClick(it) },
+                    clickable = barcodeItemClickable,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }

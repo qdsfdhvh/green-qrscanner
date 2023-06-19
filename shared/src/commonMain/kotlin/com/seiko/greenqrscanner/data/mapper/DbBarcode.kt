@@ -9,4 +9,5 @@ fun DbBarcode.toUi() = UiBarcode(
     // time = Instant.fromEpochMilliseconds(update_time).toString(),
     type = type,
     title = type.title,
+    isStar = is_star > 0,
 )
