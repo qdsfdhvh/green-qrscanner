@@ -49,6 +49,15 @@ fun AddUrlContent(
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )
+        Spacer(Modifier.height(6.dp))
+        OutlinedTextField(
+            value = status.title,
+            onValueChange = { status.event(AddUrlContentEvent.ChangeTitle(it)) },
+            maxLines = 1,
+            label = { Text("Title") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+        )
         Spacer(Modifier.height(32.dp))
         Button(
             onClick = {
@@ -67,6 +76,7 @@ private fun AddUrlContentPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
 ): AddUrlContentStatus {
     var url by remember { mutableStateOf(TextFieldValue("")) }
+    var title by remember { mutableStateOf(TextFieldValue("")) }
     val canDone by remember {
         derivedStateOf {
             url.text.isNotEmpty() && url.text.safeUrl().isUrl()
@@ -74,11 +84,15 @@ private fun AddUrlContentPresenter(
     }
     return AddUrlContentStatus(
         url = url,
+        title = title,
         canDone = canDone,
     ) { event ->
         when (event) {
             is AddUrlContentEvent.ChangeUrl -> {
                 url = event.url
+            }
+            is AddUrlContentEvent.ChangeTitle -> {
+                title = event.title
             }
             AddUrlContentEvent.Done -> {
                 val safeUrl = url.text.safeUrl()
@@ -87,7 +101,7 @@ private fun AddUrlContentPresenter(
                         rawValue = safeUrl,
                         format = BarcodeFormat.FORMAT_1D,
                         type = BarcodeType.UrlBookmark(
-                            title = "",
+                            title = title.text,
                             url = safeUrl,
                         ),
                     ),
@@ -99,12 +113,13 @@ private fun AddUrlContentPresenter(
 
 private sealed interface AddUrlContentEvent {
     object Done : AddUrlContentEvent
-
     data class ChangeUrl(val url: TextFieldValue) : AddUrlContentEvent
+    data class ChangeTitle(val title: TextFieldValue) : AddUrlContentEvent
 }
 
 private data class AddUrlContentStatus(
     val url: TextFieldValue,
+    val title: TextFieldValue,
     val canDone: Boolean,
     val event: (AddUrlContentEvent) -> Unit,
 )
