@@ -342,7 +342,7 @@ object BottomSheetDefaults {
         color: Color = SheetBottomTokens.DockedDragHandleColor.toColor()
             .copy(SheetBottomTokens.DockedDragHandleOpacity),
     ) {
-        val dragHandleDescription = getString(Strings.BottomSheetDragHandleDescription)
+        val dragHandleDescription = getString2(Strings.BottomSheetDragHandleDescription)
         Surface(
             modifier = modifier
                 .padding(vertical = DragHandleVerticalPadding)

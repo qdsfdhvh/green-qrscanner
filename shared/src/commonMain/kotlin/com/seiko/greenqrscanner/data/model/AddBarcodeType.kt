@@ -1,20 +1,21 @@
 package com.seiko.greenqrscanner.data.model
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Barcode
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.Contacts
+import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Link
+import androidx.compose.material.icons.rounded.MyLocation
+import androidx.compose.material.icons.rounded.Phone
+import androidx.compose.material.icons.rounded.ShoppingBag
+import androidx.compose.material.icons.rounded.Sms
+import androidx.compose.material.icons.rounded.TextAd
+import androidx.compose.material.icons.rounded.UnknownDocument
+import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.seiko.greenqrscanner.ui.icon.rememberBarcode
-import com.seiko.greenqrscanner.ui.icon.rememberCalendarMonth
-import com.seiko.greenqrscanner.ui.icon.rememberContactMail
-import com.seiko.greenqrscanner.ui.icon.rememberContactPhone
-import com.seiko.greenqrscanner.ui.icon.rememberContacts
-import com.seiko.greenqrscanner.ui.icon.rememberDirectionsCar
-import com.seiko.greenqrscanner.ui.icon.rememberLink
-import com.seiko.greenqrscanner.ui.icon.rememberMyLocation
-import com.seiko.greenqrscanner.ui.icon.rememberShoppingBag
-import com.seiko.greenqrscanner.ui.icon.rememberSms
-import com.seiko.greenqrscanner.ui.icon.rememberTextAd
-import com.seiko.greenqrscanner.ui.icon.rememberUnknownDocument
-import com.seiko.greenqrscanner.ui.icon.rememberWifi
 
 enum class AddBarcodeType {
     Text,
@@ -35,17 +36,17 @@ enum class AddBarcodeType {
 val AddBarcodeType.icon: ImageVector
     @Composable
     get() = when (this) {
-        AddBarcodeType.Text -> rememberTextAd()
-        AddBarcodeType.ISBN -> rememberBarcode()
-        AddBarcodeType.Product -> rememberShoppingBag()
-        AddBarcodeType.Wifi -> rememberWifi()
-        AddBarcodeType.Url -> rememberLink()
-        AddBarcodeType.Email -> rememberContactMail()
-        AddBarcodeType.Phone -> rememberContactPhone()
-        AddBarcodeType.Sms -> rememberSms()
-        AddBarcodeType.Geo -> rememberMyLocation()
-        AddBarcodeType.ContactInfo -> rememberContacts()
-        AddBarcodeType.DriverLicense -> rememberDirectionsCar()
-        AddBarcodeType.CalendarEvent -> rememberCalendarMonth()
-        AddBarcodeType.Unknown -> rememberUnknownDocument()
+        AddBarcodeType.Text -> Icons.Rounded.TextAd
+        AddBarcodeType.ISBN -> Icons.Rounded.Barcode
+        AddBarcodeType.Product -> Icons.Rounded.ShoppingBag
+        AddBarcodeType.Wifi -> Icons.Rounded.Wifi
+        AddBarcodeType.Url -> Icons.Rounded.Link
+        AddBarcodeType.Email -> Icons.Rounded.Email
+        AddBarcodeType.Phone -> Icons.Rounded.Phone
+        AddBarcodeType.Sms -> Icons.Rounded.Sms
+        AddBarcodeType.Geo -> Icons.Rounded.MyLocation
+        AddBarcodeType.ContactInfo -> Icons.Rounded.Contacts
+        AddBarcodeType.DriverLicense -> Icons.Rounded.DirectionsCar
+        AddBarcodeType.CalendarEvent -> Icons.Rounded.CalendarMonth
+        AddBarcodeType.Unknown -> Icons.Rounded.UnknownDocument
     }

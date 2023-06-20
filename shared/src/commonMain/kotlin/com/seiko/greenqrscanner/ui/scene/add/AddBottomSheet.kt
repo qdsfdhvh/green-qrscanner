@@ -82,7 +82,11 @@ private fun AddBarcodeItem(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            Icon(item.icon, contentDescription = item.name)
+            Icon(
+                item.icon,
+                contentDescription = item.name,
+                modifier = Modifier.size(24.dp),
+            )
             Spacer(Modifier.height(4.dp))
             Text(item.name)
         }

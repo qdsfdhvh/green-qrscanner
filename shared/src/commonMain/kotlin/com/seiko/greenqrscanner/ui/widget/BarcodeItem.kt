@@ -6,6 +6,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.rounded.Barcode
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.Contacts
+import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Link
+import androidx.compose.material.icons.rounded.MyLocation
+import androidx.compose.material.icons.rounded.Phone
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.ShoppingBag
+import androidx.compose.material.icons.rounded.Sms
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.TextAd
+import androidx.compose.material.icons.rounded.UnknownDocument
+import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FixedThreshold
@@ -29,22 +47,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.model.UiBarcode
-import com.seiko.greenqrscanner.ui.icon.rememberBarcode
-import com.seiko.greenqrscanner.ui.icon.rememberCalendarMonth
-import com.seiko.greenqrscanner.ui.icon.rememberContactMail
-import com.seiko.greenqrscanner.ui.icon.rememberContactPhone
-import com.seiko.greenqrscanner.ui.icon.rememberContacts
-import com.seiko.greenqrscanner.ui.icon.rememberDirectionsCar
-import com.seiko.greenqrscanner.ui.icon.rememberLink
-import com.seiko.greenqrscanner.ui.icon.rememberMyLocation
-import com.seiko.greenqrscanner.ui.icon.rememberSettings
-import com.seiko.greenqrscanner.ui.icon.rememberShoppingBag
-import com.seiko.greenqrscanner.ui.icon.rememberSms
-import com.seiko.greenqrscanner.ui.icon.rememberStar
-import com.seiko.greenqrscanner.ui.icon.rememberStarFilled
-import com.seiko.greenqrscanner.ui.icon.rememberTextAd
-import com.seiko.greenqrscanner.ui.icon.rememberUnknownDocument
-import com.seiko.greenqrscanner.ui.icon.rememberWifi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,10 +68,11 @@ fun BarcodeItem(
         background = {
             Box(modifier.fillMaxSize()) {
                 Icon(
-                    rememberSettings(),
+                    Icons.Rounded.Settings,
                     contentDescription = "barcode settings",
                     modifier = Modifier
                         .padding(end = 12.dp)
+                        .size(24.dp)
                         .align(Alignment.CenterEnd),
                 )
             }
@@ -90,6 +93,7 @@ fun BarcodeItem(
                     Icon(
                         item.type.icon,
                         contentDescription = item.title,
+                        modifier = Modifier.size(24.dp),
                     )
                 },
                 headlineText = {
@@ -105,9 +109,9 @@ fun BarcodeItem(
                     IconButton(onClick = { clickable.onStarClicked(item) }) {
                         Image(
                             if (item.isStar) {
-                                rememberStarFilled()
+                                Icons.Filled.Star
                             } else {
-                                rememberStar()
+                                Icons.Rounded.Star
                             },
                             contentDescription = "star",
                         )
@@ -172,17 +176,17 @@ data class BarcodeItemClickable(
 private val BarcodeType.icon: ImageVector
     @Composable
     get() = when (this) {
-        BarcodeType.Text -> rememberTextAd()
-        BarcodeType.ISBN -> rememberBarcode()
-        BarcodeType.Product -> rememberShoppingBag()
-        is BarcodeType.Wifi -> rememberWifi()
-        is BarcodeType.UrlBookmark -> rememberLink()
-        is BarcodeType.Email -> rememberContactMail()
-        is BarcodeType.Phone -> rememberContactPhone()
-        is BarcodeType.Sms -> rememberSms()
-        is BarcodeType.GeoPoint -> rememberMyLocation()
-        is BarcodeType.ContactInfo -> rememberContacts()
-        is BarcodeType.DriverLicense -> rememberDirectionsCar()
-        is BarcodeType.CalendarEvent -> rememberCalendarMonth()
-        BarcodeType.Unknown -> rememberUnknownDocument()
+        BarcodeType.Text -> Icons.Rounded.TextAd
+        BarcodeType.ISBN -> Icons.Rounded.Barcode
+        BarcodeType.Product -> Icons.Rounded.ShoppingBag
+        is BarcodeType.Wifi -> Icons.Rounded.Wifi
+        is BarcodeType.UrlBookmark -> Icons.Rounded.Link
+        is BarcodeType.Email -> Icons.Rounded.Email
+        is BarcodeType.Phone -> Icons.Rounded.Phone
+        is BarcodeType.Sms -> Icons.Rounded.Sms
+        is BarcodeType.GeoPoint -> Icons.Rounded.MyLocation
+        is BarcodeType.ContactInfo -> Icons.Rounded.Contacts
+        is BarcodeType.DriverLicense -> Icons.Rounded.DirectionsCar
+        is BarcodeType.CalendarEvent -> Icons.Rounded.CalendarMonth
+        BarcodeType.Unknown -> Icons.Rounded.UnknownDocument
     }

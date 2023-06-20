@@ -32,6 +32,8 @@ fun BottomSheet(
         },
         scaffoldState = bottomSheetScaffoldState,
         modifier = modifier,
+        containerColor = Color.Transparent,
+        contentColor = Color.Transparent,
     ) {
         Spacer(
             Modifier

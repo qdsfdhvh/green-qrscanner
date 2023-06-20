@@ -43,7 +43,7 @@ value class Strings private constructor(@Suppress("unused") private val value: I
 }
 
 @Composable
-fun getString(string: Strings): String {
+fun getString2(string: Strings): String {
     return when (string) {
         Strings.NavigationMenu -> "Navigation menu"
         Strings.CloseDrawer -> "Close drawer"
