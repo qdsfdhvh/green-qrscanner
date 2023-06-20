@@ -18,9 +18,10 @@ internal expect fun providePlatformDispatcher(): CoroutineContext
 @OptIn(ExperimentalStdlibApi::class)
 private class PresenterHolder<T>(
     body: @Composable () -> T,
+    useImmediateClock: Boolean = false,
 ) : AutoCloseable {
     private val dispatcher = providePlatformDispatcher()
-    private val clock = if (dispatcher[MonotonicFrameClock] == null) {
+    private val clock = if (dispatcher[MonotonicFrameClock] == null || useImmediateClock) {
         RecompositionClock.Immediate
     } else {
         RecompositionClock.ContextClock
@@ -34,14 +35,15 @@ private class PresenterHolder<T>(
 
 @Composable
 fun <T> producePresenter(
+    useImmediateClock: Boolean = false,
     body: @Composable () -> T,
 ): State<T> {
     val keyHash = currentCompositeKeyHash
     val key = remember {
-        keyHash.toString(36) + "@" + PresenterHolder::class.simpleName
+        PresenterHolder::class.simpleName + "@" + keyHash.toString(36)
     }
     val stateHolder = LocalStateHolder.current
     return stateHolder.getOrPut(key) {
-        PresenterHolder(body)
+        PresenterHolder(body, useImmediateClock)
     }.state.collectAsState()
 }

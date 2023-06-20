@@ -25,15 +25,16 @@ import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
+import com.seiko.greenqrscanner.util.isUrl
 import moe.tlaster.precompose.molecule.producePresenter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTextContent(
+fun AddUrlContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val status by producePresenter(true) { AddTextContentPresenter() }
+    val status by producePresenter(true) { AddUrlContentPresenter() }
     Column(
         modifier = modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -41,14 +42,17 @@ fun AddTextContent(
         AddBarcodeTypeTitle(AddBarcodeType.Text, Modifier.fillMaxWidth())
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
-            value = status.text,
-            onValueChange = { status.event(AddTextContentEvent.ChangeText(it)) },
-            modifier = Modifier.fillMaxWidth().height(200.dp),
+            value = status.url,
+            onValueChange = { status.event(AddUrlContentEvent.ChangeUrl(it)) },
+            label = { Text("https://") },
+            maxLines = 1,
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(32.dp))
         Button(
             onClick = {
-                status.event(AddTextContentEvent.Done)
+                status.event(AddUrlContentEvent.Done)
                 onBack()
             },
             enabled = status.canDone,
@@ -59,29 +63,33 @@ fun AddTextContent(
 }
 
 @Composable
-private fun AddTextContentPresenter(
+private fun AddUrlContentPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
-): AddTextContentStatus {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+): AddUrlContentStatus {
+    var url by remember { mutableStateOf(TextFieldValue("")) }
     val canDone by remember {
         derivedStateOf {
-            text.text.isNotEmpty()
+            url.text.isNotEmpty() && url.text.safeUrl().isUrl()
         }
     }
-    return AddTextContentStatus(
-        text = text,
+    return AddUrlContentStatus(
+        url = url,
         canDone = canDone,
     ) { event ->
         when (event) {
-            is AddTextContentEvent.ChangeText -> {
-                text = event.text
+            is AddUrlContentEvent.ChangeUrl -> {
+                url = event.url
             }
-            AddTextContentEvent.Done -> {
+            AddUrlContentEvent.Done -> {
+                val safeUrl = url.text.safeUrl()
                 barcodeRepository.upset(
                     Barcode(
-                        rawValue = text.text,
-                        format = BarcodeFormat.FORMAT_2D,
-                        type = BarcodeType.Text,
+                        rawValue = safeUrl,
+                        format = BarcodeFormat.FORMAT_1D,
+                        type = BarcodeType.UrlBookmark(
+                            title = "",
+                            url = safeUrl,
+                        ),
                     ),
                 )
             }
@@ -89,14 +97,18 @@ private fun AddTextContentPresenter(
     }
 }
 
-private sealed interface AddTextContentEvent {
-    object Done : AddTextContentEvent
+private sealed interface AddUrlContentEvent {
+    object Done : AddUrlContentEvent
 
-    data class ChangeText(val text: TextFieldValue) : AddTextContentEvent
+    data class ChangeUrl(val url: TextFieldValue) : AddUrlContentEvent
 }
 
-private data class AddTextContentStatus(
-    val text: TextFieldValue,
+private data class AddUrlContentStatus(
+    val url: TextFieldValue,
     val canDone: Boolean,
-    val event: (AddTextContentEvent) -> Unit,
+    val event: (AddUrlContentEvent) -> Unit,
 )
+
+private fun String.safeUrl(): String {
+    return if (startsWith("http")) this else "https://$this"
+}

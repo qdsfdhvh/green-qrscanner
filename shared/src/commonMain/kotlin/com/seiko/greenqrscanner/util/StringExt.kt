@@ -12,3 +12,8 @@ fun String.encodeUrl(): String {
 fun String.decodeUrl(): String {
     return Base64.UrlSafe.decode(this).decodeToString()
 }
+
+fun String.isUrl(): Boolean {
+    val regex = Regex("(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
+    return regex.matches(this)
+}
