@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
+import com.seiko.greenqrscanner.ui.scene.add.content.AddContactInfoContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddTextContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddUrlContent
 import com.seiko.greenqrscanner.ui.widget.BackButton
@@ -44,6 +45,10 @@ fun AddBarcodeScene(
                     modifier = Modifier.fillMaxWidth(),
                 )
                 AddBarcodeType.Url -> AddUrlContent(
+                    onBack = { navigator.goBack() },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                AddBarcodeType.ContactInfo -> AddContactInfoContent(
                     onBack = { navigator.goBack() },
                     modifier = Modifier.fillMaxWidth(),
                 )

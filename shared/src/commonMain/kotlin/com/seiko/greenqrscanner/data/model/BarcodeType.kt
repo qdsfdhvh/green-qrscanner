@@ -149,12 +149,12 @@ sealed interface BarcodeType {
     @SerialName("person")
     data class PersonName(
         val formattedName: String?,
-        val pronunciation: String?,
-        val prefix: String?,
-        val first: String?,
-        val middle: String?,
-        val last: String?,
-        val suffix: String?,
+        val pronunciation: String? = null,
+        val prefix: String? = null,
+        val first: String? = null,
+        val middle: String? = null,
+        val last: String? = null,
+        val suffix: String? = null,
     )
 
     @Serializable
@@ -186,4 +186,20 @@ val BarcodeType.title: String
         is BarcodeType.DriverLicense -> "Driver License"
         is BarcodeType.CalendarEvent -> "Calendar Event"
         BarcodeType.Unknown -> "Unknown"
+    }
+
+val BarcodeType.rawValue: String
+    get() = when (this) {
+        is BarcodeType.ContactInfo -> """
+            BEGIN:GREEN
+            N:${name?.formattedName};
+            ORG:$organization;
+            TITLE:$title;
+            ${phones.joinToString("\n") { "TEL;TYPE=${it.type.name}:${it.number}" }}
+            ${emails.joinToString("\n") { "EMAIL;TYPE=${it.type.name}:${it.address}" }}
+            ${urls.joinToString("\n") { "URL:$it" }}
+            ${addresses.joinToString("\n") { "ADR;TYPE=${it.type.name}:${it.addressLines.joinToString(";") { address -> address }}" }}
+            END:GREEN
+        """.trimIndent()
+        else -> error("don't use BarcodeType.rawValue for $this")
     }
