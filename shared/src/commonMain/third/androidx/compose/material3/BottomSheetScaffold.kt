@@ -186,9 +186,9 @@ private fun StandardBottomSheet(
     ) {
         Column(Modifier.fillMaxWidth()) {
             if (dragHandle != null) {
-                val partialExpandActionLabel = getString2(Strings.BottomSheetPartialExpandDescription)
-                val dismissActionLabel = getString2(Strings.BottomSheetDismissDescription)
-                val expandActionLabel = getString2(Strings.BottomSheetExpandDescription)
+                val partialExpandActionLabel = getString2(Strings2.BottomSheetPartialExpandDescription)
+                val dismissActionLabel = getString2(Strings2.BottomSheetDismissDescription)
+                val expandActionLabel = getString2(Strings2.BottomSheetExpandDescription)
                 Box(
                     Modifier
                         .align(CenterHorizontally)
