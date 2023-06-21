@@ -3,6 +3,7 @@ package com.seiko.greenqrscanner.ui.scene.detail
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -45,7 +46,9 @@ fun DetailScene(
     ) { innerPadding ->
         Box(Modifier.padding(innerPadding).fillMaxSize(), Alignment.Center) {
             status.onSuccess {
-                Text(it.barcode.rawValue)
+                SelectionContainer {
+                    Text(it.barcode.rawValue)
+                }
             }.onLoading {
                 CircularProgressIndicator()
             }
