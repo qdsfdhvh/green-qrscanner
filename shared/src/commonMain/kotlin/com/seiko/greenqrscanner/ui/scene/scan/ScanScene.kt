@@ -57,7 +57,7 @@ private fun ScanPresenter(
                     barcodeRepository.upset(barcodes)
                 }
             }
-        }
+        },
     )
 }
 

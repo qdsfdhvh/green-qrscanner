@@ -145,7 +145,7 @@ private fun AddContactInfoContentPresenter(
                     ),
                 )
             }
-        }
+        },
     )
 }
 

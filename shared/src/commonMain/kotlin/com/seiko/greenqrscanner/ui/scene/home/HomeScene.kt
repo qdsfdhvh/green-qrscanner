@@ -118,7 +118,7 @@ private fun HomePresenter(
                     isStar = !item.isStar,
                 )
             }
-        }
+        },
     )
 }
 

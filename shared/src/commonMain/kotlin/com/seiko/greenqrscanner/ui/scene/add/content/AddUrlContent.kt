@@ -108,7 +108,7 @@ private fun AddUrlContentPresenter(
                     ),
                 )
             }
-        }
+        },
     )
 }
 
