@@ -38,7 +38,7 @@ fun HomeScene(
 ) {
     val status by producePresenter { HomePresenter() }
     val scope = rememberCoroutineScope()
-    val clickable = remember(status.event) {
+    val clickable = remember(status) {
         HomeSceneClickable(
             barcodeItemClickable = BarcodeItemClickable(
                 onItemClicked = {
@@ -50,7 +50,7 @@ fun HomeScene(
                     )
                 },
                 onStarClicked = {
-                    status.event(HomeEvent.SetStar(it))
+                    status.setStar(it)
                 },
                 onSettingClicked = {
                 },
@@ -111,27 +111,26 @@ private fun HomePresenter(
     return HomeStatus(
         initialSelectIndex = initialSelectIndex,
         homeTabs = homeTabs,
-    ) { event ->
-        when (event) {
-            is HomeEvent.SetStar -> {
+        event = object : HomeEvent {
+            override fun setStar(item: UiBarcode) {
                 barcodeRepository.setStar(
-                    barcode = event.item.rawValue,
-                    isStar = !event.item.isStar,
+                    barcode = item.rawValue,
+                    isStar = !item.isStar,
                 )
             }
         }
-    }
+    )
 }
 
-private sealed interface HomeEvent {
-    data class SetStar(val item: UiBarcode) : HomeEvent
+private interface HomeEvent {
+    fun setStar(item: UiBarcode)
 }
 
 private data class HomeStatus(
     val initialSelectIndex: Int,
     val homeTabs: List<HomeTab>,
-    val event: (HomeEvent) -> Unit,
-)
+    private val event: HomeEvent,
+) : HomeEvent by event
 
 private enum class HomeTab {
     History,

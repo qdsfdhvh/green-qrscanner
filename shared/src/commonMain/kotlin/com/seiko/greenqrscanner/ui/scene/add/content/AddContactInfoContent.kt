@@ -43,28 +43,28 @@ fun AddContactInfoContent(
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = status.title,
-            onValueChange = { status.event(AddContactInfoContentEvent.ChangeTitle(it)) },
+            onValueChange = { status.changeTitle(it) },
             label = { Text("Title") },
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(
             value = status.name,
-            onValueChange = { status.event(AddContactInfoContentEvent.ChangeName(it)) },
+            onValueChange = { status.changeName(it) },
             label = { Text("Name") },
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(
             value = status.organization,
-            onValueChange = { status.event(AddContactInfoContentEvent.ChangeOrganization(it)) },
+            onValueChange = { status.changeOrganization(it) },
             label = { Text("Organization") },
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(32.dp))
         Button(
             onClick = {
-                status.event(AddContactInfoContentEvent.Done)
+                status.done()
                 onDone()
             },
             enabled = status.canDone,
@@ -81,7 +81,6 @@ private fun AddContactInfoContentPresenter(
     var title by remember { mutableStateOf(TextFieldValue("")) }
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var organization by remember { mutableStateOf(TextFieldValue("")) }
-
     val canDone by remember {
         derivedStateOf {
             title.text.isNotEmpty() ||
@@ -94,18 +93,20 @@ private fun AddContactInfoContentPresenter(
         name = name,
         organization = organization,
         canDone = canDone,
-    ) { event ->
-        when (event) {
-            is AddContactInfoContentEvent.ChangeTitle -> {
-                title = event.title
+        event = object : AddContactInfoContentEvent {
+            override fun changeName(value: TextFieldValue) {
+                name = value
             }
-            is AddContactInfoContentEvent.ChangeName -> {
-                name = event.name
+
+            override fun changeOrganization(value: TextFieldValue) {
+                organization = value
             }
-            is AddContactInfoContentEvent.ChangeOrganization -> {
-                organization = event.organization
+
+            override fun changeTitle(value: TextFieldValue) {
+                title = value
             }
-            AddContactInfoContentEvent.Done -> {
+
+            override fun done() {
                 val type = BarcodeType.ContactInfo(
                     name = BarcodeType.PersonName(
                         formattedName = name.text,
@@ -145,15 +146,14 @@ private fun AddContactInfoContentPresenter(
                 )
             }
         }
-    }
+    )
 }
 
-private sealed interface AddContactInfoContentEvent {
-    object Done : AddContactInfoContentEvent
-
-    data class ChangeName(val name: TextFieldValue) : AddContactInfoContentEvent
-    data class ChangeOrganization(val organization: TextFieldValue) : AddContactInfoContentEvent
-    data class ChangeTitle(val title: TextFieldValue) : AddContactInfoContentEvent
+private interface AddContactInfoContentEvent {
+    fun changeName(value: TextFieldValue)
+    fun changeOrganization(value: TextFieldValue)
+    fun changeTitle(value: TextFieldValue)
+    fun done()
 }
 
 private data class AddContactInfoContentStatus(
@@ -161,5 +161,5 @@ private data class AddContactInfoContentStatus(
     val name: TextFieldValue,
     val organization: TextFieldValue,
     val canDone: Boolean,
-    val event: (AddContactInfoContentEvent) -> Unit,
-)
+    private val event: AddContactInfoContentEvent,
+) : AddContactInfoContentEvent by event

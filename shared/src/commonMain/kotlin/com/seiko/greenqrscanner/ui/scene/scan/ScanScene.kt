@@ -28,7 +28,7 @@ fun ScanScene(
     Scaffold { innerPadding ->
         BarcodeScanner(
             onResult = { result ->
-                status.event(ScanEvent.UpSet(result))
+                status.upset(result)
                 result.firstOrNull()?.let {
                     navigator.navigate(
                         Route.Detail(it.rawValue),
@@ -50,21 +50,21 @@ private fun ScanPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
 ): ScanStatus {
     val scope = rememberCoroutineScope()
-    return ScanStatus { event ->
-        when (event) {
-            is ScanEvent.UpSet -> {
+    return ScanStatus(
+        event = object : ScanEvent {
+            override fun upset(barcodes: List<Barcode>) {
                 scope.launch(NonCancellable) {
-                    barcodeRepository.upset(event.barcodes)
+                    barcodeRepository.upset(barcodes)
                 }
             }
         }
-    }
+    )
 }
 
-private sealed interface ScanEvent {
-    data class UpSet(val barcodes: List<Barcode>) : ScanEvent
+private interface ScanEvent {
+    fun upset(barcodes: List<Barcode>)
 }
 
 private class ScanStatus(
-    val event: (ScanEvent) -> Unit,
-)
+    private val event: ScanEvent,
+) : ScanEvent by event

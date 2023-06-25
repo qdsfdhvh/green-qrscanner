@@ -43,7 +43,7 @@ fun AddUrlContent(
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = status.url,
-            onValueChange = { status.event(AddUrlContentEvent.ChangeUrl(it)) },
+            onValueChange = { status.changeUrl(it) },
             label = { Text("https://") },
             maxLines = 1,
             singleLine = true,
@@ -52,7 +52,7 @@ fun AddUrlContent(
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = status.title,
-            onValueChange = { status.event(AddUrlContentEvent.ChangeTitle(it)) },
+            onValueChange = { status.changeTitle(it) },
             maxLines = 1,
             label = { Text("Title") },
             singleLine = true,
@@ -61,7 +61,7 @@ fun AddUrlContent(
         Spacer(Modifier.height(32.dp))
         Button(
             onClick = {
-                status.event(AddUrlContentEvent.Done)
+                status.done()
                 onDone()
             },
             enabled = status.canDone,
@@ -86,15 +86,16 @@ private fun AddUrlContentPresenter(
         url = url,
         title = title,
         canDone = canDone,
-    ) { event ->
-        when (event) {
-            is AddUrlContentEvent.ChangeUrl -> {
-                url = event.url
+        event = object : AddUrlContentEvent {
+            override fun changeUrl(value: TextFieldValue) {
+                url = value
             }
-            is AddUrlContentEvent.ChangeTitle -> {
-                title = event.title
+
+            override fun changeTitle(value: TextFieldValue) {
+                title = value
             }
-            AddUrlContentEvent.Done -> {
+
+            override fun done() {
                 val safeUrl = url.text.safeUrl()
                 barcodeRepository.upset(
                     Barcode(
@@ -108,21 +109,21 @@ private fun AddUrlContentPresenter(
                 )
             }
         }
-    }
+    )
 }
 
-private sealed interface AddUrlContentEvent {
-    object Done : AddUrlContentEvent
-    data class ChangeUrl(val url: TextFieldValue) : AddUrlContentEvent
-    data class ChangeTitle(val title: TextFieldValue) : AddUrlContentEvent
+private interface AddUrlContentEvent {
+    fun changeUrl(value: TextFieldValue)
+    fun changeTitle(value: TextFieldValue)
+    fun done()
 }
 
 private data class AddUrlContentStatus(
     val url: TextFieldValue,
     val title: TextFieldValue,
     val canDone: Boolean,
-    val event: (AddUrlContentEvent) -> Unit,
-)
+    private val event: AddUrlContentEvent,
+) : AddUrlContentEvent by event
 
 private fun String.safeUrl(): String {
     return if (startsWith("http")) this else "https://$this"

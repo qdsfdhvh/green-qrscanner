@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.rounded.Barcode
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Contacts
@@ -21,6 +20,7 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material.icons.rounded.Sms
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TextAd
 import androidx.compose.material.icons.rounded.UnknownDocument
 import androidx.compose.material.icons.rounded.Wifi
@@ -109,17 +109,13 @@ fun BarcodeItem(
                     IconButton(onClick = { clickable.onStarClicked(item) }) {
                         Image(
                             if (item.isStar) {
-                                Icons.Filled.Star
-                            } else {
                                 Icons.Rounded.Star
+                            } else {
+                                Icons.Rounded.StarOutline
                             },
                             contentDescription = "star",
                         )
                     }
-                    // Icon(
-                    //     rememberMoreVert(),
-                    //     contentDescription = "more setting",
-                    // )
                 },
             )
         }

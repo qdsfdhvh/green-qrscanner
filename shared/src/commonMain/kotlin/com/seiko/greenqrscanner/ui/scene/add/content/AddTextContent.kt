@@ -42,13 +42,13 @@ fun AddTextContent(
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = status.text,
-            onValueChange = { status.event(AddTextContentEvent.ChangeText(it)) },
+            onValueChange = { status.changeText(it) },
             modifier = Modifier.fillMaxWidth().height(200.dp),
         )
         Spacer(Modifier.height(32.dp))
         Button(
             onClick = {
-                status.event(AddTextContentEvent.Done)
+                status.done()
                 onDone()
             },
             enabled = status.canDone,
@@ -71,12 +71,12 @@ private fun AddTextContentPresenter(
     return AddTextContentStatus(
         text = text,
         canDone = canDone,
-    ) { event ->
-        when (event) {
-            is AddTextContentEvent.ChangeText -> {
-                text = event.text
+        event = object : AddTextContentEvent {
+            override fun changeText(value: TextFieldValue) {
+                text = value
             }
-            AddTextContentEvent.Done -> {
+
+            override fun done() {
                 barcodeRepository.upset(
                     Barcode(
                         rawValue = text.text,
@@ -86,17 +86,16 @@ private fun AddTextContentPresenter(
                 )
             }
         }
-    }
+    )
 }
 
-private sealed interface AddTextContentEvent {
-    object Done : AddTextContentEvent
-
-    data class ChangeText(val text: TextFieldValue) : AddTextContentEvent
+private interface AddTextContentEvent {
+    fun changeText(value: TextFieldValue)
+    fun done()
 }
 
 private data class AddTextContentStatus(
     val text: TextFieldValue,
     val canDone: Boolean,
-    val event: (AddTextContentEvent) -> Unit,
-)
+    private val event: AddTextContentEvent,
+) : AddTextContentEvent by event
