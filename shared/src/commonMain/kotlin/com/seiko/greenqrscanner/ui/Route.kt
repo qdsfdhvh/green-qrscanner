@@ -7,7 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.remember
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.ui.scene.add.AddBarcodeScene
-import com.seiko.greenqrscanner.ui.scene.add.AddBottomSheet
+import com.seiko.greenqrscanner.ui.scene.add.SelectAddScene
 import com.seiko.greenqrscanner.ui.scene.detail.DetailScene
 import com.seiko.greenqrscanner.ui.scene.home.HomeScene
 import com.seiko.greenqrscanner.ui.scene.popup.BarcodeSettingsBottomSheet
@@ -73,8 +73,8 @@ fun RouteBuilder.initRoute(navigator: Navigator) {
             },
         )
     }
-    floating(Route.SelectAdd) {
-        AddBottomSheet(
+    scene(Route.SelectAdd, navTransition = bottomSheetTransition) {
+        SelectAddScene(
             navigator = navigator,
         )
     }

@@ -30,7 +30,7 @@ import moe.tlaster.precompose.molecule.producePresenter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTextContent(
-    onBack: () -> Unit,
+    onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val status by producePresenter(true) { AddTextContentPresenter() }
@@ -49,7 +49,7 @@ fun AddTextContent(
         Button(
             onClick = {
                 status.event(AddTextContentEvent.Done)
-                onBack()
+                onDone()
             },
             enabled = status.canDone,
         ) {

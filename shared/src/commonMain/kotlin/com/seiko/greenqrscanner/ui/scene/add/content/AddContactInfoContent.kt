@@ -31,7 +31,7 @@ import moe.tlaster.precompose.molecule.producePresenter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddContactInfoContent(
-    onBack: () -> Unit,
+    onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val status by producePresenter(true) { AddContactInfoContentPresenter() }
@@ -65,7 +65,7 @@ fun AddContactInfoContent(
         Button(
             onClick = {
                 status.event(AddContactInfoContentEvent.Done)
-                onBack()
+                onDone()
             },
             enabled = status.canDone,
         ) {

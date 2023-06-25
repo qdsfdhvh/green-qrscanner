@@ -56,6 +56,7 @@ kotlin {
         val desktopMain by getting {
             dependsOn(jvmMain)
             dependencies {
+                implementation(compose.preview)
                 implementation(libs.sqldelight.sqlite.driver)
             }
         }

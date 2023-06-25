@@ -31,7 +31,7 @@ import moe.tlaster.precompose.molecule.producePresenter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddUrlContent(
-    onBack: () -> Unit,
+    onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val status by producePresenter(true) { AddUrlContentPresenter() }
@@ -62,7 +62,7 @@ fun AddUrlContent(
         Button(
             onClick = {
                 status.event(AddUrlContentEvent.Done)
-                onBack()
+                onDone()
             },
             enabled = status.canDone,
         ) {
