@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
-    // alias(libs.plugins.moko.resources)
+    alias(libs.plugins.moko.resources)
     alias(libs.plugins.ksp)
 }
 
@@ -43,6 +43,7 @@ kotlin {
                 api(libs.koject.core)
                 implementation(libs.multiplatform.paging)
                 implementation(libs.kermit)
+                implementation(libs.moko.resources.core)
             }
         }
         val commonTest by getting {
@@ -116,9 +117,9 @@ sqldelight {
     }
 }
 
-// multiplatformResources {
-//     multiplatformResourcesPackage = "com.seiko.greenqrscanner"
-// }
+multiplatformResources {
+    multiplatformResourcesPackage = "com.seiko.greenqrscanner"
+}
 
 dependencies {
     kspAll(libs.koject.processor.app)

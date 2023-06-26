@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="text">Text</string>
+    <string name="url">URL</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="wifi">Wifi</string>
+    <string name="sms">SMS</string>
+    <string name="geo">GEO</string>
+    <string name="contract_info">ContactInfo</string>
+    <string name="driver_license">DriverLicense</string>
+    <string name="calendar_event">CalendarEvent</string>
+    <string name="unknown">Unknown</string>
+</resources>

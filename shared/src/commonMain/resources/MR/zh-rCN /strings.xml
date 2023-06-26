@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="text">纯文本</string>
+    <string name="url">链接</string>
+    <string name="email">邮箱</string>
+    <string name="phone">电话</string>
+    <string name="wifi">Wifi</string>
+    <string name="sms">短信</string>
+    <string name="geo">经纬度</string>
+    <string name="contract_info">联系人</string>
+    <string name="driver_license">驾驶证</string>
+    <string name="calendar_event">日历</string>
+    <string name="unknown">未知内容</string>
+</resources>
