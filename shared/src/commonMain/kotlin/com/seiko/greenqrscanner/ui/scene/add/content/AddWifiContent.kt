@@ -24,13 +24,14 @@ import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
+import com.seiko.greenqrscanner.data.model.rawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import moe.tlaster.precompose.molecule.producePresenter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTextContent(
+fun AddWifiContent(
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -42,10 +43,23 @@ fun AddTextContent(
         AddBarcodeTypeTitle(AddBarcodeType.Text, Modifier.fillMaxWidth())
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
-            value = status.text,
-            onValueChange = { status.changeText(it) },
+            value = status.ssid,
+            onValueChange = { status.changeSsid(it) },
+            label = { Text("SSID") },
+            maxLines = 1,
+            singleLine = true,
+            keyboardOptions = NextKeyboardOptions,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Spacer(Modifier.height(6.dp))
+        OutlinedTextField(
+            value = status.password,
+            onValueChange = { status.changePassword(it) },
+            label = { Text("Password") },
+            maxLines = 1,
+            singleLine = true,
             keyboardOptions = DoneKeyboardOptions,
-            modifier = Modifier.fillMaxWidth().height(200.dp),
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(32.dp))
         Button(
@@ -63,27 +77,38 @@ fun AddTextContent(
 @Composable
 private fun AddTextContentPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
-): AddTextContentStatus {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+): AddWifiContentStatus {
+    var ssid by remember { mutableStateOf(TextFieldValue("")) }
+    var password by remember { mutableStateOf(TextFieldValue("")) }
     val canDone by remember {
         derivedStateOf {
-            text.text.isNotEmpty()
+            ssid.text.isNotBlank() && password.text.isNotBlank()
         }
     }
-    return AddTextContentStatus(
-        text = text,
+    return AddWifiContentStatus(
+        ssid = ssid,
+        password = password,
         canDone = canDone,
-        event = object : AddTextContentEvent {
-            override fun changeText(value: TextFieldValue) {
-                text = value
+        event = object : AddWifiContentEvent {
+            override fun changeSsid(value: TextFieldValue) {
+                ssid = value
+            }
+
+            override fun changePassword(value: TextFieldValue) {
+                password = value
             }
 
             override fun done() {
+                val type = BarcodeType.Wifi(
+                    ssid = ssid.text,
+                    password = password.text,
+                    wifiType = BarcodeType.Wifi.Type.OPEN,
+                )
                 barcodeRepository.upset(
                     Barcode(
-                        rawValue = text.text,
+                        rawValue = type.rawValue,
                         format = BarcodeFormat.FORMAT_2D,
-                        type = BarcodeType.Text,
+                        type = type,
                     ),
                 )
             }
@@ -91,13 +116,15 @@ private fun AddTextContentPresenter(
     )
 }
 
-private interface AddTextContentEvent {
-    fun changeText(value: TextFieldValue)
+private interface AddWifiContentEvent {
+    fun changeSsid(value: TextFieldValue)
+    fun changePassword(value: TextFieldValue)
     fun done()
 }
 
-private data class AddTextContentStatus(
-    val text: TextFieldValue,
+private data class AddWifiContentStatus(
+    val ssid: TextFieldValue,
+    val password: TextFieldValue,
     val canDone: Boolean,
-    private val event: AddTextContentEvent,
-) : AddTextContentEvent by event
+    private val event: AddWifiContentEvent,
+) : AddWifiContentEvent by event

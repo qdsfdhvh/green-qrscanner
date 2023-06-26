@@ -26,6 +26,7 @@ import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.model.rawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
+import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import kotlinx.collections.immutable.persistentListOf
 import moe.tlaster.precompose.molecule.producePresenter
 
@@ -46,21 +47,48 @@ fun AddContactInfoContent(
             value = status.title,
             onValueChange = { status.changeTitle(it) },
             label = { Text("Title") },
+            maxLines = 1,
+            singleLine = true,
+            keyboardOptions = NextKeyboardOptions,
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = status.name,
             onValueChange = { status.changeName(it) },
             label = { Text("Name") },
+            maxLines = 1,
+            singleLine = true,
+            keyboardOptions = NextKeyboardOptions,
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = status.organization,
             onValueChange = { status.changeOrganization(it) },
             label = { Text("Organization") },
+            maxLines = 1,
+            singleLine = true,
+            keyboardOptions = NextKeyboardOptions,
             modifier = Modifier.fillMaxWidth(),
+        )
+        Spacer(Modifier.height(6.dp))
+        OutlinedTextField(
+            value = status.email,
+            onValueChange = { status.changeEmail(it) },
+            label = { Text("Email") },
+            maxLines = 1,
+            singleLine = true,
+            keyboardOptions = NextKeyboardOptions,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Spacer(Modifier.height(6.dp))
+        OutlinedTextField(
+            value = status.note,
+            onValueChange = { status.changeNote(it) },
+            label = { Text("Note") },
+            keyboardOptions = DoneKeyboardOptions,
+            modifier = Modifier.fillMaxWidth().height(200.dp),
         )
         Spacer(Modifier.height(32.dp))
         Button(
@@ -82,6 +110,8 @@ private fun AddContactInfoContentPresenter(
     var title by remember { mutableStateOf(TextFieldValue("")) }
     var name by remember { mutableStateOf(TextFieldValue("")) }
     var organization by remember { mutableStateOf(TextFieldValue("")) }
+    var email by remember { mutableStateOf(TextFieldValue("")) }
+    var note by remember { mutableStateOf(TextFieldValue("")) }
     val canDone by remember {
         derivedStateOf {
             title.text.isNotEmpty() ||
@@ -93,6 +123,8 @@ private fun AddContactInfoContentPresenter(
         title = title,
         name = name,
         organization = organization,
+        email = email,
+        note = note,
         canDone = canDone,
         event = object : AddContactInfoContentEvent {
             override fun changeName(value: TextFieldValue) {
@@ -105,6 +137,14 @@ private fun AddContactInfoContentPresenter(
 
             override fun changeTitle(value: TextFieldValue) {
                 title = value
+            }
+
+            override fun changeEmail(value: TextFieldValue) {
+                email = value
+            }
+
+            override fun changeNote(value: TextFieldValue) {
+                note = value
             }
 
             override fun done() {
@@ -154,6 +194,8 @@ private interface AddContactInfoContentEvent {
     fun changeName(value: TextFieldValue)
     fun changeOrganization(value: TextFieldValue)
     fun changeTitle(value: TextFieldValue)
+    fun changeEmail(value: TextFieldValue)
+    fun changeNote(value: TextFieldValue)
     fun done()
 }
 
@@ -161,6 +203,8 @@ private data class AddContactInfoContentStatus(
     val title: TextFieldValue,
     val name: TextFieldValue,
     val organization: TextFieldValue,
+    val email: TextFieldValue,
+    val note: TextFieldValue,
     val canDone: Boolean,
     private val event: AddContactInfoContentEvent,
 ) : AddContactInfoContentEvent by event

@@ -1,4 +1,4 @@
-package com.seiko.greenqrscanner.ui.scene.add.content
+package com.seiko.greenqrscanner.ui.widget
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.data.model.icon
+import com.seiko.greenqrscanner.data.model.title
 
 @Composable
 fun AddBarcodeTypeTitle(
@@ -25,6 +26,6 @@ fun AddBarcodeTypeTitle(
             modifier = Modifier.size(24.dp),
         )
         Spacer(Modifier.width(6.dp))
-        Text(type.name)
+        Text(type.title)
     }
 }

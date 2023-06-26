@@ -1,10 +1,13 @@
 package com.seiko.greenqrscanner.ui.scene.add.content
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -25,6 +28,7 @@ import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
+import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import com.seiko.greenqrscanner.util.isUrl
 import moe.tlaster.precompose.molecule.producePresenter
 
@@ -35,8 +39,11 @@ fun AddUrlContent(
     modifier: Modifier = Modifier,
 ) {
     val status by producePresenter(true) { AddUrlContentPresenter() }
+    val scrollableState = rememberScrollState()
     Column(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier
+            .padding(8.dp)
+            .scrollable(scrollableState, Orientation.Vertical),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AddBarcodeTypeTitle(AddBarcodeType.Text, Modifier.fillMaxWidth())
@@ -47,15 +54,17 @@ fun AddUrlContent(
             label = { Text("https://") },
             maxLines = 1,
             singleLine = true,
+            keyboardOptions = NextKeyboardOptions,
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = status.title,
             onValueChange = { status.changeTitle(it) },
-            maxLines = 1,
             label = { Text("Title") },
+            maxLines = 1,
             singleLine = true,
+            keyboardOptions = DoneKeyboardOptions,
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(32.dp))

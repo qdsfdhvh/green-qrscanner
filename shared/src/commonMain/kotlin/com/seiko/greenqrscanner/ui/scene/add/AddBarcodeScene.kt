@@ -16,6 +16,7 @@ import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.scene.add.content.AddContactInfoContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddTextContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddUrlContent
+import com.seiko.greenqrscanner.ui.scene.add.content.AddWifiContent
 import com.seiko.greenqrscanner.ui.widget.BackButton
 import com.seiko.greenqrscanner.ui.widget.SimpleTopBar
 import moe.tlaster.precompose.navigation.NavOptions
@@ -64,6 +65,10 @@ fun AddBarcodeScene(
                     modifier = Modifier.fillMaxWidth(),
                 )
                 AddBarcodeType.ContactInfo -> AddContactInfoContent(
+                    onDone = onDone,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                AddBarcodeType.Wifi -> AddWifiContent(
                     onDone = onDone,
                     modifier = Modifier.fillMaxWidth(),
                 )

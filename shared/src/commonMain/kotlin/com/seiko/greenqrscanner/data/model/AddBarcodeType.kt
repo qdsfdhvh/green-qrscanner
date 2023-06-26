@@ -1,7 +1,6 @@
 package com.seiko.greenqrscanner.data.model
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Barcode
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Contacts
 import androidx.compose.material.icons.rounded.DirectionsCar
@@ -9,18 +8,21 @@ import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.MyLocation
 import androidx.compose.material.icons.rounded.Phone
-import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material.icons.rounded.Sms
 import androidx.compose.material.icons.rounded.TextAd
 import androidx.compose.material.icons.rounded.UnknownDocument
 import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.seiko.greenqrscanner.MR
+import com.seiko.greenqrscanner.util.stringResource
 
 enum class AddBarcodeType {
     Text,
-    ISBN,
-    Product,
+
+    // ISBN,
+    // Product,
     Wifi,
     Url,
     Email,
@@ -34,11 +36,10 @@ enum class AddBarcodeType {
 }
 
 val AddBarcodeType.icon: ImageVector
-    @Composable
     get() = when (this) {
         AddBarcodeType.Text -> Icons.Rounded.TextAd
-        AddBarcodeType.ISBN -> Icons.Rounded.Barcode
-        AddBarcodeType.Product -> Icons.Rounded.ShoppingBag
+        // AddBarcodeType.ISBN -> Icons.Rounded.Barcode
+        // AddBarcodeType.Product -> Icons.Rounded.ShoppingBag
         AddBarcodeType.Wifi -> Icons.Rounded.Wifi
         AddBarcodeType.Url -> Icons.Rounded.Link
         AddBarcodeType.Email -> Icons.Rounded.Email
@@ -49,4 +50,23 @@ val AddBarcodeType.icon: ImageVector
         AddBarcodeType.DriverLicense -> Icons.Rounded.DirectionsCar
         AddBarcodeType.CalendarEvent -> Icons.Rounded.CalendarMonth
         AddBarcodeType.Unknown -> Icons.Rounded.UnknownDocument
+    }
+
+val AddBarcodeType.title: String
+    @Composable
+    @ReadOnlyComposable
+    get() = when (this) {
+        AddBarcodeType.Text -> stringResource(MR.strings.text)
+        // AddBarcodeType.ISBN -> ""
+        // AddBarcodeType.Product -> ""
+        AddBarcodeType.Wifi -> stringResource(MR.strings.wifi)
+        AddBarcodeType.Url -> stringResource(MR.strings.url)
+        AddBarcodeType.Email -> stringResource(MR.strings.email)
+        AddBarcodeType.Phone -> stringResource(MR.strings.phone)
+        AddBarcodeType.Sms -> stringResource(MR.strings.sms)
+        AddBarcodeType.Geo -> stringResource(MR.strings.geo)
+        AddBarcodeType.ContactInfo -> stringResource(MR.strings.contract_info)
+        AddBarcodeType.DriverLicense -> stringResource(MR.strings.driver_license)
+        AddBarcodeType.CalendarEvent -> stringResource(MR.strings.calendar_event)
+        AddBarcodeType.Unknown -> stringResource(MR.strings.unknown)
     }

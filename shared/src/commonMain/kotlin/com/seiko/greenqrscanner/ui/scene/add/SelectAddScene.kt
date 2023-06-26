@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.data.model.icon
+import com.seiko.greenqrscanner.data.model.title
 import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.BackButton
 import com.seiko.greenqrscanner.ui.widget.SimpleTopBar
@@ -96,7 +97,7 @@ private fun AddBarcodeItem(
                 modifier = Modifier.size(24.dp),
             )
             Spacer(Modifier.height(4.dp))
-            Text(item.name)
+            Text(item.title)
         }
     }
 }

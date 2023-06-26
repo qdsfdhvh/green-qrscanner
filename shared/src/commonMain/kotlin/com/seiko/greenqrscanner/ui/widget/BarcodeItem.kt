@@ -125,11 +125,6 @@ private fun BarcodeTypeContent(
     rawValue: String,
 ) {
     when (type) {
-        BarcodeType.Text,
-        BarcodeType.ISBN,
-        BarcodeType.Product -> {
-            Text(rawValue)
-        }
         is BarcodeType.Wifi -> {
             Column {
                 Text("ssid: ${type.ssid}")
@@ -155,7 +150,11 @@ private fun BarcodeTypeContent(
             }
         }
         else -> {
-            Text(rawValue)
+            Text(
+                text = rawValue,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
     }
 }
