@@ -2,7 +2,6 @@ package androidx.paging.compose
 
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -17,10 +16,11 @@ import androidx.paging.LoadStates
 import androidx.paging.NullPaddedList
 import androidx.paging.PagingData
 import androidx.paging.PagingDataDiffer
+import com.seiko.flow.ImmutableFlow
+import com.seiko.flow.ImmutableSharedFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
@@ -45,7 +45,7 @@ public class LazyPagingItems<T : Any> internal constructor(
     /**
      * the [Flow] object which contains a stream of [PagingData] elements.
      */
-    private val flow: Flow<PagingData<T>>
+    private val flow: ImmutableFlow<PagingData<T>>
 ) {
     private val mainDispatcher = Dispatchers.Main
 
@@ -78,7 +78,7 @@ public class LazyPagingItems<T : Any> internal constructor(
     private val pagingDataDiffer = object : PagingDataDiffer<T>(
         differCallback = differCallback,
         mainContext = mainDispatcher,
-        cachedPagingData = if (flow is SharedFlow<PagingData<T>>) flow.replayCache.firstOrNull() else null,
+        cachedPagingData = if (flow is ImmutableSharedFlow<PagingData<T>>) flow.replayCache.firstOrNull() else null,
     ) {
         override suspend fun presentNewList(
             previousList: NullPaddedList<T>,
@@ -211,9 +211,8 @@ private val InitialLoadStates = LoadStates(
  * and [CombinedLoadStates].
  */
 @Composable
-public fun <T : Any> PagingDataFlowWrapper<T>.collectAsLazyPagingItems(
-): LazyPagingItems<T> {
-    val lazyPagingItems = remember(flow) { LazyPagingItems(flow) }
+public fun <T : Any> ImmutableFlow<PagingData<T>>.collectAsLazyPagingItems(): LazyPagingItems<T> {
+    val lazyPagingItems = remember(this) { LazyPagingItems(this) }
 
     LaunchedEffect(lazyPagingItems) {
         withContext(Dispatchers.IO) {
@@ -229,8 +228,3 @@ public fun <T : Any> PagingDataFlowWrapper<T>.collectAsLazyPagingItems(
 
     return lazyPagingItems
 }
-
-@Immutable
-class PagingDataFlowWrapper<T : Any> internal constructor(val flow: Flow<PagingData<T>>)
-
-fun <T : Any> Flow<PagingData<T>>.immutable() = PagingDataFlowWrapper(this)
