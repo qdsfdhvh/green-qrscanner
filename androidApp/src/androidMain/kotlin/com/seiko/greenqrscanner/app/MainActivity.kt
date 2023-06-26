@@ -3,13 +3,19 @@ package com.seiko.greenqrscanner.app
 import MainView
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.ViewModel
 import com.seiko.greenqrscanner.di.startKoject
 import com.seiko.greenqrscanner.di.stopKoject
 import moe.tlaster.precompose.lifecycle.PreComposeActivity
 import moe.tlaster.precompose.lifecycle.setContent
+import moe.tlaster.precompose.navigation.Navigator
 
 class MainActivity : PreComposeActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startKoject(this)
@@ -17,7 +23,7 @@ class MainActivity : PreComposeActivity() {
         // window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
         setContent {
-            MainView()
+            MainView(viewModel.navigator)
         }
     }
 
@@ -25,4 +31,8 @@ class MainActivity : PreComposeActivity() {
         stopKoject()
         super.onDestroy()
     }
+}
+
+class MainViewModel : ViewModel() {
+    val navigator = Navigator()
 }
