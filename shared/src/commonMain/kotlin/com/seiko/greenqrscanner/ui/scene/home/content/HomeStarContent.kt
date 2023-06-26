@@ -13,11 +13,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import androidx.paging.map
 import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.mapper.toUi
 import com.seiko.greenqrscanner.data.model.UiBarcode
+import com.seiko.greenqrscanner.data.model.name
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.BarcodeItem
 import com.seiko.greenqrscanner.ui.widget.BarcodeItemClickable
@@ -35,8 +37,12 @@ fun HomeStarContent(
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(status.pagingItems) { item ->
-            item?.let {
+        items(
+            count = status.pagingItems.itemCount,
+            key = status.pagingItems.itemKey { it.rawValue },
+            contentType = status.pagingItems.itemContentType { it.type.name },
+        ) { index ->
+            status.pagingItems[index]?.let {
                 BarcodeItem(
                     item = it,
                     clickable = barcodeItemClickable,
