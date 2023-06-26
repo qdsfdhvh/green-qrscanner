@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import androidx.compose.runtime.Immutable
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
@@ -11,6 +12,7 @@ import com.seiko.greenqrscanner.data.mapper.MlkitBarcode
 import com.seiko.greenqrscanner.data.mapper.toBarcode
 import com.seiko.greenqrscanner.data.model.Barcode
 
+@Immutable
 class MlKitBarcodeAnalyzer(
     private val onBarcodeScanned: (List<Barcode>) -> Unit,
 ) : ImageAnalysis.Analyzer {
