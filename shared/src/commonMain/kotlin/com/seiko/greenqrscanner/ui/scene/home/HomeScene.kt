@@ -85,6 +85,9 @@ fun HomeScene(
             HorizontalPager(
                 pageCount = status.homeTabs.size,
                 state = pagerState,
+                key = { it },
+                // workaround for crash: java.lang.IllegalStateException: LayoutCoordinate operations are only valid when isAttached is true
+                beyondBoundsPageCount = 1,
                 modifier = Modifier.weight(1f).fillMaxWidth(),
             ) { page ->
                 when (status.homeTabs[page]) {
