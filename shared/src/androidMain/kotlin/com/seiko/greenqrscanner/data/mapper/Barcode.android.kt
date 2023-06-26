@@ -3,6 +3,8 @@ package com.seiko.greenqrscanner.data.mapper
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 typealias MlkitBarcode = com.google.mlkit.vision.barcode.common.Barcode
 typealias MlkitBarcodeWifi = com.google.mlkit.vision.barcode.common.Barcode.WiFi
@@ -101,19 +103,19 @@ private fun MlkitBarcodeContactInfo.toCommon(): BarcodeType.ContactInfo {
         },
         organization = organization.orEmpty(),
         title = title.orEmpty(),
-        phones = phones.map { it.toCommon() },
-        emails = emails.map { it.toCommon() },
-        urls = urls,
+        phones = phones.map { it.toCommon() }.toPersistentList(),
+        emails = emails.map { it.toCommon() }.toPersistentList(),
+        urls = urls.toPersistentList(),
         addresses = addresses.map {
             BarcodeType.Address(
-                addressLines = it.addressLines.toList(),
+                addressLines = persistentListOf(*it.addressLines),
                 type = when (it.type) {
                     MlkitBarcodeAddress.TYPE_HOME -> BarcodeType.Address.Type.HOME
                     MlkitBarcodeAddress.TYPE_WORK -> BarcodeType.Address.Type.WORK
                     else -> BarcodeType.Address.Type.UNKNOWN
                 },
             )
-        },
+        }.toPersistentList(),
     )
 }
 

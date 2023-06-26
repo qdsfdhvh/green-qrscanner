@@ -18,3 +18,29 @@ spotless {
         ktlint(libs.versions.ktlint.get())
     }
 }
+
+allprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            allWarningsAsErrors = false
+            freeCompilerArgs = freeCompilerArgs + buildComposeMetricsParameters() + listOf(
+                "-Xcontext-receivers",
+                "-Xskip-prerelease-check",
+            )
+        }
+    }
+}
+
+fun Project.buildComposeMetricsParameters(): List<String> {
+    return if (findProperty("myapp.enableComposeCompilerReports") == "true") {
+        val metricsFolder = File(rootProject.buildDir, "compose_metrics")
+        buildList {
+            add("-P")
+            add("plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" + metricsFolder.absolutePath)
+            add("-P")
+            add("plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" + metricsFolder.absolutePath)
+        }
+    } else {
+        emptyList()
+    }
+}

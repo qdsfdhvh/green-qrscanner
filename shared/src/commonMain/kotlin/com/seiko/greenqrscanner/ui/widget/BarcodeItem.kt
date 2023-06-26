@@ -26,7 +26,6 @@ import androidx.compose.material.icons.rounded.UnknownDocument
 import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FixedThreshold
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -47,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.model.UiBarcode
+import kotlinx.collections.immutable.persistentSetOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,10 +61,7 @@ fun BarcodeItem(
     }
     SwipeToDismiss(
         state = state,
-        directions = remember { mutableSetOf(DismissDirection.EndToStart) },
-        dismissThresholds = {
-            FixedThreshold(40.dp)
-        },
+        directions = remember { persistentSetOf(DismissDirection.EndToStart) },
         background = {
             Box(modifier.fillMaxSize()) {
                 Icon(

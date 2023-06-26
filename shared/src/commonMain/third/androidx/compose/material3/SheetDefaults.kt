@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import kotlin.jvm.JvmName
 
+@Stable
 class SheetState(
     internal val skipPartiallyExpanded: Boolean,
     initialValue: SheetValue = Hidden,

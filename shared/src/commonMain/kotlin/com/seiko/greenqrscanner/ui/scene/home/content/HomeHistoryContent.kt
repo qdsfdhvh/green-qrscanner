@@ -13,6 +13,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.immutable
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import androidx.paging.map
@@ -70,7 +71,7 @@ private fun HomeHistoryPresenter(
             pagingData.map {
                 it.toUi()
             }
-        }
+        }.immutable()
     }.collectAsLazyPagingItems()
     return HomeHistoryStatus(
         pagingItems = pagingItems,

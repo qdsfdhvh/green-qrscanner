@@ -22,8 +22,6 @@ package com.moriatsushi.koject.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import com.moriatsushi.koject.ExperimentalKojectApi
-import com.moriatsushi.koject.component.ComponentExtras
 import com.moriatsushi.koject.inject
 
 @Composable
@@ -33,23 +31,23 @@ inline fun <reified T : Any> rememberInject(): T {
     }
 }
 
-@OptIn(ExperimentalKojectApi::class)
-@Composable
-inline fun <reified T : Any> rememberInject(
-    componentExtras: ComponentExtras<*>? = null,
-): T {
-    return remember {
-        inject(componentExtras = componentExtras)
-    }
-}
-
-@OptIn(ExperimentalKojectApi::class)
-@Composable
-inline fun <reified T : Any> rememberInject(
-    qualifier: Any?,
-    componentExtras: ComponentExtras<*>? = null,
-): T {
-    return remember(qualifier) {
-        inject(qualifier, componentExtras = componentExtras)
-    }
-}
+// @OptIn(ExperimentalKojectApi::class)
+// @Composable
+// inline fun <reified T : Any> rememberInject(
+//     componentExtras: ComponentExtras<*>? = null,
+// ): T {
+//     return remember {
+//         inject(componentExtras = componentExtras)
+//     }
+// }
+//
+// @OptIn(ExperimentalKojectApi::class)
+// @Composable
+// inline fun <reified T : Any> rememberInject(
+//     qualifier: Any?,
+//     componentExtras: ComponentExtras<*>? = null,
+// ): T {
+//     return remember(qualifier) {
+//         inject(qualifier, componentExtras = componentExtras)
+//     }
+// }

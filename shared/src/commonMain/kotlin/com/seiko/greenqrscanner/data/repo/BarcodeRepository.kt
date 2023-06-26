@@ -1,5 +1,6 @@
 package com.seiko.greenqrscanner.data.repo
 
+import androidx.compose.runtime.Immutable
 import androidx.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneNotNull
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.map
 
 @Singleton
 @Provides
+@Immutable
 class BarcodeRepository(
     private val dbBarcodeQueries: DbBarcodeQueries,
     private val appCoroutineDispatcher: AppCoroutineDispatcher,

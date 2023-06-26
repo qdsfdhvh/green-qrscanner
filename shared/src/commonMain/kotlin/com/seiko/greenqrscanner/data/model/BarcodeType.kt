@@ -1,6 +1,7 @@
 package com.seiko.greenqrscanner.data.model
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -65,10 +66,10 @@ sealed interface BarcodeType {
         val name: PersonName?,
         val organization: String,
         val title: String,
-        val phones: List<Phone>,
-        val emails: List<Email>,
-        val urls: List<String>,
-        val addresses: List<Address>,
+        val phones: ImmutableList<Phone>,
+        val emails: ImmutableList<Email>,
+        val urls: ImmutableList<String>,
+        val addresses: ImmutableList<Address>,
     ) : BarcodeType
 
     @Serializable
@@ -160,7 +161,7 @@ sealed interface BarcodeType {
     @Serializable
     @SerialName("address")
     data class Address(
-        val addressLines: List<String>,
+        val addressLines: ImmutableList<String>,
         val type: Type,
     ) {
         enum class Type {
@@ -202,4 +203,21 @@ val BarcodeType.rawValue: String
             END:GREEN
         """.trimIndent()
         else -> error("don't use BarcodeType.rawValue for $this")
+    }
+
+val BarcodeType.name: String
+    get() = when (this) {
+        BarcodeType.Unknown -> "Unknown"
+        BarcodeType.Text -> "Text"
+        BarcodeType.ISBN -> "ISBN"
+        BarcodeType.Product -> "Product"
+        is BarcodeType.Wifi -> "Wifi"
+        is BarcodeType.UrlBookmark -> "Url"
+        is BarcodeType.Sms -> "Sms"
+        is BarcodeType.GeoPoint -> "Geo"
+        is BarcodeType.ContactInfo -> "ContactInfo"
+        is BarcodeType.Email -> "Email"
+        is BarcodeType.Phone -> "Phone"
+        is BarcodeType.DriverLicense -> "DriverLicense"
+        is BarcodeType.CalendarEvent -> "CalendarEvent"
     }

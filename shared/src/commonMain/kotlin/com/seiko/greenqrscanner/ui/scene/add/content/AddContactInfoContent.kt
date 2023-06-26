@@ -26,6 +26,7 @@ import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.model.rawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
+import kotlinx.collections.immutable.persistentListOf
 import moe.tlaster.precompose.molecule.producePresenter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,13 +114,13 @@ private fun AddContactInfoContentPresenter(
                     ),
                     organization = organization.text,
                     title = title.text,
-                    phones = listOf(
+                    phones = persistentListOf(
                         BarcodeType.Phone(
                             number = "",
                             type = BarcodeType.Phone.Type.UNKNOWN,
                         ),
                     ),
-                    emails = listOf(
+                    emails = persistentListOf(
                         BarcodeType.Email(
                             address = "",
                             subject = "",
@@ -127,12 +128,12 @@ private fun AddContactInfoContentPresenter(
                             type = BarcodeType.Email.Type.UNKNOWN,
                         ),
                     ),
-                    urls = listOf(
+                    urls = persistentListOf(
                         "",
                     ),
-                    addresses = listOf(
+                    addresses = persistentListOf(
                         BarcodeType.Address(
-                            addressLines = listOf(""),
+                            addressLines = persistentListOf(""),
                             type = BarcodeType.Address.Type.UNKNOWN,
                         ),
                     ),

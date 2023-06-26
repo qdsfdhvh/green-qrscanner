@@ -15,6 +15,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -507,9 +508,10 @@ internal class SwipeableV2State<T>(
 // @ExperimentalMaterial3Api
 internal fun <T : Any> rememberSwipeableV2State(
     initialValue: T,
-    animationSpec: AnimationSpec<Float> = SwipeableV2Defaults.AnimationSpec,
+    // animationSpec: AnimationSpec<Float> = SwipeableV2Defaults.AnimationSpec,
     confirmValueChange: (newValue: T) -> Boolean = { true }
 ): SwipeableV2State<T> {
+    val animationSpec = remember { SwipeableV2Defaults.AnimationSpec }
     return rememberSaveable(
         initialValue,
         animationSpec,

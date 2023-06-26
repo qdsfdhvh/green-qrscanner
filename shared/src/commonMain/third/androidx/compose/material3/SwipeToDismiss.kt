@@ -1,3 +1,5 @@
+@file:Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
+
 package androidx.compose.material3
 
 import androidx.compose.foundation.gestures.Orientation
@@ -22,6 +24,8 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.CancellationException
 import kotlin.math.roundToInt
 
@@ -66,7 +70,8 @@ enum class DismissValue {
  * @param initialValue The initial value of the state.
  * @param confirmStateChange Optional callback invoked to confirm or veto a pending state change.
  */
-class DismissState(
+@OptIn(ExperimentalMaterial3Api::class)
+internal class DismissState(
     initialValue: DismissValue,
     confirmStateChange: (DismissValue) -> Boolean = { true }
 ) : SwipeableState<DismissValue>(initialValue, confirmStateChange = confirmStateChange) {
@@ -128,7 +133,7 @@ class DismissState(
  * @param confirmStateChange Optional callback invoked to confirm or veto a pending state change.
  */
 @Composable
-fun rememberDismissState(
+internal fun rememberDismissState(
     initialValue: DismissValue = Default,
     confirmStateChange: (DismissValue) -> Boolean = { true }
 ): DismissState {
@@ -150,13 +155,15 @@ fun rememberDismissState(
  * content is swiped. You can/should use the [state] to have different backgrounds on each side.
  * @param dismissContent The content that can be dismissed.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SwipeToDismiss(
+internal fun SwipeToDismiss(
     state: DismissState,
     modifier: Modifier = Modifier,
-    directions: Set<DismissDirection> = setOf(EndToStart, StartToEnd),
+    directions: PersistentSet<DismissDirection> = persistentSetOf(EndToStart, StartToEnd),
     dismissThresholds: (DismissDirection) -> ThresholdConfig = {
-        FixedThreshold(DISMISS_THRESHOLD)
+        // FixedThreshold(DISMISS_THRESHOLD)
+        FixedThreshold(40.dp)
     },
     background: @Composable RowScope.() -> Unit,
     dismissContent: @Composable RowScope.() -> Unit
