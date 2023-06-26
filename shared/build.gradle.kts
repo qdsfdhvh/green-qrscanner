@@ -42,6 +42,7 @@ kotlin {
                 implementation(libs.bundles.sqldelight)
                 api(libs.koject.core)
                 implementation(libs.multiplatform.paging)
+                implementation(libs.kermit)
             }
         }
         val commonTest by getting {
