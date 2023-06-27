@@ -1,7 +1,6 @@
 package com.seiko.greenqrscanner.data.model
 
 import androidx.compose.runtime.Immutable
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -66,10 +65,10 @@ sealed interface BarcodeType {
         val name: PersonName?,
         val organization: String,
         val title: String,
-        val phones: ImmutableList<Phone>,
-        val emails: ImmutableList<Email>,
-        val urls: ImmutableList<String>,
-        val addresses: ImmutableList<Address>,
+        val phones: List<Phone>,
+        val emails: List<Email>,
+        val urls: List<String>,
+        val addresses: List<Address>,
     ) : BarcodeType
 
     @Serializable
@@ -161,7 +160,7 @@ sealed interface BarcodeType {
     @Serializable
     @SerialName("address")
     data class Address(
-        val addressLines: ImmutableList<String>,
+        val addressLines: List<String>,
         val type: Type,
     ) {
         enum class Type {
