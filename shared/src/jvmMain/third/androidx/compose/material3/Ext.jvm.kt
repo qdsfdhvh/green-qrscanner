@@ -1,6 +1,7 @@
 package androidx.compose.material3
 
+import java.util.Locale
+
 actual fun String.formatString(vararg args: Any?): String {
-    return this
-    // return format(Locale.getDefault(), *args)
+    return format(Locale.getDefault(), *args)
 }

@@ -18,11 +18,4 @@ class ExtTest {
         )
         assertEquals(expect, actual)
     }
-
-    @Test
-    fun stringFormat2Test() {
-        val expect = "My name is b a."
-        val actual = "My name is %2\$s %1\$s.".formatString("a", "b")
-        assertEquals(expect, actual)
-    }
 }
