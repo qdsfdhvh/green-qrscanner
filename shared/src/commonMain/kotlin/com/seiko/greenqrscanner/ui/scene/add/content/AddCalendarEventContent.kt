@@ -1,5 +1,6 @@
 package com.seiko.greenqrscanner.ui.scene.add.content
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +10,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +46,7 @@ fun AddCalendarEventContent(
             Text("Done")
         }
     }
-    var displayDatePicker by remember { mutableStateOf(true) }
+    var displayDatePicker by remember { mutableStateOf(false) }
     if (displayDatePicker) {
         Dialog(
             onDismissRequest = {
@@ -56,6 +59,22 @@ fun AddCalendarEventContent(
                 DatePicker(
                     state = datePickerState,
                     showModeToggle = false,
+                )
+            }
+        }
+    }
+    var displayTimePicker by remember { mutableStateOf(true) }
+    if (displayTimePicker) {
+        Dialog(
+            onDismissRequest = {
+                displayTimePicker = false
+            },
+            modifier = Modifier.padding(horizontal = 32.dp),
+        ) {
+            Box(Modifier.fillMaxWidth(), Alignment.Center) {
+                val datePickerState = rememberTimePickerState()
+                TimePicker(
+                    state = datePickerState,
                 )
             }
         }

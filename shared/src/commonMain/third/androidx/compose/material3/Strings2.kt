@@ -20,7 +20,6 @@
  */
 package androidx.compose.material3
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 
 @Immutable
@@ -70,10 +69,21 @@ value class Strings2 private constructor(@Suppress("unused") private val value: 
         val BottomSheetPartialExpandDescription = Strings2(45)
         val BottomSheetDismissDescription = Strings2(46)
         val BottomSheetExpandDescription = Strings2(47)
+        val TimePickerAM = Strings2(49)
+        val TimePickerPM = Strings2(50)
+        val TimePickerPeriodToggle = Strings2(51)
+        val TimePickerHourSelection = Strings2(52)
+        val TimePickerMinuteSelection = Strings2(53)
+        val TimePickerHourSuffix = Strings2(54)
+        val TimePicker24HourSuffix = Strings2(55)
+        val TimePickerMinuteSuffix = Strings2(56)
+        val TimePickerHour = Strings2(57)
+        val TimePickerMinute = Strings2(58)
+        val TimePickerHourTextField = Strings2(59)
+        val TimePickerMinuteTextField = Strings2(60)
     }
 }
 
-@Composable
 fun getString2(string: Strings2): String {
     return when (string) {
         Strings2.NavigationMenu -> "Navigation menu"
@@ -121,6 +131,18 @@ fun getString2(string: Strings2): String {
         Strings2.BottomSheetPartialExpandDescription -> "Collapse bottom sheet"
         Strings2.BottomSheetDismissDescription -> "Dismiss bottom sheet"
         Strings2.BottomSheetExpandDescription -> "Expand bottom sheet"
+        Strings2.TimePickerAM -> "AM"
+        Strings2.TimePickerPM -> "PM"
+        Strings2.TimePickerPeriodToggle -> "Select AM or PM"
+        Strings2.TimePickerMinuteSelection -> "Select minutes"
+        Strings2.TimePickerHourSelection -> "Select hour"
+        Strings2.TimePickerHourSuffix -> "%s o\\'clock"
+        Strings2.TimePickerMinuteSuffix -> "%s minutes"
+        Strings2.TimePicker24HourSuffix -> "%s hours"
+        Strings2.TimePickerMinute -> "Minute"
+        Strings2.TimePickerHour -> "Hour"
+        Strings2.TimePickerMinuteTextField -> "for minutes"
+        Strings2.TimePickerHourTextField -> "for hour"
         else -> ""
     }
 }
