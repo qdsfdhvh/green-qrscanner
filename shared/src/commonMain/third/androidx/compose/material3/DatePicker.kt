@@ -87,7 +87,6 @@ import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.horizontalScrollAxisRange
 import androidx.compose.ui.semantics.isContainer
 import androidx.compose.ui.semantics.liveRegion
-import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
@@ -1364,8 +1363,10 @@ private fun DatePickerContent(
                 // column is hidden and disposed.
                 // TODO(b/186443263): Have the screen reader focus on a year in the list when the
                 //  list is revealed.
-                val yearsPaneTitle = getString2(Strings2.DatePickerYearPickerPaneTitle)
-                Column(modifier = Modifier.semantics { paneTitle = yearsPaneTitle }) {
+                // val yearsPaneTitle = getString2(Strings2.DatePickerYearPickerPaneTitle)
+                Column(modifier = Modifier
+                    // .semantics { paneTitle = yearsPaneTitle } // TODO crash with paneTitle
+                ) {
                     YearPicker(
                         // Keep the height the same as the monthly calendar + weekdays height, and
                         // take into account the thickness of the divider that will be composed

@@ -53,7 +53,10 @@ fun AddCalendarEventContent(
         ) {
             Column(Modifier.fillMaxWidth()) {
                 val datePickerState = rememberDatePickerState()
-                DatePicker(state = datePickerState)
+                DatePicker(
+                    state = datePickerState,
+                    showModeToggle = false,
+                )
             }
         }
     }
