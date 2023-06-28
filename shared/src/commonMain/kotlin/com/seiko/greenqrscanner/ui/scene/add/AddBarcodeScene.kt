@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.ui.Route
+import com.seiko.greenqrscanner.ui.scene.add.content.AddCalendarEventContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddContactInfoContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddTextContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddUrlContent
@@ -69,6 +70,10 @@ fun AddBarcodeScene(
                     modifier = Modifier.fillMaxWidth(),
                 )
                 AddBarcodeType.Wifi -> AddWifiContent(
+                    onDone = onDone,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                AddBarcodeType.CalendarEvent -> AddCalendarEventContent(
                     onDone = onDone,
                     modifier = Modifier.fillMaxWidth(),
                 )

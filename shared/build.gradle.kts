@@ -36,6 +36,7 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
+                // implementation(compose.uiTooling)
                 implementation(compose.materialIconsExtended)
                 api(libs.bundles.kotlinx)
                 api(libs.bundles.precompose)
@@ -131,4 +132,17 @@ fun DependencyHandlerScope.kspAll(dependencyNotation: Any) {
     add("kspIosX64", dependencyNotation)
     add("kspIosArm64", dependencyNotation)
     add("kspIosSimulatorArm64", dependencyNotation)
+}
+
+// workaround for moko-resources
+listOf(
+    "iosSimulatorArm64",
+    "iosArm64",
+    "iosX64",
+    "macosArm64",
+    "macosX64",
+).forEach { name ->
+    tasks.matching { it.name == "kspKotlin${name.replaceFirstChar { char -> char.uppercase() }}" }.configureEach {
+        dependsOn(tasks.matching { it.name == "generateMR${name}Main" })
+    }
 }
