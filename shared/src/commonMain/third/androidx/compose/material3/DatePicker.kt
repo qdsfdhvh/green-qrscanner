@@ -1364,7 +1364,8 @@ private fun DatePickerContent(
                 // TODO(b/186443263): Have the screen reader focus on a year in the list when the
                 //  list is revealed.
                 // val yearsPaneTitle = getString2(Strings2.DatePickerYearPickerPaneTitle)
-                Column(modifier = Modifier
+                Column(
+                    modifier = Modifier,
                     // .semantics { paneTitle = yearsPaneTitle } // TODO crash with paneTitle
                 ) {
                     YearPicker(
