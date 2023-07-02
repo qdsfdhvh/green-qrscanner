@@ -3,6 +3,8 @@ package com.seiko.greenqrscanner.data.mapper
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Month
 
 typealias MlkitBarcode = com.google.mlkit.vision.barcode.common.Barcode
 typealias MlkitBarcodeWifi = com.google.mlkit.vision.barcode.common.Barcode.WiFi
@@ -169,20 +171,18 @@ private fun MlkitBarcodeCalendarEvent.toCommon(): BarcodeType.CalendarEvent {
         location = location.orEmpty(),
         organizer = organizer.orEmpty(),
         status = status.orEmpty(),
-        start = start?.toCommon(),
-        end = end?.toCommon(),
+        start = start?.toKotlinxDateTime(),
+        end = end?.toKotlinxDateTime(),
     )
 }
 
-private fun MlkitBarcodeCalendarDateTime.toCommon(): BarcodeType.CalendarEvent.DateTime {
-    return BarcodeType.CalendarEvent.DateTime(
+private fun MlkitBarcodeCalendarDateTime.toKotlinxDateTime(): LocalDateTime {
+    return LocalDateTime(
         year = year,
-        month = month,
-        day = day,
-        hours = hours,
-        minutes = minutes,
-        seconds = seconds,
-        isUtc = isUtc,
-        rawValue = rawValue.orEmpty(),
+        month = Month(month),
+        dayOfMonth = day,
+        hour = hours,
+        minute = minutes,
+        second = seconds,
     )
 }

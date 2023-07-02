@@ -1,6 +1,7 @@
 package com.seiko.greenqrscanner.data.model
 
 import androidx.compose.runtime.Immutable
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -128,22 +129,9 @@ sealed interface BarcodeType {
         val location: String,
         val organizer: String,
         val status: String,
-        val start: DateTime?,
-        val end: DateTime?,
-    ) : BarcodeType {
-        @Serializable
-        @SerialName("date_time")
-        data class DateTime(
-            val year: Int,
-            val month: Int,
-            val day: Int,
-            val hours: Int,
-            val minutes: Int,
-            val seconds: Int,
-            val isUtc: Boolean,
-            val rawValue: String,
-        )
-    }
+        val start: LocalDateTime?,
+        val end: LocalDateTime?,
+    ) : BarcodeType
 
     @Serializable
     @SerialName("person")
