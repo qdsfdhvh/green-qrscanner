@@ -24,6 +24,7 @@ accompanist-permissions = "0.28.0"
 mlkit-barcode-scanning = "17.1.0"
 kermit = "2.0.0-RC4"
 android-cache-fix = "2.7.2"
+compose-material3-windowsizeclass = "0.2.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -74,6 +75,8 @@ multiplatform-paging = { module = "io.github.qdsfdhvh:paging", version.ref = "mu
 
 moko-resources-core = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
 moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "moko-resources" }
+
+compose-material3-windowsizeclass = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "compose-material3-windowsizeclass" }
 
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 #zxing-core = { module = "com.google.zxing:core", version.ref = "zxing-core" }
