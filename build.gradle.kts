@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform).apply(false)
     alias(libs.plugins.android.application).apply(false)
     alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.android.cache.fix).apply(false)
     alias(libs.plugins.compose.multiplatform).apply(false)
     alias(libs.plugins.spotless)
 }
@@ -20,27 +21,27 @@ spotless {
 }
 
 allprojects {
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            allWarningsAsErrors = false
-            freeCompilerArgs = freeCompilerArgs + buildComposeMetricsParameters() + listOf(
-                "-Xcontext-receivers",
-                "-Xskip-prerelease-check",
-            )
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+        compilerOptions {
+            allWarningsAsErrors.set(false)
+
+            freeCompilerArgs.add("-Xcontext-receivers")
+            freeCompilerArgs.add("-Xskip-prerelease-check")
+
+            if (findProperty("myapp.enableComposeCompilerReports") == "true") {
+                freeCompilerArgs.addAll(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                        project.buildDir.absolutePath + "/compose_metrics",
+                )
+                freeCompilerArgs.addAll(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                        project.buildDir.absolutePath + "/compose_metrics",
+                )
+            }
         }
     }
 }
 
-fun Project.buildComposeMetricsParameters(): List<String> {
-    return if (findProperty("myapp.enableComposeCompilerReports") == "true") {
-        val metricsFolder = File(rootProject.buildDir, "compose_metrics")
-        buildList {
-            add("-P")
-            add("plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" + metricsFolder.absolutePath)
-            add("-P")
-            add("plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" + metricsFolder.absolutePath)
-        }
-    } else {
-        emptyList()
-    }
-}
+apply(from = "gradle/projectDependencyGraph.gradle")

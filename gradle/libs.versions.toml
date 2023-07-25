@@ -3,7 +3,7 @@ agp = "8.0.2"
 kotlin = "1.8.20"
 ksp = "1.8.20-1.0.11"
 compose-multiplatform = "1.5.0-dev1071"
-spotless = "6.19.0"
+spotless = "6.20.0"
 ktlint = "0.49.1"
 androidx-core-ktx = "1.10.1"
 androidx-appcompat = "1.6.1"
@@ -12,7 +12,7 @@ androidx-camera = "1.2.3"
 androidx-camera-view = "1.3.0-beta01"
 multiplatform-paging = "1.0.6"
 moko-resources = "0.23.0"
-kotlinx-coroutines = "1.7.1"
+kotlinx-coroutines = "1.7.2"
 kotlinx-datetime = "0.4.0"
 kotlinx-collections-immutable = "0.3.5"
 kotlinx-serialization-json = "1.5.1"
@@ -23,12 +23,13 @@ koject = "1.3.0"
 accompanist-permissions = "0.28.0"
 mlkit-barcode-scanning = "17.1.0"
 kermit = "2.0.0-RC4"
-compose-material-dialogs = "0.9.3"
+android-cache-fix = "2.7.2"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "android-cache-fix" }
+#kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -38,6 +39,10 @@ moko-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.re
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]
+# Build logic dependencies
+gradlePlugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -48,7 +53,7 @@ androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.r
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-kotlinx-datatime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
@@ -75,9 +80,11 @@ accompanist-permissions = { module = "com.google.accompanist:accompanist-permiss
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "mlkit-barcode-scanning" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
-compose-material-dialogs-datetime = { module = "ca.gosyer:compose-material-dialogs-datetime", version.ref = "compose-material-dialogs" }
-
 [bundles]
+logic-plugins = [
+    "gradlePlugin-kotlin",
+    "gradlePlugin-android"
+]
 androidx-camera = [
     "androidx-camera-view",
     "androidx-camera-camera2",
@@ -89,17 +96,11 @@ android-barcode = [
 ]
 kotlinx = [
     "kotlinx-coroutines-core",
-    "kotlinx-datatime",
+    "kotlinx-datetime",
     "kotlinx-collections-immutable",
     "kotlinx-serialization-json",
-]
-compose-extensions = [
-    "compose-material-dialogs-datetime",
 ]
 precompose = [
     "precompose-runtime",
     "molecule-runtime",
-]
-sqldelight = [
-    "sqldelight-coroutines-extensions",
 ]

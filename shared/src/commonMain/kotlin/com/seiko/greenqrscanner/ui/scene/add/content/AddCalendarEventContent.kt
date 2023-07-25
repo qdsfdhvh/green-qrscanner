@@ -9,7 +9,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,9 +23,6 @@ import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.model.rawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.datetime.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,18 +47,17 @@ fun AddCalendarEventContent(
         }
     }
 
-    val datePickerDialogState = rememberMaterialDialogState()
-    MaterialDialog(
-        dialogState = datePickerDialogState,
-        buttons = {
-            // positiveButton("Ok")
-            // negativeButton("Cancel")
-        }
-    ) {
-        datepicker {
-
-        }
-    }
+    // val datePickerDialogState = rememberMaterialDialogState()
+    // MaterialDialog(
+    //     dialogState = datePickerDialogState,
+    //     buttons = {
+    //         // positiveButton("Ok")
+    //         // negativeButton("Cancel")
+    //     },
+    // ) {
+    //     datepicker {
+    //     }
+    // }
     // val timePickerDialogState = rememberMaterialDialogState()
     // MaterialDialog(
     //     dialogState = datePickerDialogState,
@@ -74,10 +69,9 @@ fun AddCalendarEventContent(
     //
     //     }
     // }
-
-    LaunchedEffect(Unit) {
-        datePickerDialogState.show()
-    }
+    // LaunchedEffect(Unit) {
+    //     datePickerDialogState.show()
+    // }
 }
 
 @Composable
@@ -107,10 +101,10 @@ private fun AddCalendarEventContentPresenter(
                         rawValue = type.rawValue,
                         format = BarcodeFormat.FORMAT_2D,
                         type = type,
-                    )
+                    ),
                 )
             }
-        }
+        },
     )
 }
 
