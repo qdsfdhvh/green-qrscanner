@@ -42,6 +42,7 @@ kotlin {
                 implementation(libs.multiplatform.paging)
                 implementation(libs.kermit)
                 implementation(libs.moko.resources.core)
+                implementation(libs.compose.material3.windowsizeclass)
             }
         }
         val commonTest by getting {
@@ -125,4 +126,10 @@ tasks.matching { it.name == "kspDebugKotlinAndroid" }.configureEach {
 }
 tasks.matching { it.name == "packageDebugResources" }.configureEach {
     dependsOn(tasks.matching { it.name == "generateMRandroidMain" })
+}
+tasks.matching { it.name == "syncPodComposeResourcesForIos" }.configureEach {
+    dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
+}
+tasks.matching { it.name == "syncPodComposeResourcesForIos" }.configureEach {
+    dependsOn(tasks.matching { it.name == "generateMRiosSimulatorArm64Main" })
 }
