@@ -59,7 +59,10 @@ fun HomeScene(
     }
     Scaffold { innerPadding ->
         Column(Modifier.padding(innerPadding).fillMaxSize()) {
-            val pagerState = rememberPagerState(status.initialSelectIndex)
+            val pagerState = rememberPagerState(
+                initialPage = status.initialSelectIndex,
+                pageCount = { status.homeTabs.size },
+            )
             TabRow(
                 selectedTabIndex = pagerState.currentPage,
                 indicator = { tabPositions ->
@@ -83,7 +86,6 @@ fun HomeScene(
                 }
             }
             HorizontalPager(
-                pageCount = status.homeTabs.size,
                 state = pagerState,
                 key = { it },
                 // workaround for crash: java.lang.IllegalStateException: LayoutCoordinate operations are only valid when isAttached is true

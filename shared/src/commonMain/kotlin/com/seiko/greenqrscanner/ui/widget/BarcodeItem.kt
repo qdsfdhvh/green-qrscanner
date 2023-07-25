@@ -55,10 +55,12 @@ fun BarcodeItem(
     clickable: BarcodeItemClickable,
     modifier: Modifier = Modifier,
 ) {
-    val state = rememberDismissState {
-        clickable.onSettingClicked(item)
-        false
-    }
+    val state = rememberDismissState(
+        confirmValueChange = {
+            clickable.onSettingClicked(item)
+            false
+        }
+    )
     SwipeToDismiss(
         state = state,
         directions = remember { persistentSetOf(DismissDirection.EndToStart) },
@@ -74,49 +76,50 @@ fun BarcodeItem(
                 )
             }
         },
-    ) {
-        Surface(
-            onClick = { clickable.onItemClicked(item) },
-            shape = MaterialTheme.shapes.medium,
-            // tonalElevation = 2.dp,
-            // color = MaterialTheme.colorScheme.primary,
-            modifier = modifier,
-        ) {
-            ListItem(
-                colors = ListItemDefaults.colors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                ),
-                leadingContent = {
-                    Icon(
-                        item.type.icon,
-                        contentDescription = item.title,
-                        modifier = Modifier.size(24.dp),
-                    )
-                },
-                headlineText = {
-                    Text(item.title)
-                },
-                supportingText = {
-                    BarcodeTypeContent(
-                        type = item.type,
-                        rawValue = item.rawValue,
-                    )
-                },
-                trailingContent = {
-                    IconButton(onClick = { clickable.onStarClicked(item) }) {
-                        Image(
-                            if (item.isStar) {
-                                Icons.Rounded.Star
-                            } else {
-                                Icons.Rounded.StarOutline
-                            },
-                            contentDescription = "star",
+        dismissContent = {
+            Surface(
+                onClick = { clickable.onItemClicked(item) },
+                shape = MaterialTheme.shapes.medium,
+                // tonalElevation = 2.dp,
+                // color = MaterialTheme.colorScheme.primary,
+                modifier = modifier,
+            ) {
+                ListItem(
+                    colors = ListItemDefaults.colors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
+                    leadingContent = {
+                        Icon(
+                            item.type.icon,
+                            contentDescription = item.title,
+                            modifier = Modifier.size(24.dp),
                         )
-                    }
-                },
-            )
-        }
-    }
+                    },
+                    headlineContent = {
+                        Text(item.title)
+                    },
+                    supportingContent = {
+                        BarcodeTypeContent(
+                            type = item.type,
+                            rawValue = item.rawValue,
+                        )
+                    },
+                    trailingContent = {
+                        IconButton(onClick = { clickable.onStarClicked(item) }) {
+                            Image(
+                                if (item.isStar) {
+                                    Icons.Rounded.Star
+                                } else {
+                                    Icons.Rounded.StarOutline
+                                },
+                                contentDescription = "star",
+                            )
+                        }
+                    },
+                )
+            }
+        },
+    )
 }
 
 @Composable
