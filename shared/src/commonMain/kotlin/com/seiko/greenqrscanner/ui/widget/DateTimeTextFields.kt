@@ -37,6 +37,8 @@ fun DateTextField(
     onDateSelected: (LocalDate) -> Unit,
     dialogTitle: String,
     modifier: Modifier = Modifier,
+    minimumDate: LocalDate? = null,
+    maximumDate: LocalDate? = null,
 ) {
     Box(modifier) {
         val dateFormatter = LocalAppDateFormatter.current
@@ -50,7 +52,7 @@ fun DateTextField(
 
         ClickableReadOnlyOutlinedTextField(
             value = formattedDate.orEmpty(),
-            // label = { Text(text = LocalStrings.current.dateLabel) },
+            label = { Text("Date") },
             onClick = { showDialog = true },
             modifier = Modifier.fillMaxWidth(),
         )
@@ -65,11 +67,8 @@ fun DateTextField(
                     date = it
                     lastOnDateSelected(it)
                 },
-                maximumDate = remember {
-                    Clock.System.now()
-                        .toLocalDateTime(TimeZone.currentSystemDefault())
-                        .date
-                },
+                minimumDate = minimumDate,
+                maximumDate = maximumDate,
                 title = dialogTitle,
             )
         }
@@ -97,7 +96,7 @@ fun TimeTextField(
 
         ClickableReadOnlyOutlinedTextField(
             value = formattedTime.orEmpty(),
-            // label = { Text(text = LocalStrings.current.timeLabel) },
+            label = { Text("Time") },
             onClick = { showDialog = true },
             modifier = Modifier.fillMaxWidth(),
         )

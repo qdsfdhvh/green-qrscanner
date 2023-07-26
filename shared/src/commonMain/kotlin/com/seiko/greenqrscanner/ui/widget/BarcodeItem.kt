@@ -59,7 +59,7 @@ fun BarcodeItem(
         confirmValueChange = {
             clickable.onSettingClicked(item)
             false
-        }
+        },
     )
     SwipeToDismiss(
         state = state,

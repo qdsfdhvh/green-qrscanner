@@ -5,6 +5,8 @@ package com.seiko.greenqrscanner.ui.widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import com.seiko.greenqrscanner.MR
+import com.seiko.greenqrscanner.util.stringResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
@@ -18,7 +20,7 @@ expect fun DatePickerDialog(
     selectedDate: LocalDate = remember {
         Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
     },
-    confirmLabel: String = "",
+    confirmLabel: String = stringResource(MR.strings.ok),
     minimumDate: LocalDate? = null,
     maximumDate: LocalDate? = null,
     title: String = "",
@@ -31,7 +33,7 @@ expect fun TimePickerDialog(
     selectedTime: LocalTime = remember {
         Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).time
     },
-    confirmLabel: String = "",
+    confirmLabel: String = stringResource(MR.strings.ok),
     title: String = "",
     is24Hour: Boolean = false,
 )

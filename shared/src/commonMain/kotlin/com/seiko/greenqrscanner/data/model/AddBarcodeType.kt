@@ -23,8 +23,8 @@ enum class AddBarcodeType {
 
     // ISBN,
     // Product,
-    Wifi,
     Url,
+    Wifi,
     Email,
     Phone,
     Sms,
@@ -40,8 +40,8 @@ val AddBarcodeType.icon: ImageVector
         AddBarcodeType.Text -> Icons.Rounded.TextAd
         // AddBarcodeType.ISBN -> Icons.Rounded.Barcode
         // AddBarcodeType.Product -> Icons.Rounded.ShoppingBag
-        AddBarcodeType.Wifi -> Icons.Rounded.Wifi
         AddBarcodeType.Url -> Icons.Rounded.Link
+        AddBarcodeType.Wifi -> Icons.Rounded.Wifi
         AddBarcodeType.Email -> Icons.Rounded.Email
         AddBarcodeType.Phone -> Icons.Rounded.Phone
         AddBarcodeType.Sms -> Icons.Rounded.Sms
@@ -59,8 +59,8 @@ val AddBarcodeType.title: String
         AddBarcodeType.Text -> stringResource(MR.strings.text)
         // AddBarcodeType.ISBN -> ""
         // AddBarcodeType.Product -> ""
-        AddBarcodeType.Wifi -> stringResource(MR.strings.wifi)
         AddBarcodeType.Url -> stringResource(MR.strings.url)
+        AddBarcodeType.Wifi -> stringResource(MR.strings.wifi)
         AddBarcodeType.Email -> stringResource(MR.strings.email)
         AddBarcodeType.Phone -> stringResource(MR.strings.phone)
         AddBarcodeType.Sms -> stringResource(MR.strings.sms)

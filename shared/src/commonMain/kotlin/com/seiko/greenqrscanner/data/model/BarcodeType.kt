@@ -179,7 +179,7 @@ val BarcodeType.title: String
 val BarcodeType.rawValue: String
     get() = when (this) {
         is BarcodeType.ContactInfo -> """
-            BEGIN:GREEN
+            BEGIN:$QR_TAG
             N:${name?.formattedName};
             ORG:$organization;
             TITLE:$title;
@@ -187,7 +187,21 @@ val BarcodeType.rawValue: String
             ${emails.joinToString("\n") { "EMAIL;TYPE=${it.type.name}:${it.address}" }}
             ${urls.joinToString("\n") { "URL:$it" }}
             ${addresses.joinToString("\n") { "ADR;TYPE=${it.type.name}:${it.addressLines.joinToString(";") { address -> address }}" }}
-            END:GREEN
+            END:$QR_TAG
+        """.trimIndent()
+        is BarcodeType.CalendarEvent -> """
+            BEGIN:$QR_TAG
+            VERSION:2.0
+            PRODID:$organizer
+            BEGIN:VEVENT
+            SUMMARY:$summary
+            DTSTART:$start
+            DTEND:$end
+            LOCATION:$location
+            UID:xxxxxxx@android
+            DESCRIPTION:$description
+            END:VEVENT
+            END:$QR_TAG
         """.trimIndent()
         else -> error("don't use BarcodeType.rawValue for $this")
     }
@@ -208,3 +222,5 @@ val BarcodeType.name: String
         is BarcodeType.DriverLicense -> "DriverLicense"
         is BarcodeType.CalendarEvent -> "CalendarEvent"
     }
+
+private const val QR_TAG = "GREEN"

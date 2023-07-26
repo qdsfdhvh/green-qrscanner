@@ -11,4 +11,5 @@
     <string name="driver_license">DriverLicense</string>
     <string name="calendar_event">CalendarEvent</string>
     <string name="unknown">Unknown</string>
+    <string name="ok">OK</string>
 </resources>

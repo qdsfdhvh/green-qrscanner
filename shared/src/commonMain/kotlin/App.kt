@@ -1,6 +1,4 @@
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -25,10 +23,6 @@ fun App(
     ) {
         GreenQrScannerTheme {
             RouteScene(navigator)
-        }
-        val transition = updateTransition(targetState = "", label = "AnimatedContent")
-        transition.AnimatedContent {
-
         }
     }
 }

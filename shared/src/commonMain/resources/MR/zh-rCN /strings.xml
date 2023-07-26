@@ -11,4 +11,5 @@
     <string name="driver_license">驾驶证</string>
     <string name="calendar_event">日历</string>
     <string name="unknown">未知内容</string>
+    <string name="ok">确定</string>
 </resources>

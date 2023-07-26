@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,18 +31,16 @@ import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import com.seiko.greenqrscanner.util.isUrl
 import moe.tlaster.precompose.molecule.producePresenter
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddUrlContent(
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val status by producePresenter(true) { AddUrlContentPresenter() }
-    val scrollableState = rememberScrollState()
     Column(
         modifier = modifier
             .padding(8.dp)
-            .scrollable(scrollableState, Orientation.Vertical),
+            .scrollable(rememberScrollState(), Orientation.Vertical),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AddBarcodeTypeTitle(AddBarcodeType.Text, Modifier.fillMaxWidth())
