@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.ui.scene.add.AddBarcodeScene
 import com.seiko.greenqrscanner.ui.scene.add.SelectAddScene
+import com.seiko.greenqrscanner.ui.scene.detail.DetailContentScene
 import com.seiko.greenqrscanner.ui.scene.detail.DetailScene
 import com.seiko.greenqrscanner.ui.scene.home.HomeScene
 import com.seiko.greenqrscanner.ui.scene.popup.BarcodeSettingsBottomSheet
@@ -36,6 +37,11 @@ object Route {
     object Detail {
         const val path = "Detail/{$paramBarcode}"
         operator fun invoke(barcode: String) = "Detail/${barcode.encodeUrl()}"
+    }
+
+    object DetailFullContent {
+        const val path = "DetailFullContent/{$paramBarcode}"
+        operator fun invoke(barcode: String) = "DetailFullContent/${barcode.encodeUrl()}"
     }
 
     const val SelectAdd = "SelectAdd"
@@ -67,6 +73,14 @@ fun RouteBuilder.initRoute(navigator: Navigator) {
     }
     scene(Route.Detail.path) {
         DetailScene(
+            navigator = navigator,
+            barcode = remember {
+                it.path<String>(Route.paramBarcode)!!.decodeUrl()
+            },
+        )
+    }
+    scene(Route.DetailFullContent.path) {
+        DetailContentScene(
             navigator = navigator,
             barcode = remember {
                 it.path<String>(Route.paramBarcode)!!.decodeUrl()
