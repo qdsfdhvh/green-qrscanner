@@ -66,6 +66,7 @@ kotlin {
                 implementation(libs.bundles.android.barcode)
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.sqldelight.android.driver)
+                implementation(libs.zxing.core)
             }
         }
         val iosMain by getting {
