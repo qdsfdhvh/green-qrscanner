@@ -43,6 +43,7 @@ kotlin {
                 implementation(libs.kermit)
                 implementation(libs.moko.resources.core)
                 implementation(libs.compose.material3.windowsizeclass)
+                implementation(libs.okio)
             }
         }
         val commonTest by getting {

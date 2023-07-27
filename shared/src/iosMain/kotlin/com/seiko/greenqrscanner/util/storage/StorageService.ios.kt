@@ -2,6 +2,8 @@ package com.seiko.greenqrscanner.util.storage
 
 import com.moriatsushi.koject.Provides
 import com.moriatsushi.koject.Singleton
+import okio.Path
+import okio.Path.Companion.toPath
 import platform.Foundation.NSCachesDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDirectory
@@ -31,9 +33,9 @@ actual class StorageService {
         )!!
     }
 
-    actual val appDir: String
-        get() = _appDir.path.orEmpty()
+    actual val appDir: Path
+        get() = requireNotNull(_appDir.path).toPath()
 
-    actual val cacheDir: String
-        get() = _cacheDir.path.orEmpty()
+    actual val cacheDir: Path
+        get() = requireNotNull(_cacheDir.path).toPath()
 }

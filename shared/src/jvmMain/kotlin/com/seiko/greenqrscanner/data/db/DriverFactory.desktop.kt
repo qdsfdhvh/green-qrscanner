@@ -7,6 +7,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.moriatsushi.koject.Provides
 import com.moriatsushi.koject.Singleton
 import com.seiko.greenqrscanner.util.storage.StorageService
+import com.seiko.greenqrscanner.util.storage.databaseDir
 
 @Singleton
 @Provides
@@ -17,7 +18,7 @@ internal actual class DriverFactory(
         schema: SqlSchema<QueryResult.Value<Unit>>,
         dbName: String,
     ): SqlDriver {
-        val driver = JdbcSqliteDriver("$JDBC_PREFIX${storageService.appDir}/$dbName")
+        val driver = JdbcSqliteDriver("$JDBC_PREFIX${storageService.databaseDir.resolve(dbName)}")
         schema.create(driver)
         return driver
     }

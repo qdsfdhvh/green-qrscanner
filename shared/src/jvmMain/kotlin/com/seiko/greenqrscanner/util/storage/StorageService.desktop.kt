@@ -4,15 +4,17 @@ import com.moriatsushi.koject.Provides
 import com.moriatsushi.koject.Singleton
 import com.seiko.greenqrscanner.util.OperatingSystem
 import com.seiko.greenqrscanner.util.currentOperatingSystem
+import okio.Path
+import okio.Path.Companion.toOkioPath
 import java.io.File
 
 @Singleton
 @Provides
 actual class StorageService {
-    actual val appDir: String
-        get() = getAppDir().absolutePath
-    actual val cacheDir: String
-        get() = getCacheDir().absolutePath
+    actual val appDir: Path
+        get() = getAppDir().toOkioPath()
+    actual val cacheDir: Path
+        get() = getCacheDir().toOkioPath()
 }
 
 private fun getAppDir() = when (currentOperatingSystem) {
