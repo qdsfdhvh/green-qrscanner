@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -33,7 +32,6 @@ import com.seiko.greenqrscanner.ui.widget.SimpleTopBar
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.Navigator
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectAddScene(
     navigator: Navigator,
@@ -73,7 +71,6 @@ fun SelectAddScene(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AddBarcodeItem(
     item: AddBarcodeType,
@@ -97,7 +94,11 @@ private fun AddBarcodeItem(
                 modifier = Modifier.size(24.dp),
             )
             Spacer(Modifier.height(4.dp))
-            Text(item.title)
+            Text(
+                item.title,
+                maxLines = 1,
+                style = MaterialTheme.typography.labelMedium,
+            )
         }
     }
 }
