@@ -40,6 +40,8 @@ kotlin {
                 implementation(libs.koject.core)
                 implementation(libs.sqldelight.coroutines.extensions)
                 implementation(libs.multiplatform.paging)
+                implementation(libs.multiplatform.settings.core)
+                implementation(libs.multiplatform.settings.coroutines)
                 implementation(libs.kermit)
                 implementation(libs.moko.resources.core)
                 implementation(libs.compose.material3.windowsizeclass)
@@ -49,6 +51,12 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+            }
+        }
+        val jvmCommonMain by getting {
+            dependencies {
+                implementation(libs.multiplatform.settings.datastore)
+                implementation(libs.androidx.datastore.preferences.core)
             }
         }
         // not build desktop app, just easy to test
@@ -68,6 +76,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.sqldelight.android.driver)
                 implementation(libs.zxing.core)
+                implementation(libs.androidx.datastore.preferences)
             }
         }
         val iosMain by getting {

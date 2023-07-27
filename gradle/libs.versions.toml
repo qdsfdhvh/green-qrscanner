@@ -10,6 +10,7 @@ androidx-appcompat = "1.6.1"
 androidx-activity-compose = "1.7.2"
 androidx-camera = "1.2.3"
 androidx-camera-view = "1.3.0-beta01"
+androidx-datastore = "1.0.0"
 multiplatform-paging = "1.0.6"
 moko-resources = "0.23.0"
 kotlinx-coroutines = "1.7.2"
@@ -25,6 +26,7 @@ mlkit-barcode-scanning = "17.1.0"
 kermit = "2.0.0-RC4"
 android-cache-fix = "2.7.2"
 compose-material3-windowsizeclass = "0.2.0"
+multiplatform-settings = "1.0.0"
 zxing = "3.4.1"
 okio = "3.4.0"
 
@@ -52,6 +54,8 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidx-camera-view" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidx-camera" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidx-camera" }
+androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidx-datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
@@ -74,6 +78,11 @@ precompose-runtime = { module = "io.github.qdsfdhvh:precompose", version.ref = "
 molecule-runtime = { module = "app.cash.molecule:molecule-runtime", version.ref = "molecule-runtime" }
 
 multiplatform-paging = { module = "io.github.qdsfdhvh:paging", version.ref = "multiplatform-paging" }
+
+multiplatform-settings-core = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
+multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings" }
+multiplatform-settings-datastore = { module = "com.russhwolf:multiplatform-settings-datastore", version.ref = "multiplatform-settings" }
+
 
 moko-resources-core = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
 moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "moko-resources" }
