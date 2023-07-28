@@ -27,16 +27,18 @@ import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
-import com.seiko.greenqrscanner.data.model.rawValue
+import com.seiko.greenqrscanner.data.model.toRawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import com.seiko.greenqrscanner.ui.widget.DateTextField
 import com.seiko.greenqrscanner.ui.widget.TimeTextField
+import com.seiko.greenqrscanner.util.AppDateFormatter
+import com.seiko.greenqrscanner.util.copy
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atTime
 import kotlinx.datetime.toLocalDateTime
 import moe.tlaster.precompose.molecule.producePresenter
 
@@ -150,6 +152,7 @@ fun AddCalendarEventContent(
 @Composable
 private fun AddCalendarEventContentPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
+    appDateFormatter: AppDateFormatter = rememberInject(),
 ): AddCalendarEventContentStatus {
     var title by remember { mutableStateOf(TextFieldValue("")) }
     val today = remember { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
@@ -186,6 +189,7 @@ private fun AddCalendarEventContentPresenter(
 
             override fun updateStartTime(time: LocalTime) {
                 startTime = time
+                if (startDate == endDate && time > endTime) endTime = time
             }
 
             override fun updateEndDate(date: LocalDate) {
@@ -195,6 +199,7 @@ private fun AddCalendarEventContentPresenter(
 
             override fun updateEndTime(time: LocalTime) {
                 endTime = time
+                if (startDate == endDate && time < startTime) startTime = time
             }
 
             override fun updateLocation(value: TextFieldValue) {
@@ -207,17 +212,17 @@ private fun AddCalendarEventContentPresenter(
 
             override fun done() {
                 val type = BarcodeType.CalendarEvent(
-                    organizer = title.text,
-                    summary = desc.text,
+                    summary = title.text,
                     description = desc.text,
                     location = location.text,
+                    organizer = "",
                     status = "",
-                    start = LocalDateTime(startDate, startTime),
-                    end = LocalDateTime(endDate, endTime),
+                    start = startDate.atTime(startTime.copy(nanosecond = 0)),
+                    end = endDate.atTime(endTime.copy(nanosecond = 0)),
                 )
                 barcodeRepository.upset(
                     Barcode(
-                        rawValue = type.rawValue,
+                        rawValue = type.toRawValue(),
                         format = BarcodeFormat.FORMAT_2D,
                         type = type,
                     ),

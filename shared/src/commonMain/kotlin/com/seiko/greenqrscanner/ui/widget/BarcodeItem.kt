@@ -2,9 +2,13 @@ package com.seiko.greenqrscanner.ui.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -41,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -95,14 +100,32 @@ fun BarcodeItem(
                             modifier = Modifier.size(24.dp),
                         )
                     },
-                    headlineContent = {
-                        Text(item.title)
+                    overlineContent = {
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(item.title, fontWeight = FontWeight.Bold)
+
+                            val appDateFormatter = LocalAppDateFormatter.current
+                            val formattedTime = remember(appDateFormatter, item.time) {
+                                appDateFormatter.formatMediumDateTime(item.time)
+                            }
+                            Text(
+                                formattedTime,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
                     },
-                    supportingContent = {
-                        BarcodeTypeContent(
-                            type = item.type,
-                            rawValue = item.rawValue,
-                        )
+                    headlineContent = {
+                        Column {
+                            BarcodeTypeContent(
+                                type = item.type,
+                                rawValue = item.rawValue,
+                            )
+                        }
                     },
                     trailingContent = {
                         IconButton(onClick = { clickable.onStarClicked(item) }) {
@@ -123,33 +146,46 @@ fun BarcodeItem(
 }
 
 @Composable
-private fun BarcodeTypeContent(
+private fun ColumnScope.BarcodeTypeContent(
     type: BarcodeType,
     rawValue: String,
 ) {
     when (type) {
         is BarcodeType.Wifi -> {
-            Column {
-                Text("ssid: ${type.ssid}")
-                Text("password: ${type.password}")
-                Text("type: ${type.wifiType.name}")
-            }
+            Text("ssid: ${type.ssid}")
+            Text("password: ${type.password}")
+            Text("type: ${type.wifiType.name}")
         }
         is BarcodeType.UrlBookmark -> {
-            Column {
-                val uriHandler = LocalUriHandler.current
-                Text(
-                    type.url,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable {
-                        uriHandler.openUri(type.url)
-                    },
-                )
-                if (type.title.isNotEmpty()) {
-                    Text(type.title)
+            val uriHandler = LocalUriHandler.current
+            Text(
+                type.title.ifEmpty { type.url },
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable {
+                    uriHandler.openUri(type.url)
+                },
+            )
+        }
+        is BarcodeType.CalendarEvent -> {
+            if (type.summary.isNotEmpty()) {
+                Text(type.summary)
+            }
+            val appDateFormatter = LocalAppDateFormatter.current
+            if (type.start != null) {
+                val startFormattedTime = remember(appDateFormatter, type.start) {
+                    appDateFormatter.formatShortDate(type.start.date) + " " +
+                        appDateFormatter.formatShortTime(type.start.time)
                 }
+                Text("Start: $startFormattedTime")
+            }
+            if (type.end != null) {
+                val endFormattedTime = remember(appDateFormatter, type.end) {
+                    appDateFormatter.formatShortDate(type.end.date) + " " +
+                        appDateFormatter.formatShortTime(type.end.time)
+                }
+                Text("End: $endFormattedTime")
             }
         }
         else -> {

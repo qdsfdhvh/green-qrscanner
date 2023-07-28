@@ -23,7 +23,7 @@ import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
-import com.seiko.greenqrscanner.data.model.rawValue
+import com.seiko.greenqrscanner.data.model.toRawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import kotlinx.collections.immutable.persistentListOf
@@ -178,7 +178,7 @@ private fun AddContactInfoContentPresenter(
                 )
                 barcodeRepository.upset(
                     Barcode(
-                        rawValue = type.rawValue,
+                        rawValue = type.toRawValue(),
                         format = BarcodeFormat.FORMAT_2D,
                         type = type,
                     ),
