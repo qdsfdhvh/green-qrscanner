@@ -51,6 +51,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(libs.assertk)
             }
         }
         val jvmCommonMain by getting {

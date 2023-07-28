@@ -29,6 +29,7 @@ compose-material3-windowsizeclass = "0.2.0"
 multiplatform-settings = "1.0.0"
 zxing = "3.5.1"
 okio = "3.4.0"
+assertk = "0.26.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -94,6 +95,7 @@ zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "mlkit-barcode-scanning" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
 
 [bundles]
 logic-plugins = [
