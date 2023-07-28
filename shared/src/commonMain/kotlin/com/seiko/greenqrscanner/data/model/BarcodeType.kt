@@ -176,8 +176,8 @@ val BarcodeType.title: String
         BarcodeType.Unknown -> "Unknown"
     }
 
-val BarcodeType.rawValue: String
-    get() = when (this) {
+fun BarcodeType.toRawValue(): String {
+    return when (this) {
         is BarcodeType.ContactInfo -> """
             BEGIN:$QR_TAG
             N:${name?.formattedName};
@@ -190,21 +190,17 @@ val BarcodeType.rawValue: String
             END:$QR_TAG
         """.trimIndent()
         is BarcodeType.CalendarEvent -> """
-            BEGIN:$QR_TAG
-            VERSION:2.0
-            PRODID:$organizer
             BEGIN:VEVENT
             SUMMARY:$summary
             DTSTART:$start
             DTEND:$end
             LOCATION:$location
-            UID:xxxxxxx@android
             DESCRIPTION:$description
             END:VEVENT
-            END:$QR_TAG
         """.trimIndent()
-        else -> error("don't use BarcodeType.rawValue for $this")
+        else -> error("don't use BarcodeType.toRawValue() for $this")
     }
+}
 
 val BarcodeType.name: String
     get() = when (this) {

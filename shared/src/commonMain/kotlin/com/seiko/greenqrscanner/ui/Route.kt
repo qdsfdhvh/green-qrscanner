@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.ui.scene.add.AddBarcodeScene
 import com.seiko.greenqrscanner.ui.scene.add.SelectAddScene
-import com.seiko.greenqrscanner.ui.scene.detail.DetailContentScene
+import com.seiko.greenqrscanner.ui.scene.detail.DetailContentDialog
 import com.seiko.greenqrscanner.ui.scene.detail.DetailScene
 import com.seiko.greenqrscanner.ui.scene.home.HomeScene
 import com.seiko.greenqrscanner.ui.scene.popup.BarcodeSettingsBottomSheet
@@ -79,8 +79,8 @@ fun RouteBuilder.initRoute(navigator: Navigator) {
             },
         )
     }
-    scene(Route.DetailFullContent.path) {
-        DetailContentScene(
+    floating(Route.DetailFullContent.path) {
+        DetailContentDialog(
             navigator = navigator,
             barcode = remember {
                 it.path<String>(Route.paramBarcode)!!.decodeUrl()
