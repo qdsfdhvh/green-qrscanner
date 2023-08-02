@@ -128,6 +128,11 @@ listOf(
     "mergeReleaseResources",
     "mapDebugSourceSetPaths",
     "mapReleaseSourceSetPaths",
+    "iosX64ProcessResources",
+    "iosArm64ProcessResources",
+    "iosSimulatorArm64ProcessResources",
+    "syncPodComposeResourcesForIos",
+    "jvmProcessResources",
 ).forEach { name ->
     tasks.matching { it.name == name }.configureEach {
         dependsOn(tasks.matching { it.name == "libresGenerateImages" })
