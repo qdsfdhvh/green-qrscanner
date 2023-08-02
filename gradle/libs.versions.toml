@@ -1,6 +1,6 @@
 [versions]
 agp = "8.1.0"
-kotlin = "1.8.20"
+kotlin = "1.9.0"
 ksp = "1.8.20-1.0.11"
 compose-multiplatform = "1.5.0-beta01"
 spotless = "6.20.0"
