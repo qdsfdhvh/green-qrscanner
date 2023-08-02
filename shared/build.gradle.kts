@@ -120,6 +120,16 @@ fun DependencyHandlerScope.kspAll(dependencyNotation: Any) {
     add("kspIosSimulatorArm64", dependencyNotation)
 }
 
-tasks.matching { it.name == "packageDebugResources" }.configureEach {
-    dependsOn(tasks.matching { it.name == "libresGenerateImages" })
+// workaround for libres
+listOf(
+    "packageDebugResources",
+    "packageReleaseResources",
+    "mergeDebugResources",
+    "mergeReleaseResources",
+    "mapDebugSourceSetPaths",
+    "mapReleaseSourceSetPaths",
+).forEach { name ->
+    tasks.matching { it.name == name }.configureEach {
+        dependsOn(tasks.matching { it.name == "libresGenerateImages" })
+    }
 }
