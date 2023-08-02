@@ -45,3 +45,15 @@ allprojects {
 }
 
 apply(from = "gradle/projectDependencyGraph.gradle")
+
+gradle.taskGraph.whenReady {
+    // workaround error of: Cannot access class 'app.cash.sqldelight.db.SqlSchema'
+    // https://github.com/cashapp/sqldelight/issues/4473
+    if (project.hasProperty("noIosMetadata")) {
+        allTasks.filter {
+            it.path.startsWith(":shared:compileIosMainKotlinMetadata")
+        }.forEach {
+            it.enabled = false
+        }
+    }
+}
