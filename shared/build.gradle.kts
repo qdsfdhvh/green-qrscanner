@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
-    alias(libs.plugins.moko.resources)
+    alias(libs.plugins.libres)
     alias(libs.plugins.ksp)
 }
 
@@ -43,7 +43,6 @@ kotlin {
                 implementation(libs.multiplatform.settings.core)
                 implementation(libs.multiplatform.settings.coroutines)
                 implementation(libs.kermit)
-                implementation(libs.moko.resources.core)
                 implementation(libs.compose.material3.windowsizeclass)
                 implementation(libs.okio)
             }
@@ -105,8 +104,8 @@ sqldelight {
     }
 }
 
-multiplatformResources {
-    multiplatformResourcesPackage = "com.seiko.greenqrscanner"
+libres {
+    generatedClassName = "MR"
 }
 
 dependencies {
@@ -121,27 +120,6 @@ fun DependencyHandlerScope.kspAll(dependencyNotation: Any) {
     add("kspIosSimulatorArm64", dependencyNotation)
 }
 
-// workaround for moko-resources
-listOf(
-    "iosSimulatorArm64",
-    "iosArm64",
-    "iosX64",
-    "macosArm64",
-    "macosX64",
-).forEach { name ->
-    tasks.matching { it.name == "kspKotlin${name.replaceFirstChar { char -> char.uppercase() }}" }.configureEach {
-        dependsOn(tasks.matching { it.name == "generateMR${name}Main" })
-    }
-}
-tasks.matching { it.name == "kspDebugKotlinAndroid" }.configureEach {
-    dependsOn(tasks.matching { it.name == "generateMRandroidMain" })
-}
 tasks.matching { it.name == "packageDebugResources" }.configureEach {
-    dependsOn(tasks.matching { it.name == "generateMRandroidMain" })
-}
-tasks.matching { it.name == "syncPodComposeResourcesForIos" }.configureEach {
-    dependsOn(tasks.matching { it.name == "generateMRcommonMain" })
-}
-tasks.matching { it.name == "syncPodComposeResourcesForIos" }.configureEach {
-    dependsOn(tasks.matching { it.name == "generateMRiosSimulatorArm64Main" })
+    dependsOn(tasks.matching { it.name == "libresGenerateImages" })
 }

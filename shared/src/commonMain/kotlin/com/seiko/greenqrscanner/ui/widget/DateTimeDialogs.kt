@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.seiko.greenqrscanner.MR
 import com.seiko.greenqrscanner.util.stringResource
+import com.seiko.greenqrscanner.util.strings
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime

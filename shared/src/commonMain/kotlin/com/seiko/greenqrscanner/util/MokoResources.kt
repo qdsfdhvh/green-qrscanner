@@ -1,9 +1,9 @@
 package com.seiko.greenqrscanner.util
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ReadOnlyComposable
-import dev.icerock.moko.resources.StringResource
+import com.seiko.greenqrscanner.MR
 
-@Composable
-@ReadOnlyComposable
-expect fun stringResource(resource: StringResource): String
+inline fun stringResource(resource: String): String {
+    return resource
+}
+
+inline val MR.strings get() = string

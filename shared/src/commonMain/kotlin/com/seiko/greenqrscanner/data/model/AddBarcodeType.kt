@@ -17,6 +17,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.seiko.greenqrscanner.MR
 import com.seiko.greenqrscanner.util.stringResource
+import com.seiko.greenqrscanner.util.strings
 
 enum class AddBarcodeType {
     Text,

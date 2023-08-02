@@ -12,7 +12,7 @@ androidx-camera = "1.2.3"
 androidx-camera-view = "1.3.0-beta02"
 androidx-datastore = "1.0.0"
 multiplatform-paging = "1.0.6"
-moko-resources = "0.23.0"
+libres = "1.1.8"
 kotlinx-coroutines = "1.7.3"
 kotlinx-datetime = "0.4.0"
 kotlinx-collections-immutable = "0.3.5"
@@ -41,7 +41,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
-moko-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko-resources" }
+libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]
@@ -83,10 +83,6 @@ multiplatform-paging = { module = "io.github.qdsfdhvh:paging", version.ref = "mu
 multiplatform-settings-core = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings" }
 multiplatform-settings-datastore = { module = "com.russhwolf:multiplatform-settings-datastore", version.ref = "multiplatform-settings" }
-
-
-moko-resources-core = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
-moko-resources-test = { module = "dev.icerock.moko:resources-test", version.ref = "moko-resources" }
 
 compose-material3-windowsizeclass = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "compose-material3-windowsizeclass" }
 
