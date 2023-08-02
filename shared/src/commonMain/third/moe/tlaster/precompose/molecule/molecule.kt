@@ -6,7 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.currentCompositeKeyHash
 import androidx.compose.runtime.remember
-import app.cash.molecule.RecompositionMode
+import app.cash.molecule.RecompositionClock
 import app.cash.molecule.launchMolecule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -22,9 +22,9 @@ private class PresenterHolder<T>(
 ) : AutoCloseable {
     private val dispatcher = providePlatformDispatcher()
     private val clock = if (useImmediateClock || dispatcher[MonotonicFrameClock] == null) {
-        RecompositionMode.Immediate
+        RecompositionClock.Immediate
     } else {
-        RecompositionMode.ContextClock
+        RecompositionClock.ContextClock
     }
     private val scope = CoroutineScope(dispatcher)
     val state = scope.launchMolecule(clock, body)
