@@ -2,7 +2,6 @@ package com.seiko.greenqrscanner.ui.scene.scan
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,13 +12,16 @@ import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.BarcodeScanner
+import io.github.seiko.precompose.annotation.NavGraphDestination
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 
-@OptIn(ExperimentalMaterial3Api::class)
+@NavGraphDestination(
+    route = Route.Scan,
+)
 @Composable
 fun ScanScene(
     navigator: Navigator,

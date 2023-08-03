@@ -19,9 +19,29 @@ import com.seiko.greenqrscanner.ui.scene.add.content.AddUrlContent
 import com.seiko.greenqrscanner.ui.scene.add.content.AddWifiContent
 import com.seiko.greenqrscanner.ui.widget.BackButton
 import com.seiko.greenqrscanner.ui.widget.SimpleTopBar
+import io.github.seiko.precompose.annotation.NavGraphDestination
+import io.github.seiko.precompose.annotation.Query
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
+
+@NavGraphDestination(
+    route = Route.Add.path,
+)
+@Composable
+fun AddBarcodeSceneRoute(
+    navigator: Navigator,
+    @Query(Route.paramType) typeString: String?,
+) {
+    AddBarcodeScene(
+        navigator = navigator,
+        type = remember {
+            typeString?.let {
+                AddBarcodeType.valueOf(it)
+            } ?: AddBarcodeType.Text
+        },
+    )
+}
 
 @Composable
 fun AddBarcodeScene(

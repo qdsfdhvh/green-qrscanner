@@ -33,10 +33,12 @@ kotlin {
                 implementation(compose.materialIconsExtended)
 
                 api(libs.bundles.kotlinx)
-                api(libs.bundles.precompose)
 
                 implementation(projects.thirdParty.composeMaterialDialogsDatetime)
 
+                api(libs.precompose.runtime)
+                implementation(libs.precompose.annotation) // native not support compileOnly
+                implementation(libs.molecule.runtime)
                 implementation(libs.koject.core)
                 implementation(libs.sqldelight.coroutines.extensions)
                 implementation(libs.multiplatform.paging)
@@ -110,10 +112,10 @@ libres {
 
 dependencies {
     kspAll(libs.koject.processor.app)
+    kspAll(libs.precompose.ksp)
 }
 
 fun DependencyHandlerScope.kspAll(dependencyNotation: Any) {
-    // add("kspCommonMainMetadata", dependencyNotation)
     add("kspAndroid", dependencyNotation)
     add("kspIosX64", dependencyNotation)
     add("kspIosArm64", dependencyNotation)

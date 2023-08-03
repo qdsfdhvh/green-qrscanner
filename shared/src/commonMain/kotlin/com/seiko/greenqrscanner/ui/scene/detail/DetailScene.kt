@@ -27,15 +27,32 @@ import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.BackButton
 import com.seiko.greenqrscanner.ui.widget.OverflowTextSelection
 import com.seiko.greenqrscanner.ui.widget.SimpleTopBar
+import com.seiko.greenqrscanner.util.decodeUrl
 import com.seiko.greenqrscanner.util.generateQrCode
 import com.seiko.uistate.UiState
 import com.seiko.uistate.map
 import com.seiko.uistate.onLoading
 import com.seiko.uistate.onSuccess
 import com.seiko.uistate.toUiState
+import io.github.seiko.precompose.annotation.NavGraphDestination
+import io.github.seiko.precompose.annotation.Path
 import kotlinx.coroutines.withContext
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.Navigator
+
+@NavGraphDestination(
+    route = Route.Detail.path,
+)
+@Composable
+fun DetailSceneRoute(
+    navigator: Navigator,
+    @Path(Route.paramBarcode) barcodeBase64: String,
+) {
+    DetailScene(
+        navigator = navigator,
+        barcode = remember { barcodeBase64.decodeUrl() },
+    )
+}
 
 @Composable
 fun DetailScene(

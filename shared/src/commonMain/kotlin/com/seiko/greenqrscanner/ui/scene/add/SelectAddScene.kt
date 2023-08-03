@@ -29,9 +29,13 @@ import com.seiko.greenqrscanner.data.model.title
 import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.BackButton
 import com.seiko.greenqrscanner.ui.widget.SimpleTopBar
+import io.github.seiko.precompose.annotation.NavGraphDestination
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.Navigator
 
+@NavGraphDestination(
+    route = Route.SelectAdd,
+)
 @Composable
 fun SelectAddScene(
     navigator: Navigator,

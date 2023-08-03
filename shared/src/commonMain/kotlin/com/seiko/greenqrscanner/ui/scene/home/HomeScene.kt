@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -26,12 +25,17 @@ import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeHistoryContent
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeStarContent
 import com.seiko.greenqrscanner.ui.widget.BarcodeItemClickable
+import com.seiko.greenqrscanner.util.AppLogger
+import io.github.seiko.precompose.annotation.NavGraphDestination
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
+@NavGraphDestination(
+    route = Route.Home,
+)
 @Composable
 fun HomeScene(
     navigator: Navigator,
@@ -42,6 +46,7 @@ fun HomeScene(
         HomeSceneClickable(
             barcodeItemClickable = BarcodeItemClickable(
                 onItemClicked = {
+                    AppLogger.d { "onItemClicked $it" }
                     navigator.navigate(
                         Route.Detail(it.rawValue),
                         NavOptions(
@@ -53,6 +58,13 @@ fun HomeScene(
                     status.setStar(it)
                 },
                 onSettingClicked = {
+                    AppLogger.d { "onSetting $it" }
+                    navigator.navigate(
+                        Route.Popup.BarcodeSettings(it.rawValue),
+                        // NavOptions(
+                        //     launchSingleTop = true,
+                        // ),
+                    )
                 },
             ),
         )

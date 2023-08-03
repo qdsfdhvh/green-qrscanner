@@ -48,7 +48,7 @@ fun RouteScene(
             initialRoute = Route.initial,
             navTransition = noneTransition,
         ) {
-            initRoute(navigator)
+            generateRoute(navigator)
         }
         AnimatedVisibility(
             visible = showBottomBar,

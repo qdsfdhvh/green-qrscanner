@@ -13,8 +13,13 @@ import androidx.compose.ui.unit.dp
 import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.store.DataStoreKeys
 import com.seiko.greenqrscanner.data.store.DataStoreManager
+import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.preference.SwitchPreference
+import io.github.seiko.precompose.annotation.NavGraphDestination
 
+@NavGraphDestination(
+    route = Route.Settings,
+)
 @Composable
 fun SettingsScene() {
     Scaffold { innerPadding ->
