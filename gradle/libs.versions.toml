@@ -29,7 +29,7 @@ android-cache-fix = "2.7.3"
 compose-material3-windowsizeclass = "0.2.0"
 multiplatform-settings = "1.0.0"
 zxing = "3.5.2"
-okio = "3.4.0"
+okio = "3.5.0"
 assertk = "0.26.1"
 
 [plugins]
