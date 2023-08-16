@@ -49,6 +49,7 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 # Build logic dependencies
 gradlePlugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradlePlugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
@@ -99,7 +100,8 @@ assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assert
 [bundles]
 logic-plugins = [
     "gradlePlugin-kotlin",
-    "gradlePlugin-android"
+    "gradlePlugin-android",
+    "gradlePlugin-compose",
 ]
 androidx-camera = [
     "androidx-camera-view",
