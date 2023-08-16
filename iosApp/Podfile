@@ -1,5 +1,5 @@
 target 'GreenQrScanner' do
   use_frameworks!
   platform :ios, '15.2'
-  pod 'shared', :path => '../shared'
+  pod 'combine', :path => '../iosAppCombine'
 end

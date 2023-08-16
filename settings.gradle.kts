@@ -21,5 +21,6 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":androidApp")
+include(":iosAppCombine")
 include(":shared")
 include(":third-party:compose-material-dialogs-datetime")

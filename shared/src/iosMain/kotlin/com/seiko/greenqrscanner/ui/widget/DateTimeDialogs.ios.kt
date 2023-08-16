@@ -63,7 +63,7 @@ actual fun TimePickerDialog(
             minute = selectedTime.minute.toLong(),
             second = 0,
             ofDate = NSDate(),
-            options = 0,
+            options = 0u,
         )!!,
         confirmLabel = confirmLabel,
         onDateChanged = { date ->
@@ -224,8 +224,8 @@ private class DatePickerViewController(
             ),
         )
 
-        stack.insertArrangedSubview(datePicker, 0)
-        stack.insertArrangedSubview(confirmButton, 1)
+        stack.insertArrangedSubview(datePicker, 0u)
+        stack.insertArrangedSubview(confirmButton, 1u)
     }
 
     override fun viewDidDisappear(animated: Boolean) {

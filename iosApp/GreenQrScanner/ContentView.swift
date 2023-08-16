@@ -1,14 +1,14 @@
 import UIKit
 import SwiftUI
-import shared
+import combine
 
 struct ComposeView: UIViewControllerRepresentable {
     init() {
-        KojectHelper_iosKt.startKoject()
+        MainKt.doInitDI()
     }
-    
+
     func makeUIViewController(context: Context) -> UIViewController {
-        Main_iosKt.MainViewController()
+        MainKt.MainViewController()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

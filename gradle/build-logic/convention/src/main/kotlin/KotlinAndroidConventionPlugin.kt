@@ -10,7 +10,7 @@ class KotlinAndroidConventionPlugin : Plugin<Project> {
             apply("org.jetbrains.kotlin.multiplatform")
         }
         extensions.configure<KotlinMultiplatformExtension> {
-            android()
+            androidTarget()
         }
         configKotlin()
     }
