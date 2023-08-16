@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.interop.LocalUIViewController
 import androidx.compose.ui.unit.dp
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ExportObjCClass
 import kotlinx.cinterop.ObjCAction
 import kotlinx.cinterop.cstr
@@ -194,6 +195,7 @@ private class DatePickerViewController(
         translatesAutoresizingMaskIntoConstraints = false
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     val stack = UIStackView().apply {
         axis = UILayoutConstraintAxisVertical
         spacing = 16.0
@@ -236,6 +238,7 @@ private class DatePickerViewController(
 
 private val midday by lazy { LocalTime(12, 0, 0, 0) }
 
+@OptIn(ExperimentalForeignApi::class)
 fun <T : UIControl> T.addEventHandler(
     event: UIControlEvents,
     lambda: T.() -> Unit,

@@ -14,15 +14,9 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
         extensions.configure<KotlinMultiplatformExtension> {
             jvm()
             androidTarget()
-            listOf(
-                iosX64(),
-                iosArm64(),
-                iosSimulatorArm64(),
-            ).forEach { target ->
-                target.binaries.framework {
-                    baseName = path.substring(1).replace(':', '-')
-                }
-            }
+            iosX64()
+            iosArm64()
+            iosSimulatorArm64()
             @OptIn(ExperimentalKotlinGradlePluginApi::class)
             targetHierarchy.custom {
                 common {
@@ -53,12 +47,6 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                         // Enable debug symbols:
                         // https://kotlinlang.org/docs/native-ios-symbolication.html
                         freeCompilerArgs.add("-Xadd-light-debug=enable")
-
-                        // Various opt-ins
-                        freeCompilerArgs.addAll(
-                            "-opt-in=kotlinx.cinterop.ExperimentalForeignApi",
-                            "-opt-in=kotlinx.cinterop.BetaInteropApi",
-                        )
                     }
                 }
             }

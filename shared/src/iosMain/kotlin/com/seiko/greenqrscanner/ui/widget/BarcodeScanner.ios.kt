@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.interop.UIKitView
 import com.seiko.greenqrscanner.data.model.Barcode
 import kotlinx.cinterop.CValue
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.AVFoundation.AVCaptureDeviceInput
 import platform.AVFoundation.AVCaptureMetadataOutput
 import platform.AVFoundation.AVCaptureSession
@@ -17,6 +18,7 @@ import platform.QuartzCore.CATransaction
 import platform.QuartzCore.kCATransactionDisableActions
 import platform.UIKit.UIView
 
+@OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun BarcodeScanner(
     onResult: (result: List<Barcode>) -> Unit,

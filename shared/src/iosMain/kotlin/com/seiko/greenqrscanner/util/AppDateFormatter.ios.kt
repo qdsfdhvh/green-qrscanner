@@ -1,5 +1,6 @@
 package com.seiko.greenqrscanner.util
 
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.convert
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
@@ -111,6 +112,7 @@ actual class AppDateFormatter(
         else -> formatShortDate(date)
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     actual fun formatDayOfWeek(dayOfWeek: DayOfWeek): String {
         val date = NSDateComponents()
             .apply { weekday = dayOfWeek.toNSWeekdayUnit().convert() }
@@ -142,6 +144,7 @@ actual class AppDateFormatter(
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
 private fun LocalTime.toNSDateComponents(): NSDateComponents {
     val components = NSDateComponents()
     components.hour = hour.convert()
