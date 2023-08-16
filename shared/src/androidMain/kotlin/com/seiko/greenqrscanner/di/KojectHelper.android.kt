@@ -14,6 +14,10 @@ fun startKoject(
     }
 }
 
+actual fun startKoject() {
+    Koject.start()
+}
+
 fun stopKoject() {
     Koject.stop()
 }
