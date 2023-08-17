@@ -56,4 +56,4 @@ jobs:
           java-version: 17
 
       - name: Build
-        run: ./gradlew build --stacktrace -PnoIosMetadata
+        run: ./gradlew build --stacktrace -PnoIosMetadata -PnoLinkPodDebug

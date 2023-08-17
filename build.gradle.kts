@@ -50,8 +50,15 @@ gradle.taskGraph.whenReady {
     // workaround error of: Cannot access class 'app.cash.sqldelight.db.SqlSchema'
     // https://github.com/cashapp/sqldelight/issues/4473
     if (project.hasProperty("noIosMetadata")) {
-        allTasks.filter {
+        allTasks.asSequence().filter {
             it.path.startsWith(":shared:compileIosMainKotlinMetadata")
+        }.forEach {
+            it.enabled = false
+        }
+    }
+    if (project.hasProperty("noLinkPodDebug")) {
+        allTasks.asSequence().filter {
+            it.path.startsWith(":iosAppCombine:linkPodDebug")
         }.forEach {
             it.enabled = false
         }
