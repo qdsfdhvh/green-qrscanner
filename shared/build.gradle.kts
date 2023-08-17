@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 plugins {
     id("app.android.library")
     id("app.kotlin.multiplatform")
+    id("app.kotlin.multiplatform.ios")
     id("app.compose.multiplatform")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)

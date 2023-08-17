@@ -1,13 +1,11 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     id("app.compose.multiplatform")
+    id("app.kotlin.multiplatform.ios")
     kotlin("native.cocoapods")
 }
 
 kotlin {
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
     sourceSets {
         commonMain {
             dependencies {

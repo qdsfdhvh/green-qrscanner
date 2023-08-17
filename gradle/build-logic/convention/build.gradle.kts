@@ -30,6 +30,10 @@ gradlePlugin {
             id = "app.kotlin.multiplatform"
             implementationClass = "KotlinMultiplatformConventionPlugin"
         }
+        register("kotlinMultiplatformIos") {
+            id = "app.kotlin.multiplatform.ios"
+            implementationClass = "KotlinMultiplatformIosConventionPlugin"
+        }
         register("kotlinAndroid") {
             id = "app.kotlin.android"
             implementationClass = "KotlinAndroidConventionPlugin"
