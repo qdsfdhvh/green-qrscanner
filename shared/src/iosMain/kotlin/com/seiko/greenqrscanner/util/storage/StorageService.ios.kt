@@ -2,6 +2,7 @@ package com.seiko.greenqrscanner.util.storage
 
 import com.moriatsushi.koject.Provides
 import com.moriatsushi.koject.Singleton
+import kotlinx.cinterop.ExperimentalForeignApi
 import okio.Path
 import okio.Path.Companion.toPath
 import platform.Foundation.NSCachesDirectory
@@ -9,6 +10,7 @@ import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDirectory
 import platform.Foundation.NSUserDomainMask
 
+@OptIn(ExperimentalForeignApi::class)
 @Singleton
 @Provides
 actual class StorageService {

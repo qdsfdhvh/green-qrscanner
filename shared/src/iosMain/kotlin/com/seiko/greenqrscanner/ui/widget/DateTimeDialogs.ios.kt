@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.interop.LocalUIViewController
 import androidx.compose.ui.unit.dp
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ExportObjCClass
 import kotlinx.cinterop.ObjCAction
 import kotlinx.cinterop.cstr
@@ -63,7 +64,7 @@ actual fun TimePickerDialog(
             minute = selectedTime.minute.toLong(),
             second = 0,
             ofDate = NSDate(),
-            options = 0,
+            options = 0u,
         )!!,
         confirmLabel = confirmLabel,
         onDateChanged = { date ->
@@ -194,6 +195,7 @@ private class DatePickerViewController(
         translatesAutoresizingMaskIntoConstraints = false
     }
 
+    @OptIn(ExperimentalForeignApi::class)
     val stack = UIStackView().apply {
         axis = UILayoutConstraintAxisVertical
         spacing = 16.0
@@ -224,8 +226,8 @@ private class DatePickerViewController(
             ),
         )
 
-        stack.insertArrangedSubview(datePicker, 0)
-        stack.insertArrangedSubview(confirmButton, 1)
+        stack.insertArrangedSubview(datePicker, 0u)
+        stack.insertArrangedSubview(confirmButton, 1u)
     }
 
     override fun viewDidDisappear(animated: Boolean) {
@@ -236,6 +238,7 @@ private class DatePickerViewController(
 
 private val midday by lazy { LocalTime(12, 0, 0, 0) }
 
+@OptIn(ExperimentalForeignApi::class)
 fun <T : UIControl> T.addEventHandler(
     event: UIControlEvents,
     lambda: T.() -> Unit,

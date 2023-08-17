@@ -12,4 +12,4 @@ iosApp/Pods/*
 iosApp/GreenQrScanner.xcworkspace/*
 iosApp/GreenQrScanner.xcodeproj/*
 !iosApp/GreenQrScanner.xcodeproj/project.pbxproj
-shared/shared.podspec
+iosAppCombine/combine.podspec

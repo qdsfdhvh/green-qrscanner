@@ -3,7 +3,7 @@ package com.seiko.greenqrscanner.di
 import com.moriatsushi.koject.Koject
 import com.moriatsushi.koject.start
 
-fun startKoject() {
+actual fun startKoject() {
     Koject.start {
     }
 }

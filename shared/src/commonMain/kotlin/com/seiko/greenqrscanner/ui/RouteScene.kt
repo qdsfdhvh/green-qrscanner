@@ -22,7 +22,7 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 
 @Composable
-fun RouteScene(
+internal fun RouteScene(
     navigator: Navigator,
     modifier: Modifier = Modifier,
 ) {

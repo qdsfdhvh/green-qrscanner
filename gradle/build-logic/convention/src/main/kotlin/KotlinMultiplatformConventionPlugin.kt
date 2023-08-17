@@ -1,7 +1,10 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -10,48 +13,41 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
         }
         extensions.configure<KotlinMultiplatformExtension> {
             jvm()
-            android()
+            androidTarget()
             iosX64()
             iosArm64()
             iosSimulatorArm64()
-            sourceSets.apply {
-                val commonMain = getByName("commonMain")
-                val commonTest = getByName("commonTest")
-
-                val androidMain = getByName("androidMain")
-                val jvmMain = getByName("jvmMain")
-                maybeCreate("jvmCommonMain").apply {
-                    dependsOn(commonMain)
-                    androidMain.dependsOn(this)
-                    jvmMain.dependsOn(this)
+            @OptIn(ExperimentalKotlinGradlePluginApi::class)
+            targetHierarchy.custom {
+                common {
+                    group("jvmCommon") {
+                        withJvm()
+                        withAndroidTarget()
+                    }
+                    group("ios") {
+                        withIosX64()
+                        withIosArm64()
+                        withIosSimulatorArm64()
+                    }
+                }
+            }
+            targets.withType<KotlinNativeTarget>().configureEach {
+                binaries.all {
+                    // Add linker flag for SQLite. See:
+                    // https://github.com/touchlab/SQLiter/issues/77
+                    linkerOpts("-lsqlite3")
                 }
 
-                val androidUnitTest = getByName("androidUnitTest")
-                val jvmTest = getByName("jvmTest")
-                maybeCreate("jvmCommonTest").apply {
-                    dependsOn(commonTest)
-                    androidUnitTest.dependsOn(this)
-                    jvmTest.dependsOn(this)
-                }
+                compilations.configureEach {
+                    compilerOptions.configure {
+                        // Try out preview custom allocator in K/N 1.9
+                        // https://kotlinlang.org/docs/whatsnew19.html#preview-of-custom-memory-allocator
+                        // freeCompilerArgs.add("-Xallocator=custom")
 
-                val iosX64Main = getByName("iosX64Main")
-                val iosArm64Main = getByName("iosArm64Main")
-                val iosSimulatorArm64Main = getByName("iosSimulatorArm64Main")
-                maybeCreate("iosMain").apply {
-                    dependsOn(commonMain)
-                    iosX64Main.dependsOn(this)
-                    iosArm64Main.dependsOn(this)
-                    iosSimulatorArm64Main.dependsOn(this)
-                }
-
-                val iosX64Test = getByName("iosX64Test")
-                val iosArm64Test = getByName("iosArm64Test")
-                val iosSimulatorArm64Test = getByName("iosSimulatorArm64Test")
-                maybeCreate("iosTest").apply {
-                    dependsOn(commonTest)
-                    iosX64Test.dependsOn(this)
-                    iosArm64Test.dependsOn(this)
-                    iosSimulatorArm64Test.dependsOn(this)
+                        // Enable debug symbols:
+                        // https://kotlinlang.org/docs/native-ios-symbolication.html
+                        freeCompilerArgs.add("-Xadd-light-debug=enable")
+                    }
                 }
             }
         }

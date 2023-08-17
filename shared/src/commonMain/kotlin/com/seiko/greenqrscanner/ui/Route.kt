@@ -4,9 +4,6 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import com.seiko.greenqrscanner.data.model.AddBarcodeType
 import com.seiko.greenqrscanner.util.encodeUrl
-import io.github.seiko.precompose.annotation.NavGraphContainer
-import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.navigation.RouteBuilder
 import moe.tlaster.precompose.navigation.transition.NavTransition
 
 object Route {
@@ -43,10 +40,6 @@ object Route {
     const val paramBarcode = "barcode"
     const val paramType = "type"
 }
-
-@Suppress("NO_ACTUAL_FOR_EXPECT")
-@NavGraphContainer
-expect fun RouteBuilder.generateRoute(navigator: Navigator)
 
 val noneTransition = NavTransition(
     createTransition = EnterTransition.None,
