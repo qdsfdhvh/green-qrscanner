@@ -19,6 +19,18 @@ dependencyResolutionManagement {
     }
 }
 
+plugins {
+    id("com.gradle.enterprise") version "3.14.1"
+}
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+        publishAlwaysIf(System.getenv("GITHUB_ACTIONS") != null)
+    }
+}
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":androidApp")
