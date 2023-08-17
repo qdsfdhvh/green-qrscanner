@@ -21,11 +21,12 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                         Properties().apply {
                             load(it.reader(Charsets.UTF_8))
                         }.getProperty("arch")
-                    } ?: System.getenv("arch"),
+                    } ?: System.getProperty("os.arch"),
             )
             when (activeArch) {
                 Arch.X86 -> iosX64()
-                Arch.ARM -> iosSimulatorArm64()
+                Arch.ARM -> iosArm64()
+                Arch.AARCH -> iosSimulatorArm64()
                 Arch.ALL -> {
                     iosArm64()
                     iosX64()
@@ -42,7 +43,8 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                     group("ios") {
                         when (activeArch) {
                             Arch.X86 -> withIosX64()
-                            Arch.ARM -> withIosSimulatorArm64()
+                            Arch.ARM -> withIosArm64()
+                            Arch.AARCH -> withIosSimulatorArm64()
                             Arch.ALL -> {
                                 withIosX64()
                                 withIosArm64()
@@ -76,10 +78,11 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     }
 }
 
-enum class Arch(val arch: String?) {
+enum class Arch(val arch: String) {
     ARM("arm64"),
+    AARCH("aarch64"),
     X86("x86_64"),
-    ALL(null);
+    ALL("all");
 
     companion object {
         fun findByArch(arch: String?): Arch {

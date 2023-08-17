@@ -1,3 +1,7 @@
+import org.gradle.configurationcache.extensions.capitalized
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
+
 plugins {
     id("app.android.library")
     id("app.kotlin.multiplatform")
@@ -103,10 +107,15 @@ dependencies {
 }
 
 fun DependencyHandlerScope.kspAll(dependencyNotation: Any) {
-    add("kspAndroid", dependencyNotation)
-    add("kspIosX64", dependencyNotation)
-    add("kspIosArm64", dependencyNotation)
-    add("kspIosSimulatorArm64", dependencyNotation)
+    val kmpExtension = project.extensions.getByType<KotlinMultiplatformExtension>()
+    kmpExtension.targets.asSequence()
+        .filter { target ->
+            // Don't add KSP for common target, only final platforms
+            target.platformType != KotlinPlatformType.common
+        }
+        .forEach { target ->
+            add("ksp${target.targetName.capitalized()}", dependencyNotation)
+        }
 }
 
 // workaround for libres
