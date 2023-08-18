@@ -18,17 +18,17 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material3)
-                api(compose.ui)
-                api(compose.materialIconsExtended)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.materialIconsExtended)
 
-                api(libs.bundles.kotlinx)
+                implementation(libs.bundles.kotlinx)
 
                 implementation(projects.thirdParty.composeMaterialDialogsDatetime)
 
-                api(libs.precompose.runtime)
+                implementation(libs.precompose.runtime)
                 implementation(libs.precompose.annotation) // native not support compileOnly
                 implementation(libs.molecule.runtime)
                 implementation(libs.koject.core)
