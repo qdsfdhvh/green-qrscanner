@@ -10,4 +10,3 @@ fun initDI() {
 
 @Suppress("FunctionName")
 fun MainViewController(): UIViewController = MainComposeViewController()
-
