@@ -9,6 +9,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.shared)
+                implementation(libs.precompose.runtime)
             }
         }
     }
