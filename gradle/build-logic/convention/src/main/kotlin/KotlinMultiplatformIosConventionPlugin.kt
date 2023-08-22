@@ -56,7 +56,7 @@ class KotlinMultiplatformIosConventionPlugin : Plugin<Project> {
                     compilerOptions.configure {
                         // Try out preview custom allocator in K/N 1.9
                         // https://kotlinlang.org/docs/whatsnew19.html#preview-of-custom-memory-allocator
-                        // freeCompilerArgs.add("-Xallocator=custom")
+                        freeCompilerArgs.add("-Xallocator=custom")
 
                         // Enable debug symbols:
                         // https://kotlinlang.org/docs/native-ios-symbolication.html

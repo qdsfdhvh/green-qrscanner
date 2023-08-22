@@ -31,7 +31,7 @@ fun Project.configureAndroid() {
     }
 }
 
-fun Project.configKotlin() {
+fun Project.configureKotlin() {
     extensions.configure<KotlinTopLevelExtension> {
         jvmToolchain(17)
     }

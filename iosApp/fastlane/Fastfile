@@ -1,0 +1,44 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  derived_data_path = "build/DerivedData"
+  scheme = "GreenQrScanner"
+  workspace = "GreenQrScanner.xcworkspace"
+  project = "GreenQrScanner.xcodeproj"
+  destination = "platform=iOS Simulator,name=iPhone 14 Pro,OS=17.0"
+
+  desc "Swift Lint"
+  lane :lint do
+    swiftlint(
+      mode: :lint,
+      strict: true,
+      raise_if_swiftlint_error: true
+    )
+  end
+
+  desc "Build GreenQrScanner project"
+  lane :build_project do
+    xcodebuild(
+      xcargs: "-skipPackagePluginValidation",
+      project: project,
+      scheme: scheme,
+      destination: destination,
+    )
+  end
+
+end

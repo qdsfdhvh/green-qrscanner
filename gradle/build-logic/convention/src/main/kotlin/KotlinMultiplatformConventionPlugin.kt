@@ -23,6 +23,6 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                 }
             }
         }
-        configKotlin()
+        configureKotlin()
     }
 }
