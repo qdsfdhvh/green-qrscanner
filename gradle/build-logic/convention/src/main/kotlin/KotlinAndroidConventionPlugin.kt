@@ -12,6 +12,6 @@ class KotlinAndroidConventionPlugin : Plugin<Project> {
         extensions.configure<KotlinMultiplatformExtension> {
             androidTarget()
         }
-        configKotlin()
+        configureKotlin()
     }
 }
