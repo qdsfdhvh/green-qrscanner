@@ -22,6 +22,15 @@ platform :ios do
   project = "GreenQrScanner.xcodeproj"
   destination = "platform=iOS Simulator,name=iPhone 14 Pro,OS=17.0"
 
+  desc "Swift Lint"
+  lane :lint do
+    swiftlint(
+      mode: :lint,
+      strict: true,
+      raise_if_swiftlint_error: true
+    )
+  end
+
   desc "Build GreenQrScanner project"
   lane :build_project do
     xcodebuild(
