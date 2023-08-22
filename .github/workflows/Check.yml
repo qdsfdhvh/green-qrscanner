@@ -41,9 +41,10 @@ jobs:
         run: fastlane ios lint
         working-directory: iosApp
 
-  build:
+  build-android:
     needs: spotless
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -60,5 +61,59 @@ jobs:
           distribution: 'zulu'
           java-version: 17
 
-      - name: Build
-        run: ./gradlew build --stacktrace -PnoIosMetadata -PnoLinkPodDebug
+      - name: Build Android App
+        run: |
+          ./gradlew \
+            :androidApp:bundle \
+            :androidApp:build
+
+      - name: Upload build outputs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-build-outputs
+          path: androidApp/build/outputs
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-reports
+          path: |
+            **/build/reports/*
+
+  build-ios:
+    needs: spotless
+    runs-on: macos-13
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        with:
+          bundler-cache: true
+
+      - name: read .xcode-version
+        shell: bash
+        run: |
+          echo "XCODE_VERSION=$(grep -oE "\d+(\.\d+)+" .xcode-version | awk -F. '{print $1 ".0"}' | uniq)" >> $GITHUB_ENV
+
+      - name: execute xcode-select
+        shell: bash
+        run: |
+          echo "select $XCODE_VERSION"
+          sudo xcode-select --switch "/Applications/Xcode_$XCODE_VERSION.app"
+
+      - name: Build iOS application
+        run: bundle exec fastlane build_project
+        working-directory: iosApp
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-logs
+          path: |
+            **/fastlane-buildlog
