@@ -31,6 +31,7 @@ multiplatform-settings = "1.0.0"
 zxing = "3.5.2"
 okio = "3.5.0"
 assertk = "0.26.1"
+licensee = "1.7.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -44,6 +45,7 @@ compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-m
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+licensee = { id = "app.cash.licensee", version.ref = "licensee" }
 
 [libraries]
 # Build logic dependencies
