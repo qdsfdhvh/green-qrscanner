@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.libres)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.licensee)
 }
 
 kotlin {
@@ -100,6 +101,19 @@ sqldelight {
 
 libres {
     generatedClassName = "MR"
+}
+
+licensee {
+    allow("Apache-2.0")
+    allow("MIT")
+    allowUrl("https://developer.android.com/studio/terms.html")
+    allowUrl("https://developers.google.com/ml-kit/terms")
+    ignoreDependencies("junit", "junit") {
+        because("junit is used in tests only")
+    }
+    ignoreDependencies("org.hamcrest", "hamcrest-core") {
+        because("hamcrest-core is used in tests only")
+    }
 }
 
 dependencies {
