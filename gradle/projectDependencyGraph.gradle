@@ -7,7 +7,7 @@ def font = "Helvetica"
 
 task projectDependencyGraph {
     doLast {
-        def dot = new File(rootProject.buildDir, 'reports/dependency-graph/project.dot')
+        def dot = rootProject.layout.buildDirectory.file("reports/dependency-graph/project.dot").get().asFile
         dot.parentFile.mkdirs()
         dot.delete()
 
