@@ -30,7 +30,7 @@ compose-material3-windowsizeclass = "0.3.1"
 multiplatform-settings = "1.0.0"
 zxing = "3.5.2"
 okio = "3.5.0"
-assertk = "0.26.1"
+assertk = "0.27.0"
 licensee = "1.7.0"
 
 [plugins]
