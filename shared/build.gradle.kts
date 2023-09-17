@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.libres)
     alias(libs.plugins.ksp)
     alias(libs.plugins.licensee)
+    alias(libs.plugins.aboutlibraries)
 }
 
 kotlin {
@@ -24,6 +25,8 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.materialIconsExtended)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
 
                 implementation(libs.bundles.kotlinx)
 
@@ -41,6 +44,8 @@ kotlin {
                 implementation(libs.compose.material3.windowsizeclass)
                 implementation(libs.okio)
                 implementation(libs.material.kolor)
+                implementation(libs.aboutlibraries.core)
+                implementation(libs.aboutlibraries.compose)
             }
         }
         val commonTest by getting {
@@ -115,6 +120,10 @@ licensee {
     ignoreDependencies("org.hamcrest", "hamcrest-core") {
         because("hamcrest-core is used in tests only")
     }
+}
+
+aboutLibraries {
+    registerAndroidTasks = false
 }
 
 dependencies {
