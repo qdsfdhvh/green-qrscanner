@@ -10,6 +10,7 @@ object Route {
     const val Home = "Home"
     const val Scan = "Scan"
     const val Settings = "Settings"
+    const val AboutLibraries = "AboutLibraries"
 
     object Popup {
         object BarcodeSettings {

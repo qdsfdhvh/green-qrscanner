@@ -48,7 +48,11 @@ internal fun RouteScene(
             initialRoute = Route.initial,
             navTransition = noneTransition,
         ) {
-            generateRoute(navigator)
+            generateRoute(
+                navigator = navigator,
+                onBack = { navigator.goBack() },
+                onNavigate = { navigator.navigate(it) },
+            )
         }
         AnimatedVisibility(
             visible = showBottomBar,

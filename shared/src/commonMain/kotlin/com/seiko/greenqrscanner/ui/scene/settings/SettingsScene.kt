@@ -14,14 +14,18 @@ import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.store.DataStoreKeys
 import com.seiko.greenqrscanner.data.store.DataStoreManager
 import com.seiko.greenqrscanner.ui.Route
+import com.seiko.greenqrscanner.ui.widget.preference.Preference
 import com.seiko.greenqrscanner.ui.widget.preference.SwitchPreference
 import io.github.seiko.precompose.annotation.NavGraphDestination
+import io.github.seiko.precompose.annotation.Navigate
 
 @NavGraphDestination(
     route = Route.Settings,
 )
 @Composable
-fun SettingsScene() {
+fun SettingsScene(
+    @Navigate onNavigate: (String) -> Unit,
+) {
     Scaffold { innerPadding ->
         val dataStoreManager: DataStoreManager = rememberInject()
         LazyColumn(
@@ -51,6 +55,12 @@ fun SettingsScene() {
                     dataStore = dataStoreManager,
                     key = DataStoreKeys.sound_on_scan,
                     defaultValue = false,
+                )
+            }
+            item {
+                Preference(
+                    title = { Text("About Libraries") },
+                    onClick = { onNavigate(Route.AboutLibraries) },
                 )
             }
         }
