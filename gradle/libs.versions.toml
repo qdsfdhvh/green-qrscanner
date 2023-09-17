@@ -28,6 +28,7 @@ kermit = "2.0.0-RC5"
 android-cache-fix = "2.7.4"
 compose-material3-windowsizeclass = "0.3.1"
 multiplatform-settings = "1.0.0"
+material-kolor = "1.2.5"
 zxing = "3.5.2"
 okio = "3.5.0"
 assertk = "0.26.1"
@@ -92,6 +93,7 @@ multiplatform-settings-datastore = { module = "com.russhwolf:multiplatform-setti
 
 compose-material3-windowsizeclass = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "compose-material3-windowsizeclass" }
 
+material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "mlkit-barcode-scanning" }

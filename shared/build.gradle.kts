@@ -40,6 +40,7 @@ kotlin {
                 implementation(libs.kermit)
                 implementation(libs.compose.material3.windowsizeclass)
                 implementation(libs.okio)
+                implementation(libs.material.kolor)
             }
         }
         val commonTest by getting {
