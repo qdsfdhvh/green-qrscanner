@@ -29,6 +29,7 @@ kotlin {
                 implementation(compose.components.resources)
 
                 implementation(libs.bundles.kotlinx)
+                implementation(libs.bundles.androidx.common)
 
                 implementation(projects.thirdParty.composeMaterialDialogsDatetime)
 
@@ -37,7 +38,6 @@ kotlin {
                 implementation(libs.molecule.runtime)
                 implementation(libs.koject.core)
                 implementation(libs.sqldelight.coroutines.extensions)
-                implementation(libs.multiplatform.paging)
                 implementation(libs.multiplatform.settings.core)
                 implementation(libs.multiplatform.settings.coroutines)
                 implementation(libs.kermit)

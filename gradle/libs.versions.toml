@@ -11,7 +11,7 @@ androidx-activity-compose = "1.7.2"
 androidx-camera = "1.2.3"
 androidx-camera-view = "1.3.0-rc01"
 androidx-datastore = "1.0.0"
-multiplatform-paging = "1.0.6"
+androidx-paging = "3.3.0-alpha02"
 libres = "1.1.8"
 kotlinx-coroutines = "1.7.3"
 kotlinx-datetime = "0.4.1"
@@ -64,6 +64,8 @@ androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", versi
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidx-camera" }
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidx-datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging" }
+#androidx-paging-compose = { module = "androidx.paging.paging-compose", version.ref = "androidx-paging" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
@@ -86,8 +88,6 @@ precompose-runtime = { module = "moe.tlaster:precompose", version.ref = "precomp
 precompose-annotation = { module = "io.github.qdsfdhvh:precompose-annotation", version.ref = "precompose-ksp" }
 precompose-ksp = { module = "io.github.qdsfdhvh:precompose-ksp", version.ref = "precompose-ksp" }
 molecule-runtime = { module = "app.cash.molecule:molecule-runtime", version.ref = "molecule-runtime" }
-
-multiplatform-paging = { module = "io.github.qdsfdhvh:paging", version.ref = "multiplatform-paging" }
 
 multiplatform-settings-core = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings" }
@@ -112,6 +112,16 @@ logic-plugins = [
     "gradlePlugin-android",
     "gradlePlugin-compose",
 ]
+kotlinx = [
+    "kotlinx-coroutines-core",
+    "kotlinx-datetime",
+    "kotlinx-collections-immutable",
+    "kotlinx-serialization-json",
+]
+androidx-common = [
+    "androidx-paging-common",
+#    "androidx-paging-compose", # TODO: paging-compose only support android
+]
 androidx-camera = [
     "androidx-camera-view",
     "androidx-camera-camera2",
@@ -120,10 +130,4 @@ androidx-camera = [
 android-barcode = [
     "accompanist-permissions",
     "mlkit-barcode-scanning"
-]
-kotlinx = [
-    "kotlinx-coroutines-core",
-    "kotlinx-datetime",
-    "kotlinx-collections-immutable",
-    "kotlinx-serialization-json",
 ]
