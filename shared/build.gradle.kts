@@ -30,22 +30,9 @@ kotlin {
 
                 implementation(libs.bundles.kotlinx)
                 implementation(libs.bundles.androidx.common)
+                implementation(libs.bundles.thirdParty.common)
 
                 implementation(projects.thirdParty.composeMaterialDialogsDatetime)
-
-                implementation(libs.precompose.runtime)
-                implementation(libs.precompose.annotation) // native not support compileOnly
-                implementation(libs.molecule.runtime)
-                implementation(libs.koject.core)
-                implementation(libs.sqldelight.coroutines.extensions)
-                implementation(libs.multiplatform.settings.core)
-                implementation(libs.multiplatform.settings.coroutines)
-                implementation(libs.kermit)
-                implementation(libs.compose.material3.windowsizeclass)
-                implementation(libs.okio)
-                implementation(libs.material.kolor)
-                implementation(libs.aboutlibraries.core)
-                implementation(libs.aboutlibraries.compose)
             }
         }
         val commonTest by getting {

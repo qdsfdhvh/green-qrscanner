@@ -34,6 +34,7 @@ okio = "3.5.0"
 assertk = "0.27.0"
 licensee = "1.7.0"
 aboutlibraries = "10.9.0-b02"
+insetsx = "0.1.0-alpha10"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -105,6 +106,7 @@ mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
+insetsx = { module = "com.moriatsushi.insetsx:insetsx", version.ref = "insetsx" }
 
 [bundles]
 logic-plugins = [
@@ -130,4 +132,20 @@ androidx-camera = [
 android-barcode = [
     "accompanist-permissions",
     "mlkit-barcode-scanning"
+]
+thirdParty-common = [
+    "okio",
+    "kermit",
+    "precompose-runtime",
+    "precompose-annotation",
+    "molecule-runtime",
+    "koject-core",
+    "insetsx",
+    "sqldelight-coroutines-extensions",
+    "multiplatform-settings-core",
+    "multiplatform-settings-coroutines",
+    "compose-material3-windowsizeclass",
+    "material-kolor",
+    "aboutlibraries-core",
+    "aboutlibraries-compose",
 ]

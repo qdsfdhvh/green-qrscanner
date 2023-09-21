@@ -20,7 +20,7 @@ class MainActivity : PreComposeActivity() {
         super.onCreate(savedInstanceState)
         startKoject(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        // window.statusBarColor = Color.TRANSPARENT
+        window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
         setContent {
             MainView(viewModel.navigator)
