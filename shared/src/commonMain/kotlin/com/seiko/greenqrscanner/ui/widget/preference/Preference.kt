@@ -8,6 +8,17 @@ import androidx.compose.ui.Modifier
 @Composable
 fun Preference(
     title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ListItem(
+        headlineContent = title,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun Preference(
+    title: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

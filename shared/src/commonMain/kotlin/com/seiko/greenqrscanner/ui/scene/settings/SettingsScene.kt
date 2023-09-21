@@ -15,6 +15,7 @@ import com.seiko.greenqrscanner.data.store.DataStoreKeys
 import com.seiko.greenqrscanner.data.store.DataStoreManager
 import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.preference.Preference
+import com.seiko.greenqrscanner.ui.widget.preference.PreferenceTitle
 import com.seiko.greenqrscanner.ui.widget.preference.SwitchPreference
 import io.github.seiko.precompose.annotation.NavGraphDestination
 import io.github.seiko.precompose.annotation.Navigate
@@ -30,9 +31,14 @@ fun SettingsScene(
         val dataStoreManager: DataStoreManager = rememberInject()
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(6.dp),
-            contentPadding = PaddingValues(8.dp),
+            contentPadding = PaddingValues(vertical = 8.dp),
             modifier = Modifier.padding(innerPadding).fillMaxSize(),
         ) {
+            item {
+                PreferenceTitle(
+                    title = { Text("Custom") },
+                )
+            }
             item {
                 SwitchPreference(
                     title = { Text("将扫描添加到历史") },
@@ -55,6 +61,11 @@ fun SettingsScene(
                     dataStore = dataStoreManager,
                     key = DataStoreKeys.sound_on_scan,
                     defaultValue = false,
+                )
+            }
+            item {
+                PreferenceTitle(
+                    title = { Text("About") },
                 )
             }
             item {
