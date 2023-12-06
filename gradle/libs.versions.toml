@@ -33,7 +33,7 @@ zxing = "3.5.2"
 okio = "3.6.0"
 assertk = "0.27.0"
 licensee = "1.8.0"
-aboutlibraries = "10.9.0"
+aboutlibraries = "10.9.2"
 insetsx = "0.1.0-alpha10"
 
 [plugins]
