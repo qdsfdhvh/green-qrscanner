@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.model.Barcode
@@ -13,8 +12,6 @@ import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.BarcodeScanner
 import io.github.seiko.precompose.annotation.NavGraphDestination
-import kotlinx.coroutines.NonCancellable
-import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -51,13 +48,10 @@ fun ScanScene(
 private fun ScanPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
 ): ScanStatus {
-    val scope = rememberCoroutineScope()
     return ScanStatus(
         event = object : ScanEvent {
             override fun upset(barcodes: List<Barcode>) {
-                scope.launch(NonCancellable) {
-                    barcodeRepository.upset(barcodes)
-                }
+                barcodeRepository.upset(barcodes)
             }
         },
     )

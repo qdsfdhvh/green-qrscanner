@@ -16,7 +16,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +29,6 @@ import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import com.seiko.greenqrscanner.util.isUrl
-import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 
 @Composable
@@ -90,7 +88,6 @@ private fun AddUrlContentPresenter(
             url.text.isNotEmpty() && url.text.safeUrl().isUrl()
         }
     }
-    val scope = rememberCoroutineScope()
     return AddUrlContentStatus(
         url = url,
         title = title,
@@ -105,19 +102,17 @@ private fun AddUrlContentPresenter(
             }
 
             override fun done() {
-                scope.launch {
-                    val safeUrl = url.text.safeUrl()
-                    barcodeRepository.upset(
-                        Barcode(
-                            rawValue = safeUrl,
-                            format = BarcodeFormat.FORMAT_1D,
-                            type = BarcodeType.UrlBookmark(
-                                title = title.text,
-                                url = safeUrl,
-                            ),
+                val safeUrl = url.text.safeUrl()
+                barcodeRepository.upset(
+                    Barcode(
+                        rawValue = safeUrl,
+                        format = BarcodeFormat.FORMAT_1D,
+                        type = BarcodeType.UrlBookmark(
+                            title = title.text,
+                            url = safeUrl,
                         ),
-                    )
-                }
+                    ),
+                )
             }
         },
     )

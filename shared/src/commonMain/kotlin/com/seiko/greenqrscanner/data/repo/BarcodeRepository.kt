@@ -14,8 +14,11 @@ import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.UiBarcode
 import com.seiko.greenqrscanner.option.AppCoroutineDispatcher
 import com.seiko.greenqrscanner.util.currentTime
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @Singleton
 @Provides
@@ -25,13 +28,15 @@ class BarcodeRepository(
     private val appCoroutineDispatcher: AppCoroutineDispatcher,
 ) {
 
-    suspend fun upset(barcodes: List<Barcode>) {
+    private val scope = CoroutineScope(SupervisorJob() + appCoroutineDispatcher.io)
+
+    fun upset(barcodes: List<Barcode>) = scope.launch {
         dbBarcodeQueries.transaction {
             barcodes.forEach { upset(it) }
         }
     }
 
-    suspend fun upset(barcode: Barcode) {
+    fun upset(barcode: Barcode) = scope.launch {
         dbBarcodeQueries.upset(
             barcode = barcode.rawValue,
             barcode_format = barcode.format,
@@ -40,7 +45,7 @@ class BarcodeRepository(
         )
     }
 
-    suspend fun setStar(barcode: String, isStar: Boolean) {
+    fun setStar(barcode: String, isStar: Boolean) = scope.launch {
         dbBarcodeQueries.setStar(if (isStar) 1 else 0, barcode)
     }
 

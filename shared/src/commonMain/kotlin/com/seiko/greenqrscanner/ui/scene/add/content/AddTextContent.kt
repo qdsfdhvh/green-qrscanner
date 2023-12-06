@@ -13,7 +13,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +25,6 @@ import com.seiko.greenqrscanner.data.model.BarcodeFormat
 import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
-import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 
 @Composable
@@ -70,7 +68,6 @@ private fun AddTextContentPresenter(
             text.text.isNotEmpty()
         }
     }
-    val scope = rememberCoroutineScope()
     return AddTextContentStatus(
         text = text,
         canDone = canDone,
@@ -80,15 +77,13 @@ private fun AddTextContentPresenter(
             }
 
             override fun done() {
-                scope.launch {
-                    barcodeRepository.upset(
-                        Barcode(
-                            rawValue = text.text,
-                            format = BarcodeFormat.FORMAT_2D,
-                            type = BarcodeType.Text,
-                        ),
-                    )
-                }
+                barcodeRepository.upset(
+                    Barcode(
+                        rawValue = text.text,
+                        format = BarcodeFormat.FORMAT_2D,
+                        type = BarcodeType.Text,
+                    ),
+                )
             }
         },
     )
