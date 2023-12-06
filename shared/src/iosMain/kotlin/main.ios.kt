@@ -2,6 +2,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.window.ComposeUIViewController
+import com.seiko.greenqrscanner.di.startKoject
 import moe.tlaster.precompose.lifecycle.LifecycleOwner
 import moe.tlaster.precompose.lifecycle.LifecycleRegistry
 import moe.tlaster.precompose.lifecycle.LocalLifecycleOwner
@@ -12,8 +13,12 @@ import moe.tlaster.precompose.ui.BackDispatcherOwner
 import moe.tlaster.precompose.ui.LocalBackDispatcherOwner
 import platform.UIKit.UIViewController
 
+fun initDI() {
+    startKoject()
+}
+
 @Suppress("FunctionName")
-fun MainComposeViewController(): UIViewController = ComposeUIViewController {
+fun MainViewController(): UIViewController = ComposeUIViewController {
     ProvideDesktopCompositionLocals {
         App()
     }

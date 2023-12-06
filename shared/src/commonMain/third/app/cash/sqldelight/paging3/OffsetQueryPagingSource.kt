@@ -2,15 +2,19 @@ package app.cash.sqldelight.paging3
 
 import androidx.paging.PagingState
 import app.cash.sqldelight.Query
+import app.cash.sqldelight.SuspendingTransacter
 import app.cash.sqldelight.Transacter
+import app.cash.sqldelight.TransacterBase
+import app.cash.sqldelight.TransactionCallbacks
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 internal class OffsetQueryPagingSource<RowType : Any>(
     private val queryProvider: (limit: Int, offset: Int) -> Query<RowType>,
     private val countQuery: Query<Int>,
-    private val transacter: Transacter,
+    private val transacter: TransacterBase,
     private val context: CoroutineContext,
+    private val initialOffset: Int,
 ) : QueryPagingSource<Int, RowType>() {
 
     override val jumpingSupported get() = true
@@ -18,12 +22,12 @@ internal class OffsetQueryPagingSource<RowType : Any>(
     override suspend fun load(
         params: LoadParams<Int>,
     ): LoadResult<Int, RowType> = withContext(context) {
-        val key = params.key ?: 0
+        val key = params.key ?: initialOffset
         val limit = when (params) {
             is LoadParams.Prepend<*> -> minOf(key, params.loadSize)
             else -> params.loadSize
         }
-        val loadResult = transacter.transactionWithResult {
+        val getPagingSourceLoadResult: TransactionCallbacks.() -> LoadResult.Page<Int, RowType> = {
             val count = countQuery.executeAsOne()
             val offset = when (params) {
                 is LoadParams.Prepend<*> -> maxOf(0, key - params.loadSize)
@@ -42,6 +46,10 @@ internal class OffsetQueryPagingSource<RowType : Any>(
                 itemsBefore = offset,
                 itemsAfter = maxOf(0, count - nextPosToLoad),
             )
+        }
+        val loadResult = when (transacter) {
+            is Transacter -> transacter.transactionWithResult(bodyWithReturn = getPagingSourceLoadResult)
+            is SuspendingTransacter -> transacter.transactionWithResult(bodyWithReturn = getPagingSourceLoadResult)
         }
         if (invalid) LoadResult.Invalid() else loadResult
     }

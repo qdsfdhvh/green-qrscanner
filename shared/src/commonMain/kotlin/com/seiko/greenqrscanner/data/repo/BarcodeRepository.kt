@@ -5,10 +5,10 @@ import androidx.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneNotNull
 import app.cash.sqldelight.paging3.QueryPagingSource
-import app.com.seiko.greenqrscanner.DbBarcode
-import app.com.seiko.greenqrscanner.DbBarcodeQueries
 import com.moriatsushi.koject.Provides
 import com.moriatsushi.koject.Singleton
+import com.seiko.greenqrscanner.DbBarcode
+import com.seiko.greenqrscanner.DbBarcodeQueries
 import com.seiko.greenqrscanner.data.mapper.toUi
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.model.UiBarcode
@@ -25,13 +25,13 @@ class BarcodeRepository(
     private val appCoroutineDispatcher: AppCoroutineDispatcher,
 ) {
 
-    fun upset(barcodes: List<Barcode>) {
+    suspend fun upset(barcodes: List<Barcode>) {
         dbBarcodeQueries.transaction {
             barcodes.forEach { upset(it) }
         }
     }
 
-    fun upset(barcode: Barcode) {
+    suspend fun upset(barcode: Barcode) {
         dbBarcodeQueries.upset(
             barcode = barcode.rawValue,
             barcode_format = barcode.format,
@@ -40,7 +40,7 @@ class BarcodeRepository(
         )
     }
 
-    fun setStar(barcode: String, isStar: Boolean) {
+    suspend fun setStar(barcode: String, isStar: Boolean) {
         dbBarcodeQueries.setStar(if (isStar) 1 else 0, barcode)
     }
 

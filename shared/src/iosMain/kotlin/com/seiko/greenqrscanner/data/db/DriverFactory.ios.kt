@@ -1,5 +1,6 @@
 package com.seiko.greenqrscanner.data.db
 
+import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.db.SqlSchema
@@ -11,9 +12,9 @@ import com.moriatsushi.koject.Singleton
 @Provides
 internal actual class DriverFactory {
     actual fun createDriver(
-        schema: SqlSchema<QueryResult.Value<Unit>>,
+        schema: SqlSchema<QueryResult.AsyncValue<Unit>>,
         dbName: String,
     ): SqlDriver {
-        return NativeSqliteDriver(schema, dbName)
+        return NativeSqliteDriver(schema.synchronous(), dbName)
     }
 }

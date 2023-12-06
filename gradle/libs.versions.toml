@@ -6,6 +6,7 @@ compose-multiplatform = "1.5.11"
 spotless = "6.23.3"
 ktlint = "0.49.1"
 androidx-core-ktx = "1.12.0"
+androidx-annotation = "1.7.0"
 androidx-appcompat = "1.6.1"
 androidx-activity-compose = "1.8.1"
 androidx-camera = "1.3.0"
@@ -40,7 +41,6 @@ insetsx = "0.1.0-alpha10"
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "android-cache-fix" }
-#kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -58,6 +58,7 @@ gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ve
 gradlePlugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidx-camera-view" }
@@ -120,11 +121,12 @@ kotlinx = [
     "kotlinx-collections-immutable",
     "kotlinx-serialization-json",
 ]
-androidx-common = [
+common-androidx = [
+    "androidx-annotation",
     "androidx-paging-common",
 #    "androidx-paging-compose", # TODO: paging-compose only support android
 ]
-androidx-camera = [
+android-androidx-camera = [
     "androidx-camera-view",
     "androidx-camera-camera2",
     "androidx-camera-lifecycle",
@@ -133,7 +135,7 @@ android-barcode = [
     "accompanist-permissions",
     "mlkit-barcode-scanning"
 ]
-thirdParty-common = [
+common-thirdParty = [
     "okio",
     "kermit",
     "precompose-runtime",

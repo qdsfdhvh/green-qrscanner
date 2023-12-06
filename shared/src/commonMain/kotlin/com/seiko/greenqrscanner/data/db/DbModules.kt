@@ -1,9 +1,9 @@
 package com.seiko.greenqrscanner.data.db
 
-import app.com.seiko.greenqrscanner.DbBarcode
-import app.com.seiko.greenqrscanner.DbBarcodeQueries
 import com.moriatsushi.koject.Provides
 import com.moriatsushi.koject.Singleton
+import com.seiko.greenqrscanner.DbBarcode
+import com.seiko.greenqrscanner.DbBarcodeQueries
 import com.seiko.greenqrscanner.data.db.adapter.JsonColumnAdapter
 import com.seiko.greenqrscanner.data.model.AppDatabase
 import com.seiko.greenqrscanner.data.model.BarcodeFormat

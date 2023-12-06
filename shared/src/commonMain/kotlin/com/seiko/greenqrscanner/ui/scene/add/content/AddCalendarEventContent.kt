@@ -17,6 +17,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +35,7 @@ import com.seiko.greenqrscanner.ui.widget.DateTextField
 import com.seiko.greenqrscanner.ui.widget.TimeTextField
 import com.seiko.greenqrscanner.util.AppDateFormatter
 import com.seiko.greenqrscanner.util.copy
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
@@ -167,6 +169,7 @@ private fun AddCalendarEventContentPresenter(
             title.text.isNotEmpty()
         }
     }
+    val scope = rememberCoroutineScope()
     return AddCalendarEventContentStatus(
         title = title,
         minimumDate = today.date,
@@ -211,22 +214,24 @@ private fun AddCalendarEventContentPresenter(
             }
 
             override fun done() {
-                val type = BarcodeType.CalendarEvent(
-                    summary = title.text,
-                    description = desc.text,
-                    location = location.text,
-                    organizer = "",
-                    status = "",
-                    start = startDate.atTime(startTime.copy(nanosecond = 0)),
-                    end = endDate.atTime(endTime.copy(nanosecond = 0)),
-                )
-                barcodeRepository.upset(
-                    Barcode(
-                        rawValue = type.toRawValue(),
-                        format = BarcodeFormat.FORMAT_2D,
-                        type = type,
-                    ),
-                )
+                scope.launch {
+                    val type = BarcodeType.CalendarEvent(
+                        summary = title.text,
+                        description = desc.text,
+                        location = location.text,
+                        organizer = "",
+                        status = "",
+                        start = startDate.atTime(startTime.copy(nanosecond = 0)),
+                        end = endDate.atTime(endTime.copy(nanosecond = 0)),
+                    )
+                    barcodeRepository.upset(
+                        Barcode(
+                            rawValue = type.toRawValue(),
+                            format = BarcodeFormat.FORMAT_2D,
+                            type = type,
+                        ),
+                    )
+                }
             }
         },
     )

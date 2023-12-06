@@ -8,9 +8,6 @@ plugins {
 }
 
 spotless {
-    // Workaround for https://github.com/diffplug/spotless/issues/1644
-    lineEndings = com.diffplug.spotless.LineEnding.PLATFORM_NATIVE
-
     kotlin {
         target("**/*.kt")
         targetExclude("**/build/")
@@ -46,8 +43,6 @@ allprojects {
         }
     }
 }
-
-apply(from = "gradle/projectDependencyGraph.gradle")
 
 gradle.taskGraph.whenReady {
     // workaround error of: Cannot access class 'app.cash.sqldelight.db.SqlSchema'

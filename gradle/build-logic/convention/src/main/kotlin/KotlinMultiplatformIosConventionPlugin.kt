@@ -29,7 +29,7 @@ class KotlinMultiplatformIosConventionPlugin : Plugin<Project> {
                 }
             }
             @OptIn(ExperimentalKotlinGradlePluginApi::class)
-            targetHierarchy.custom {
+            applyHierarchyTemplate {
                 common {
                     group("ios") {
                         when (activeArch) {

@@ -13,6 +13,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ import com.seiko.greenqrscanner.data.model.toRawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 
 @Composable
@@ -117,6 +119,7 @@ private fun AddContactInfoContentPresenter(
                 organization.text.isNotEmpty()
         }
     }
+    val scope = rememberCoroutineScope()
     return AddContactInfoContentStatus(
         title = title,
         name = name,
@@ -146,43 +149,45 @@ private fun AddContactInfoContentPresenter(
             }
 
             override fun done() {
-                val type = BarcodeType.ContactInfo(
-                    name = BarcodeType.PersonName(
-                        formattedName = name.text,
-                    ),
-                    organization = organization.text,
-                    title = title.text,
-                    phones = persistentListOf(
-                        BarcodeType.Phone(
-                            number = "",
-                            type = BarcodeType.Phone.Type.UNKNOWN,
+                scope.launch {
+                    val type = BarcodeType.ContactInfo(
+                        name = BarcodeType.PersonName(
+                            formattedName = name.text,
                         ),
-                    ),
-                    emails = persistentListOf(
-                        BarcodeType.Email(
-                            address = "",
-                            subject = "",
-                            body = "",
-                            type = BarcodeType.Email.Type.UNKNOWN,
+                        organization = organization.text,
+                        title = title.text,
+                        phones = persistentListOf(
+                            BarcodeType.Phone(
+                                number = "",
+                                type = BarcodeType.Phone.Type.UNKNOWN,
+                            ),
                         ),
-                    ),
-                    urls = persistentListOf(
-                        "",
-                    ),
-                    addresses = persistentListOf(
-                        BarcodeType.Address(
-                            addressLines = persistentListOf(""),
-                            type = BarcodeType.Address.Type.UNKNOWN,
+                        emails = persistentListOf(
+                            BarcodeType.Email(
+                                address = "",
+                                subject = "",
+                                body = "",
+                                type = BarcodeType.Email.Type.UNKNOWN,
+                            ),
                         ),
-                    ),
-                )
-                barcodeRepository.upset(
-                    Barcode(
-                        rawValue = type.toRawValue(),
-                        format = BarcodeFormat.FORMAT_2D,
-                        type = type,
-                    ),
-                )
+                        urls = persistentListOf(
+                            "",
+                        ),
+                        addresses = persistentListOf(
+                            BarcodeType.Address(
+                                addressLines = persistentListOf(""),
+                                type = BarcodeType.Address.Type.UNKNOWN,
+                            ),
+                        ),
+                    )
+                    barcodeRepository.upset(
+                        Barcode(
+                            rawValue = type.toRawValue(),
+                            format = BarcodeFormat.FORMAT_2D,
+                            type = type,
+                        ),
+                    )
+                }
             }
         },
     )

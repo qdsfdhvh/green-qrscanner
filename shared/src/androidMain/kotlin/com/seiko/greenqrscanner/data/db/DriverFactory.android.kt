@@ -1,6 +1,7 @@
 package com.seiko.greenqrscanner.data.db
 
 import android.content.Context
+import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.db.SqlSchema
@@ -14,9 +15,9 @@ internal actual class DriverFactory(
     private val context: Context,
 ) {
     actual fun createDriver(
-        schema: SqlSchema<QueryResult.Value<Unit>>,
+        schema: SqlSchema<QueryResult.AsyncValue<Unit>>,
         dbName: String,
     ): SqlDriver {
-        return AndroidSqliteDriver(schema, context, dbName)
+        return AndroidSqliteDriver(schema.synchronous(), context, dbName)
     }
 }

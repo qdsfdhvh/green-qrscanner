@@ -14,6 +14,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ import com.seiko.greenqrscanner.data.model.BarcodeType
 import com.seiko.greenqrscanner.data.model.toRawValue
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.widget.AddBarcodeTypeTitle
+import kotlinx.coroutines.launch
 import moe.tlaster.precompose.molecule.producePresenter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,6 +87,7 @@ private fun AddTextContentPresenter(
             ssid.text.isNotBlank() && password.text.isNotBlank()
         }
     }
+    val scope = rememberCoroutineScope()
     return AddWifiContentStatus(
         ssid = ssid,
         password = password,
@@ -99,18 +102,20 @@ private fun AddTextContentPresenter(
             }
 
             override fun done() {
-                val type = BarcodeType.Wifi(
-                    ssid = ssid.text,
-                    password = password.text,
-                    wifiType = BarcodeType.Wifi.Type.OPEN,
-                )
-                barcodeRepository.upset(
-                    Barcode(
-                        rawValue = type.toRawValue(),
-                        format = BarcodeFormat.FORMAT_2D,
-                        type = type,
-                    ),
-                )
+                scope.launch {
+                    val type = BarcodeType.Wifi(
+                        ssid = ssid.text,
+                        password = password.text,
+                        wifiType = BarcodeType.Wifi.Type.OPEN,
+                    )
+                    barcodeRepository.upset(
+                        Barcode(
+                            rawValue = type.toRawValue(),
+                            format = BarcodeFormat.FORMAT_2D,
+                            type = type,
+                        ),
+                    )
+                }
             }
         },
     )

@@ -1,12 +1,14 @@
 import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
+import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     id("app.android.library")
     id("app.kotlin.multiplatform")
     id("app.kotlin.multiplatform.ios")
-    id("app.compose.multiplatform")
+    id("org.jetbrains.compose")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.libres)
@@ -16,9 +18,8 @@ plugins {
 }
 
 kotlin {
-    @Suppress("UNUSED_VARIABLE")
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -27,39 +28,36 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-
                 implementation(libs.bundles.kotlinx)
-                implementation(libs.bundles.androidx.common)
-                implementation(libs.bundles.thirdParty.common)
-
+                implementation(libs.bundles.common.androidx)
+                implementation(libs.bundles.common.thirdParty)
                 implementation(projects.thirdParty.composeMaterialDialogsDatetime)
             }
         }
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.assertk)
             }
         }
-        val jvmCommonMain by getting {
+        jvmCommonMain {
             dependencies {
                 implementation(libs.multiplatform.settings.datastore)
                 implementation(libs.androidx.datastore.preferences.core)
             }
         }
         // not build desktop app, just easy to test
-        val jvmMain by getting {
+        jvmMain {
             dependencies {
                 implementation(compose.preview)
                 implementation(libs.sqldelight.sqlite.driver)
             }
         }
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 api(libs.androidx.core.ktx)
                 api(libs.androidx.appcompat)
-                api(libs.androidx.activity.compose)
-                implementation(libs.bundles.androidx.camera)
+                implementation(libs.bundles.android.androidx.camera)
                 implementation(libs.bundles.android.barcode)
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.sqldelight.android.driver)
@@ -67,10 +65,20 @@ kotlin {
                 implementation(libs.androidx.datastore.preferences)
             }
         }
-        val iosMain by getting {
+        iosMain {
             dependencies {
                 implementation(libs.sqldelight.native.driver)
             }
+        }
+    }
+    targets.withType<KotlinNativeTarget>().configureEach {
+        binaries.framework {
+            baseName = "shared"
+            isStatic = true
+            embedBitcode(BitcodeEmbeddingMode.DISABLE)
+            binaryOption("bundleId", "com.seiko.greenqrscanner.ios.shared")
+            binaryOption("bundleVersion", version.toString())
+            binaryOption("bundleShortVersionString", version.toString())
         }
     }
     sourceSets.forEach {
@@ -87,7 +95,9 @@ android {
 sqldelight {
     databases {
         create("AppDatabase") {
+            srcDirs("src/commonMain/sqldelight/app/")
             packageName.set("com.seiko.greenqrscanner.data.model")
+            generateAsync.set(true)
         }
     }
 }

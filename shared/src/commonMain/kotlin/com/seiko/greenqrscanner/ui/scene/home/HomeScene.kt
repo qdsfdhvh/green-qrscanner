@@ -125,15 +125,18 @@ private fun HomePresenter(
 ): HomeStatus {
     val homeTabs = remember { HomeTab.values().toList() }
     val initialSelectIndex = remember { homeTabs.indexOf(HomeTab.History) }
+    val scope = rememberCoroutineScope()
     return HomeStatus(
         initialSelectIndex = initialSelectIndex,
         homeTabs = homeTabs,
         event = object : HomeEvent {
             override fun setStar(item: UiBarcode) {
-                barcodeRepository.setStar(
-                    barcode = item.rawValue,
-                    isStar = !item.isStar,
-                )
+                scope.launch {
+                    barcodeRepository.setStar(
+                        barcode = item.rawValue,
+                        isStar = !item.isStar,
+                    )
+                }
             }
         },
     )

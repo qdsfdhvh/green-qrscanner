@@ -1,15 +1,16 @@
 plugins {
     id("app.android.application")
     id("app.kotlin.android")
-    id("app.compose.multiplatform")
+    id("org.jetbrains.compose")
 }
 
 kotlin {
     sourceSets {
-        commonMain {
+        androidMain {
             dependencies {
                 implementation(projects.shared)
                 implementation(libs.precompose.runtime)
+                implementation(libs.androidx.activity.compose)
             }
         }
     }

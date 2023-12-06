@@ -15,7 +15,7 @@ internal actual class DriverFactory(
     private val storageService: StorageService,
 ) {
     actual fun createDriver(
-        schema: SqlSchema<QueryResult.Value<Unit>>,
+        schema: SqlSchema<QueryResult.AsyncValue<Unit>>,
         dbName: String,
     ): SqlDriver {
         val driver = JdbcSqliteDriver("$JDBC_PREFIX${storageService.databaseDir.resolve(dbName)}")
