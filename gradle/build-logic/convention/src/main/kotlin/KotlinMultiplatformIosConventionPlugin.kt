@@ -61,6 +61,12 @@ class KotlinMultiplatformIosConventionPlugin : Plugin<Project> {
                         // Enable debug symbols:
                         // https://kotlinlang.org/docs/native-ios-symbolication.html
                         freeCompilerArgs.add("-Xadd-light-debug=enable")
+
+                        // Various opt-ins
+                        freeCompilerArgs.addAll(
+                            "-opt-in=kotlinx.cinterop.ExperimentalForeignApi",
+                            "-opt-in=kotlinx.cinterop.BetaInteropApi",
+                        )
                     }
                 }
             }
