@@ -13,6 +13,3 @@ iosApp/GreenQrScanner.xcworkspace/*
 iosApp/GreenQrScanner.xcodeproj/*
 !iosApp/GreenQrScanner.xcodeproj/project.pbxproj
 iosAppCombine/combine.podspec
-
-# Project
-**/aboutlibraries.json

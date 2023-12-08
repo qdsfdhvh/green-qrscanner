@@ -1,3 +1,4 @@
+
 import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
@@ -8,13 +9,11 @@ plugins {
     id("app.android.library")
     id("app.kotlin.multiplatform")
     id("app.kotlin.multiplatform.ios")
+    id("app.licenses")
     id("org.jetbrains.compose")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
-    alias(libs.plugins.libres)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.licensee)
-    alias(libs.plugins.aboutlibraries)
 }
 
 kotlin {
@@ -84,6 +83,7 @@ kotlin {
     sourceSets.forEach {
         if (it.name.endsWith("Main")) {
             it.kotlin.srcDir("src/${it.name}/third")
+            // it.resources.srcDir("src/${it.name}/resources")
         }
     }
 }
@@ -102,27 +102,6 @@ sqldelight {
     }
 }
 
-libres {
-    generatedClassName = "MR"
-}
-
-licensee {
-    allow("Apache-2.0")
-    allow("MIT")
-    allowUrl("https://developer.android.com/studio/terms.html")
-    allowUrl("https://developers.google.com/ml-kit/terms")
-    ignoreDependencies("junit", "junit") {
-        because("junit is used in tests only")
-    }
-    ignoreDependencies("org.hamcrest", "hamcrest-core") {
-        because("hamcrest-core is used in tests only")
-    }
-}
-
-aboutLibraries {
-    registerAndroidTasks = false
-}
-
 dependencies {
     kspAll(libs.koject.processor.app)
     kspAll(libs.precompose.ksp)
@@ -138,23 +117,4 @@ fun DependencyHandlerScope.kspAll(dependencyNotation: Any) {
         .forEach { target ->
             add("ksp${target.targetName.capitalized()}", dependencyNotation)
         }
-}
-
-// workaround for libres
-listOf(
-    "packageDebugResources",
-    "packageReleaseResources",
-    "mergeDebugResources",
-    "mergeReleaseResources",
-    "mapDebugSourceSetPaths",
-    "mapReleaseSourceSetPaths",
-    "iosX64ProcessResources",
-    "iosArm64ProcessResources",
-    "iosSimulatorArm64ProcessResources",
-    "syncPodComposeResourcesForIos",
-    "jvmProcessResources",
-).forEach { name ->
-    tasks.matching { it.name == name }.configureEach {
-        dependsOn(tasks.matching { it.name == "libresGenerateImages" })
-    }
 }

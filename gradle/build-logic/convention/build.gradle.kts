@@ -25,6 +25,7 @@ spotless {
 
 dependencies {
     compileOnly(libs.bundles.logic.plugins)
+    implementation(libs.gradlePlugin.licensee)
 }
 
 gradlePlugin {
@@ -48,6 +49,10 @@ gradlePlugin {
         register("androidLibrary") {
             id = "app.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("licenses") {
+            id = "app.licenses"
+            implementationClass = "LicensesConventionPlugin"
         }
     }
 }
