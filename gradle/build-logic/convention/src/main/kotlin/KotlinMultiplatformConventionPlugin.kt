@@ -22,6 +22,13 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                     }
                 }
             }
+            targets.configureEach {
+                compilations.configureEach {
+                    compilerOptions.configure {
+                        freeCompilerArgs.add("-Xexpect-actual-classes")
+                    }
+                }
+            }
         }
         configureKotlin()
     }
