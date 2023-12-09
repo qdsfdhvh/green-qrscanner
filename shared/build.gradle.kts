@@ -48,7 +48,6 @@ kotlin {
         // not build desktop app, just easy to test
         jvmMain {
             dependencies {
-                implementation(compose.preview)
                 implementation(libs.sqldelight.sqlite.driver)
             }
         }

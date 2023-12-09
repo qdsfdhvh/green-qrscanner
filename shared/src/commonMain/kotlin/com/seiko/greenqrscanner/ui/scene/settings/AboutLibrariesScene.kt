@@ -24,7 +24,7 @@ import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.widget.BackButton
 import com.seiko.greenqrscanner.ui.widget.SimpleTopBar
 import com.seiko.greenqrscanner.ui.widget.preference.Preference
-import com.seiko.greenqrscanner.ui.widget.preference.PreferenceHeader
+import com.seiko.greenqrscanner.ui.widget.preference.PreferenceTitle
 import com.seiko.greenqrscanner.util.decodeJson
 import io.github.seiko.precompose.annotation.Back
 import io.github.seiko.precompose.annotation.NavGraphDestination
@@ -73,12 +73,11 @@ fun AboutLibrariesScene(
         ) {
             licenses.forEach { group ->
                 stickyHeader {
-                    PreferenceHeader(
+                    PreferenceTitle(
                         title = {
                             Text(group.id)
                         },
                         modifier = Modifier.fillMaxSize(),
-                        tonalElevation = 1.dp,
                     )
                 }
 

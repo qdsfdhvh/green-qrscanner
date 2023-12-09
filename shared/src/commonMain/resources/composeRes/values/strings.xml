@@ -12,4 +12,9 @@
     <string name="calendar_event">CalendarEvent</string>
     <string name="unknown">Unknown</string>
     <string name="ok">OK</string>
+    <string name="custom">Custom</string>
+    <string name="about">About</string>
+    <string name="about_libraries">About Libraries</string>
+    <string name="appearance">Appearance</string>
+    <string name="theme">Theme</string>
 </resources>
