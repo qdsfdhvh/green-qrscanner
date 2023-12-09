@@ -13,11 +13,9 @@ import androidx.compose.material.icons.rounded.TextAd
 import androidx.compose.material.icons.rounded.UnknownDocument
 import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.seiko.greenqrscanner.MR
 import com.seiko.greenqrscanner.util.stringResource
-import com.seiko.greenqrscanner.util.strings
 
 enum class AddBarcodeType {
     Text,
@@ -55,19 +53,20 @@ val AddBarcodeType.icon: ImageVector
 
 val AddBarcodeType.title: String
     @Composable
-    @ReadOnlyComposable
-    get() = when (this) {
-        AddBarcodeType.Text -> stringResource(MR.strings.text)
-        // AddBarcodeType.ISBN -> ""
-        // AddBarcodeType.Product -> ""
-        AddBarcodeType.Url -> stringResource(MR.strings.url)
-        AddBarcodeType.Wifi -> stringResource(MR.strings.wifi)
-        AddBarcodeType.Email -> stringResource(MR.strings.email)
-        AddBarcodeType.Phone -> stringResource(MR.strings.phone)
-        AddBarcodeType.Sms -> stringResource(MR.strings.sms)
-        AddBarcodeType.Geo -> stringResource(MR.strings.geo)
-        AddBarcodeType.ContactInfo -> stringResource(MR.strings.contract_info)
-        AddBarcodeType.DriverLicense -> stringResource(MR.strings.driver_license)
-        AddBarcodeType.CalendarEvent -> stringResource(MR.strings.calendar_event)
-        AddBarcodeType.Unknown -> stringResource(MR.strings.unknown)
-    }
+    get() = stringResource(
+        when (this) {
+            AddBarcodeType.Text -> MR.strings.text
+            // AddBarcodeType.ISBN -> ""
+            // AddBarcodeType.Product -> ""
+            AddBarcodeType.Url -> MR.strings.url
+            AddBarcodeType.Wifi -> MR.strings.wifi
+            AddBarcodeType.Email -> MR.strings.email
+            AddBarcodeType.Phone -> MR.strings.phone
+            AddBarcodeType.Sms -> MR.strings.sms
+            AddBarcodeType.Geo -> MR.strings.geo
+            AddBarcodeType.ContactInfo -> MR.strings.contract_info
+            AddBarcodeType.DriverLicense -> MR.strings.driver_license
+            AddBarcodeType.CalendarEvent -> MR.strings.calendar_event
+            AddBarcodeType.Unknown -> MR.strings.unknown
+        },
+    )

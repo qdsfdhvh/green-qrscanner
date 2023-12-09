@@ -83,7 +83,6 @@ kotlin {
     sourceSets.forEach {
         if (it.name.endsWith("Main")) {
             it.kotlin.srcDir("src/${it.name}/third")
-            // it.resources.srcDir("src/${it.name}/resources")
         }
     }
 }

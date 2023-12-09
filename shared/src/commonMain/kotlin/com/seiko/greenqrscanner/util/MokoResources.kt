@@ -1,9 +1,12 @@
 package com.seiko.greenqrscanner.util
 
-import com.seiko.greenqrscanner.MR
+import androidx.compose.runtime.Composable
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 
-inline fun stringResource(resource: String): String {
-    return resource
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+inline fun stringResource(resource: StringResource): String {
+    return getString(resource)
 }
-
-inline val MR.strings get() = string

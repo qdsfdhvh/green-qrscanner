@@ -1,7 +1,7 @@
 package com.seiko.greenqrscanner
 
-import com.seiko.greenqrscanner.strings.MRStrings
+import green_qrscanner.generated.resources.Res
 
-public object MR {
-    public val string: MRStrings = MRStrings
+internal object MR {
+    inline val strings get() = Res.strings
 }

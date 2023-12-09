@@ -26,6 +26,11 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                 compilations.configureEach {
                     compilerOptions.configure {
                         freeCompilerArgs.add("-Xexpect-actual-classes")
+
+                        // Various opt-ins
+                        freeCompilerArgs.addAll(
+                            "-opt-in=org.jetbrains.compose.resources.ExperimentalResourceApi",
+                        )
                     }
                 }
             }
