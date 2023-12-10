@@ -28,6 +28,9 @@ VALUES (
 );
 }
 
+delete:
+DELETE FROM DbBarcode WHERE raw_value = :barcode;
+
 load:
 SELECT * FROM DbBarcode WHERE raw_value = :barcode;
 

@@ -45,6 +45,10 @@ class BarcodeRepository(
         )
     }
 
+    fun delete(barcode: String) = scope.launch {
+        dbBarcodeQueries.delete(barcode)
+    }
+
     fun setStar(barcode: String, isStar: Boolean) = scope.launch {
         dbBarcodeQueries.setStar(if (isStar) 1 else 0, barcode)
     }

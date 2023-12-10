@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.seiko.greenqrscanner.ui.widget.SimpleBottomBar
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.mapNotNull
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
@@ -26,7 +26,7 @@ internal fun RouteScene(
     navigator: Navigator,
     modifier: Modifier = Modifier,
 ) {
-    val homeTabs = remember { persistentListOf(*HomeTab.values()) }
+    val homeTabs = remember { HomeTab.entries.toImmutableList() }
     val selectedTabIndex by remember {
         navigator.currentEntry.mapNotNull { backStackEntry ->
             val route = backStackEntry?.route?.route ?: return@mapNotNull null
