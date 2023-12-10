@@ -33,11 +33,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.seiko.greenqrscanner.ui.HomeTab
 import com.seiko.greenqrscanner.ui.Route
-import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun SimpleBottomBar(
-    tabs: PersistentList<HomeTab>,
+    tabs: ImmutableList<HomeTab>,
     selectedTabIndex: Int,
     onItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
