@@ -1,7 +1,7 @@
 package com.seiko.greenqrscanner.ui.widget
 
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.vanpra.composematerialdialogs.datetime.date.DatePicker
@@ -9,7 +9,6 @@ import com.vanpra.composematerialdialogs.datetime.time.TimePicker
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun TimePickerDialog(
     onDismissRequest: () -> Unit,
@@ -37,7 +36,6 @@ actual fun TimePickerDialog(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun DatePickerDialog(
     onDismissRequest: () -> Unit,
