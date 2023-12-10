@@ -1,5 +1,6 @@
 package com.seiko.greenqrscanner.ui.scene.scan
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -10,6 +11,7 @@ import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.model.Barcode
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.Route
+import com.seiko.greenqrscanner.ui.scene.scan.widget.ScanCropView
 import com.seiko.greenqrscanner.ui.widget.BarcodeScanner
 import io.github.seiko.precompose.annotation.NavGraphDestination
 import moe.tlaster.precompose.molecule.producePresenter
@@ -25,22 +27,29 @@ fun ScanScene(
 ) {
     val status by producePresenter { ScanPresenter() }
     Scaffold { innerPadding ->
-        BarcodeScanner(
-            onResult = { result ->
-                status.upset(result)
-                result.firstOrNull()?.let {
-                    navigator.navigate(
-                        Route.Detail(it.rawValue),
-                        NavOptions(
-                            launchSingleTop = true,
-                        ),
-                    )
-                }
-            },
+        Box(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
-        )
+        ) {
+            BarcodeScanner(
+                onResult = { result ->
+                    status.upset(result)
+                    result.firstOrNull()?.let {
+                        navigator.navigate(
+                            Route.Detail(it.rawValue),
+                            NavOptions(
+                                launchSingleTop = true,
+                            ),
+                        )
+                    }
+                },
+                modifier = Modifier.fillMaxSize(),
+            )
+            ScanCropView(
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
     }
 }
 

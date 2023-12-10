@@ -30,24 +30,3 @@ inline fun <reified T : Any> rememberInject(): T {
         inject()
     }
 }
-
-// @OptIn(ExperimentalKojectApi::class)
-// @Composable
-// inline fun <reified T : Any> rememberInject(
-//     componentExtras: ComponentExtras<*>? = null,
-// ): T {
-//     return remember {
-//         inject(componentExtras = componentExtras)
-//     }
-// }
-//
-// @OptIn(ExperimentalKojectApi::class)
-// @Composable
-// inline fun <reified T : Any> rememberInject(
-//     qualifier: Any?,
-//     componentExtras: ComponentExtras<*>? = null,
-// ): T {
-//     return remember(qualifier) {
-//         inject(qualifier, componentExtras = componentExtras)
-//     }
-// }

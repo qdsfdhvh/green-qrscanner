@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +19,7 @@ import com.seiko.greenqrscanner.option.PermissionPlace
 fun PermissionRequiredContent(
     permissionPlace: PermissionPlace,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val permissionsState = rememberMultiplePermissionsState(permissionPlace.permissions)
     Box(modifier) {
