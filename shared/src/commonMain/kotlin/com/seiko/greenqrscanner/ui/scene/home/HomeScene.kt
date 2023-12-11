@@ -24,7 +24,7 @@ import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.ui.Route
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeHistoryContent
 import com.seiko.greenqrscanner.ui.scene.home.content.HomeStarContent
-import com.seiko.greenqrscanner.ui.widget.BarcodeItemClickable
+import com.seiko.greenqrscanner.ui.scene.home.widget.BarcodeItemClickable
 import com.seiko.greenqrscanner.util.AppLogger
 import io.github.seiko.precompose.annotation.NavGraphDestination
 import kotlinx.coroutines.launch
@@ -61,9 +61,9 @@ fun HomeScene(
                     AppLogger.d { "onSetting $it" }
                     navigator.navigate(
                         Route.Popup.BarcodeSettings(it.rawValue),
-                        // NavOptions(
-                        //     launchSingleTop = true,
-                        // ),
+                        NavOptions(
+                            launchSingleTop = true,
+                        ),
                     )
                 },
             ),

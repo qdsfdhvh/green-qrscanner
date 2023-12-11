@@ -54,7 +54,7 @@ fun AddBarcodeScene(
                 Route.Home,
                 NavOptions(
                     launchSingleTop = true,
-                    popUpTo = PopUpTo(Route.Home),
+                    popUpTo = PopUpTo.First(false),
                 ),
             )
         }

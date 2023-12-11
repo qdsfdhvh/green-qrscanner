@@ -24,6 +24,7 @@ import io.github.seiko.precompose.annotation.NavGraphDestination
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.navigation.PopUpTo
 
 @NavGraphDestination(
     route = Route.Scan,
@@ -48,6 +49,7 @@ fun ScanScene(
                             Route.Detail(it.rawValue),
                             NavOptions(
                                 launchSingleTop = true,
+                                popUpTo = PopUpTo.First(false),
                             ),
                         )
                     }
