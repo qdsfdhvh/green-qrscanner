@@ -59,12 +59,16 @@ class BarcodeRepository(
             .map { it.toUi() }
     }
 
-    fun getHistory(): PagingSource<Int, DbBarcode> = QueryPagingSource(
+    fun getHistory(query: String): PagingSource<Int, DbBarcode> = QueryPagingSource(
         countQuery = dbBarcodeQueries.getHistoryCount(),
         transacter = dbBarcodeQueries,
         context = appCoroutineDispatcher.io,
         queryProvider = { limit, offset ->
-            dbBarcodeQueries.getHistory(limit, offset)
+            if (query.isBlank()) {
+                dbBarcodeQueries.getHistory(limit, offset)
+            } else {
+                dbBarcodeQueries.queryHistory("%$query%", limit, offset)
+            }
         },
     )
 

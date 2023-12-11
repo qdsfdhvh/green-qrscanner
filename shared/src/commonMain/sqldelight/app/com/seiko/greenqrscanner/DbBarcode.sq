@@ -49,6 +49,13 @@ FROM DbBarcode
 ORDER BY update_time DESC
 LIMIT :limit OFFSET :offset;
 
+queryHistory:
+SELECT *
+FROM DbBarcode
+WHERE raw_value LIKE :value
+ORDER BY update_time DESC
+LIMIT :limit OFFSET :offset;
+
 getStars:
 SELECT *
 FROM DbBarcode WHERE is_star = 1

@@ -1,9 +1,14 @@
 package com.seiko.greenqrscanner.ui.scene.home.content
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -22,8 +27,8 @@ import com.seiko.greenqrscanner.data.mapper.toUi
 import com.seiko.greenqrscanner.data.model.UiBarcode
 import com.seiko.greenqrscanner.data.model.name
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
-import com.seiko.greenqrscanner.ui.widget.BarcodeItem
-import com.seiko.greenqrscanner.ui.widget.BarcodeItemClickable
+import com.seiko.greenqrscanner.ui.scene.home.widget.BarcodeItem
+import com.seiko.greenqrscanner.ui.scene.home.widget.BarcodeItemClickable
 import kotlinx.coroutines.flow.map
 import moe.tlaster.precompose.molecule.producePresenter
 
@@ -35,7 +40,7 @@ fun HomeStarContent(
     val status by producePresenter { HomeStarPresenter() }
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(8.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(
@@ -48,6 +53,18 @@ fun HomeStarContent(
                     item = it,
                     clickable = barcodeItemClickable,
                     modifier = Modifier.fillMaxWidth(),
+                    trail = {
+                        IconButton(onClick = { barcodeItemClickable.onStarClicked(it) }) {
+                            Image(
+                                if (it.isStar) {
+                                    Icons.Rounded.Star
+                                } else {
+                                    Icons.Rounded.StarOutline
+                                },
+                                contentDescription = "star barcode",
+                            )
+                        }
+                    }
                 )
             }
         }

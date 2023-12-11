@@ -59,7 +59,7 @@ fun ScanScene(
                     .fillMaxSize(),
             ) {
                 ScanCropView(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.matchParentSize(),
                 )
             }
         } else {

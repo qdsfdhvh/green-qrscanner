@@ -3,13 +3,19 @@ package com.seiko.greenqrscanner.ui.scene.detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
@@ -21,6 +27,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.model.UiBarcode
+import com.seiko.greenqrscanner.data.model.name
 import com.seiko.greenqrscanner.data.repo.BarcodeRepository
 import com.seiko.greenqrscanner.option.AppCoroutineDispatcher
 import com.seiko.greenqrscanner.ui.Route
@@ -60,13 +67,6 @@ fun DetailScene(
     barcode: String,
 ) {
     val status by producePresenter { DetailPresenter(barcode) }
-    val clickable = remember {
-        DetailSceneClickable(
-            onFullContentClick = {
-                navigator.navigate(Route.DetailFullContent(barcode))
-            },
-        )
-    }
     Scaffold(
         topBar = {
             SimpleTopBar(
@@ -75,6 +75,9 @@ fun DetailScene(
                         navigator.goBack()
                     }
                 },
+                title = {
+                    Text("详情")
+                }
             )
         },
     ) { innerPadding ->
@@ -82,7 +85,14 @@ fun DetailScene(
             status.onSuccess {
                 DetailSuccessContent(
                     status = it,
-                    clickable = clickable,
+                    clickable = DetailSceneClickable(
+                        onStarClicked = {
+                            it.setStar(it.barcode)
+                        },
+                        onFullContentClicked = {
+                            navigator.navigate(Route.DetailFullContent(barcode))
+                        },
+                    ),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }.onLoading {
@@ -104,13 +114,41 @@ private fun DetailSuccessContent(
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         item {
-            OverflowTextSelection(
-                status.barcode.rawValue,
-                onFullContentClick = clickable.onFullContentClick,
-            )
+            Text(status.barcode.type.name)
         }
         item {
             QrCodeContent(status.qrCodeState, Modifier.size(200.dp))
+        }
+        item {
+            ButtonRow(
+                barcode = status.barcode,
+                onStarClick = clickable.onStarClicked,
+            )
+        }
+        item {
+            OverflowTextSelection(
+                status.barcode.rawValue,
+                onFullContentClick = clickable.onFullContentClicked,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ButtonRow(
+    barcode: UiBarcode,
+    onStarClick: () -> Unit
+) {
+    Row {
+        IconButton(onClick = onStarClick) {
+            Image(
+                if (barcode.isStar) {
+                    Icons.Rounded.Star
+                } else {
+                    Icons.Rounded.StarOutline
+                },
+                contentDescription = "star",
+            )
         }
     }
 }
@@ -136,6 +174,7 @@ private fun QrCodeContent(
 @Composable
 private fun DetailPresenter(
     barcode: String,
+    barcodeRepository: BarcodeRepository = rememberInject(),
     qrCodeRepository: BarcodeRepository = rememberInject(),
     appCoroutineDispatcher: AppCoroutineDispatcher = rememberInject(),
 ): UiState<DetailStatus> {
@@ -158,16 +197,30 @@ private fun DetailPresenter(
         DetailStatus(
             barcode = uiBarcode,
             qrCodeState = qrCodeState,
+            event = object : DetailEvent {
+                override fun setStar(item: UiBarcode) {
+                    barcodeRepository.setStar(
+                        barcode = item.rawValue,
+                        isStar = !item.isStar,
+                    )
+                }
+            }
         )
     }
+}
+
+interface DetailEvent {
+    fun setStar(item: UiBarcode)
 }
 
 @Immutable
 data class DetailStatus(
     val barcode: UiBarcode,
     val qrCodeState: UiState<ImageBitmap>,
-)
+    private val event: DetailEvent,
+) : DetailEvent by event
 
 private data class DetailSceneClickable(
-    val onFullContentClick: () -> Unit,
+    val onStarClicked: () -> Unit,
+    val onFullContentClicked: () -> Unit,
 )
