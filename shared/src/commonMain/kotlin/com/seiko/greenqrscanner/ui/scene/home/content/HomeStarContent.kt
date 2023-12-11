@@ -64,7 +64,7 @@ fun HomeStarContent(
                                 contentDescription = "star barcode",
                             )
                         }
-                    }
+                    },
                 )
             }
         }

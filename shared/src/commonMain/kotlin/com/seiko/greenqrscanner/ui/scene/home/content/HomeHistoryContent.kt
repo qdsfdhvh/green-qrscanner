@@ -101,7 +101,7 @@ fun HomeHistoryContent(
                     headlineContent = {
                         Text(
                             text = resultText,
-                            style = MaterialTheme.typography.titleMedium
+                            style = MaterialTheme.typography.titleMedium,
                         )
                     },
                     leadingContent = {
@@ -114,8 +114,10 @@ fun HomeHistoryContent(
         LazyColumn(
             modifier = modifier,
             contentPadding = PaddingValues(
-                start = 8.dp, end = 8.dp,
-                top = 16.dp + 56.dp, bottom = 60.dp,
+                start = 8.dp,
+                end = 8.dp,
+                top = 16.dp + 56.dp,
+                bottom = 60.dp,
             ),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -136,7 +138,7 @@ fun HomeHistoryContent(
                                     contentDescription = "barcode settings",
                                 )
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -177,7 +179,7 @@ private fun HomeHistoryPresenter(
             override fun onQueryChange(value: String) {
                 query = value
             }
-        }
+        },
     )
 }
 

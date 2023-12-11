@@ -77,7 +77,7 @@ fun DetailScene(
                 },
                 title = {
                     Text("详情")
-                }
+                },
             )
         },
     ) { innerPadding ->
@@ -204,7 +204,7 @@ private fun DetailPresenter(
                         isStar = !item.isStar,
                     )
                 }
-            }
+            },
         )
     }
 }
