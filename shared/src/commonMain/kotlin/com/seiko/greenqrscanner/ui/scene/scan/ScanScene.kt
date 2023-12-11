@@ -3,9 +3,16 @@ package com.seiko.greenqrscanner.ui.scene.scan
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.moriatsushi.koject.compose.rememberInject
 import com.seiko.greenqrscanner.data.model.Barcode
@@ -26,12 +33,13 @@ fun ScanScene(
     navigator: Navigator,
 ) {
     val status by producePresenter { ScanPresenter() }
+    DisposableEffect(Unit) {
+        onDispose {
+            status.resetScan()
+        }
+    }
     Scaffold { innerPadding ->
-        Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-        ) {
+        if (status.isOpenScan) {
             BarcodeScanner(
                 onResult = { result ->
                     status.upset(result)
@@ -44,11 +52,25 @@ fun ScanScene(
                         )
                     }
                 },
-                modifier = Modifier.fillMaxSize(),
-            )
-            ScanCropView(
-                modifier = Modifier.fillMaxSize(),
-            )
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+            ) {
+                ScanCropView(
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Button(onClick = { status.openScan() }) {
+                    Text("Scan")
+                }
+            }
         }
     }
 }
@@ -57,8 +79,18 @@ fun ScanScene(
 private fun ScanPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
 ): ScanStatus {
+    var isOpenScan by remember { mutableStateOf(false) }
     return ScanStatus(
+        isOpenScan = isOpenScan,
         event = object : ScanEvent {
+            override fun resetScan() {
+                isOpenScan = false
+            }
+
+            override fun openScan() {
+                isOpenScan = true
+            }
+
             override fun upset(barcodes: List<Barcode>) {
                 barcodeRepository.upset(barcodes)
             }
@@ -67,9 +99,12 @@ private fun ScanPresenter(
 }
 
 private interface ScanEvent {
+    fun resetScan()
+    fun openScan()
     fun upset(barcodes: List<Barcode>)
 }
 
 private class ScanStatus(
+    val isOpenScan: Boolean,
     private val event: ScanEvent,
 ) : ScanEvent by event

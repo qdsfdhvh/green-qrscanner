@@ -1,10 +1,12 @@
 package com.seiko.greenqrscanner.ui.widget
 
+import android.os.Looper
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -24,6 +26,7 @@ import java.util.concurrent.Executors
 actual fun BarcodeScanner(
     onResult: (result: List<Barcode>) -> Unit,
     modifier: Modifier,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     PermissionRequiredContent(
         permissionPlace = PermissionPlace.QrScan,
@@ -33,6 +36,7 @@ actual fun BarcodeScanner(
             onResult = onResult,
             modifier = Modifier.matchParentSize(),
         )
+        content()
     }
 }
 
@@ -90,7 +94,9 @@ private fun BarcodeScannerContent(
                 preview,
                 imageAnalysis,
             )
-            preview.setSurfaceProvider(previewView.surfaceProvider)
+            doOnIdle {
+                preview.setSurfaceProvider(previewView.surfaceProvider)
+            }
         }
     }
 
@@ -132,4 +138,21 @@ private class CameraLifecycleOwner : androidx.lifecycle.LifecycleOwner {
 
     override val lifecycle: androidx.lifecycle.Lifecycle
         get() = lifecycleRegistry
+}
+
+private fun doOnIdle(runnable: Runnable) {
+    when {
+        Looper.myLooper() == Looper.getMainLooper() -> {
+            Looper.myQueue().addIdleHandler {
+                runnable.run()
+                false
+            }
+        }
+        else -> {
+            Looper.getMainLooper().queue.addIdleHandler {
+                runnable.run()
+                false
+            }
+        }
+    }
 }

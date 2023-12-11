@@ -1,5 +1,6 @@
 package com.seiko.greenqrscanner.ui.widget
 
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,6 +24,7 @@ import platform.UIKit.UIView
 actual fun BarcodeScanner(
     onResult: (result: List<Barcode>) -> Unit,
     modifier: Modifier,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     CameraPermissionRequiredContent(modifier) { camera ->
         val captureSession = remember {
@@ -60,5 +62,6 @@ actual fun BarcodeScanner(
                 CATransaction.commit()
             },
         )
+        content()
     }
 }

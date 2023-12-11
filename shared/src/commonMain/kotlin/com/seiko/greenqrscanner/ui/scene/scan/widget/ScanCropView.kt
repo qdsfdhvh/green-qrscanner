@@ -16,7 +16,6 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
@@ -52,11 +51,11 @@ fun ScanCropView(
             (size.width - cropWidth) / 2f,
             (size.height - cropHeight) / 2f,
         )
-        val rectF = Rect(offset = topLeft, size = Size(cropWidth, cropHeight))
+        // val rectF = Rect(offset = topLeft, size = Size(cropWidth, cropHeight))
         drawRoundRect(
             color = Color.Transparent,
-            topLeft = rectF.topLeft,
-            size = rectF.size,
+            topLeft = topLeft,
+            size = Size(cropWidth, cropHeight),
             blendMode = BlendMode.Clear,
         )
 
@@ -69,26 +68,26 @@ fun ScanCropView(
         drawOval(color, rectLine.topLeft, rectLine.size)
 
         // 角边框
-        val lineWith = 3.dp.toPx()
-        val lineLength = 12.dp.toPx()
-
-        val lSizeH = Size(lineLength, lineWith)
-        val lSizeV = Size(lineWith, lineLength)
-
-        val path = Path().apply {
-            // 左上角
-            addRect(Rect(rectF.topLeft, lSizeH))
-            addRect(Rect(rectF.topLeft, lSizeV))
-            // 左下角
-            addRect(Rect(rectF.bottomLeft.minus(Offset(x = 0f, y = lineWith)), lSizeH))
-            addRect(Rect(rectF.bottomLeft.minus(Offset(x = 0f, y = lineLength)), lSizeV))
-            // 右上角
-            addRect(Rect(rectF.topRight.minus(Offset(x = lineLength, y = 0f)), lSizeH))
-            addRect(Rect(rectF.topRight.minus(Offset(x = lineWith, y = 0f)), lSizeV))
-            // 右下角
-            addRect(Rect(rectF.bottomRight.minus(Offset(x = lineLength, y = lineWith)), lSizeH))
-            addRect(Rect(rectF.bottomRight.minus(Offset(x = lineWith, y = lineLength)), lSizeV))
-        }
-        drawPath(path = path, color = Color.White)
+        // val lineWidth = 3.dp.toPx()
+        // val lineLength = 12.dp.toPx()
+        //
+        // val lSizeH = Size(lineLength, lineWidth)
+        // val lSizeV = Size(lineWidth, lineLength)
+        //
+        // val path = Path().apply {
+        //     // 左上角
+        //     addRect(Rect(rectF.topLeft, lSizeH))
+        //     addRect(Rect(rectF.topLeft, lSizeV))
+        //     // 左下角
+        //     addRect(Rect(rectF.bottomLeft.minus(Offset(x = 0f, y = lineWidth)), lSizeH))
+        //     addRect(Rect(rectF.bottomLeft.minus(Offset(x = 0f, y = lineLength)), lSizeV))
+        //     // 右上角
+        //     addRect(Rect(rectF.topRight.minus(Offset(x = lineLength, y = 0f)), lSizeH))
+        //     addRect(Rect(rectF.topRight.minus(Offset(x = lineWidth, y = 0f)), lSizeV))
+        //     // 右下角
+        //     addRect(Rect(rectF.bottomRight.minus(Offset(x = lineLength, y = lineWidth)), lSizeH))
+        //     addRect(Rect(rectF.bottomRight.minus(Offset(x = lineWidth, y = lineLength)), lSizeV))
+        // }
+        // drawPath(path = path, color = Color.White)
     }
 }
