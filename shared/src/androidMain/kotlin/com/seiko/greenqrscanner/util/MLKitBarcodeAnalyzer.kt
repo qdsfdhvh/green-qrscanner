@@ -50,7 +50,6 @@ class MlKitBarcodeAnalyzer(
                     Log.e("MlKitBarcodeAnalyzer", it.message.orEmpty())
                 }
                 .addOnCompleteListener {
-                    imageProxy.image?.close()
                     imageProxy.close()
                 }
         }
