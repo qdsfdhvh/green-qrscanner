@@ -7,6 +7,8 @@ spotless = "6.23.3"
 ktlint = "0.49.1"
 androidx-core-ktx = "1.12.0"
 androidx-annotation = "1.7.0"
+androidx-collection = "1.3.0"
+androidx-arch-core = "2.2.0"
 androidx-appcompat = "1.6.1"
 androidx-activity-compose = "1.8.1"
 androidx-camera = "1.3.0"
@@ -55,6 +57,8 @@ gradlePlugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", v
 
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
+androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
+androidx-arch-core = { module = "androidx.arch.core:core-runtime", version.ref = "androidx-arch-core" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidx-camera-view" }
@@ -116,17 +120,28 @@ kotlinx = [
 ]
 common-androidx = [
     "androidx-annotation",
+    "androidx-collection",
     "androidx-paging-common",
 #    "androidx-paging-compose", # TODO: paging-compose only support android
 ]
-android-androidx-camera = [
+jvmCommon-androidx = [
+    # preference
+    "androidx-datastore-preferences-core",
+]
+android-androidx = [
+    "androidx-arch-core",
+    "androidx-activity-compose",
+    # preference
+    "androidx-datastore-preferences",
+    # camerax
     "androidx-camera-view",
     "androidx-camera-camera2",
     "androidx-camera-lifecycle",
 ]
 android-barcode = [
     "accompanist-permissions",
-    "mlkit-barcode-scanning"
+    "mlkit-barcode-scanning",
+    "zxing-core",
 ]
 common-thirdParty = [
     "okio",

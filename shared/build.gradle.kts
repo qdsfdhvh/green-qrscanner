@@ -22,8 +22,8 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material3)
                 implementation(compose.ui)
+                implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
@@ -41,8 +41,8 @@ kotlin {
         }
         jvmCommonMain {
             dependencies {
+                implementation(libs.bundles.jvmCommon.androidx)
                 implementation(libs.multiplatform.settings.datastore)
-                implementation(libs.androidx.datastore.preferences.core)
             }
         }
         // not build desktop app, just easy to test
@@ -55,12 +55,10 @@ kotlin {
             dependencies {
                 api(libs.androidx.core.ktx)
                 api(libs.androidx.appcompat)
-                implementation(libs.bundles.android.androidx.camera)
+                implementation(libs.bundles.android.androidx)
                 implementation(libs.bundles.android.barcode)
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.sqldelight.android.driver)
-                implementation(libs.zxing.core)
-                implementation(libs.androidx.datastore.preferences)
             }
         }
         iosMain {
