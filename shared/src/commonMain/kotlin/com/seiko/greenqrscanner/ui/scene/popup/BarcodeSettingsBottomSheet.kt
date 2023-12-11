@@ -87,8 +87,20 @@ fun BarcodeSettingsBottomSheet(
 @Composable
 private fun BarcodeSettingsPresenter(
     barcodeRepository: BarcodeRepository = rememberInject(),
-) = object {
-    fun delete(barcode: String) {
-        barcodeRepository.delete(barcode)
-    }
+): BarcodeSettingsStatus {
+    return BarcodeSettingsStatus(
+        event = object : BarcodeSettingsEvent {
+            override fun delete(barcode: String) {
+                barcodeRepository.delete(barcode)
+            }
+        },
+    )
 }
+
+private interface BarcodeSettingsEvent {
+    fun delete(barcode: String)
+}
+
+private class BarcodeSettingsStatus(
+    private val event: BarcodeSettingsEvent,
+) : BarcodeSettingsEvent by event
