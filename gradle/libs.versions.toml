@@ -31,11 +31,11 @@ android-cache-fix = "3.0"
 compose-material3-windowsizeclass = "0.3.1"
 multiplatform-settings = "1.1.1"
 material-kolor = "1.2.9"
-zxing = "3.5.2"
 okio = "3.6.0"
 assertk = "0.28.0"
 licensee = "1.8.0"
 insetsx = "0.1.0-alpha10"
+qrose = "1.0.0-beta3"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -99,12 +99,12 @@ compose-material3-windowsizeclass = { module = "dev.chrisbanes.material3:materia
 
 material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
-zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 mlkit-barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "mlkit-barcode-scanning" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
 insetsx = { module = "com.moriatsushi.insetsx:insetsx", version.ref = "insetsx" }
+qrose = { module = "io.github.alexzhirkevich:qrose", version.ref = "qrose" }
 
 [bundles]
 logic-plugins = [
@@ -141,7 +141,6 @@ android-androidx = [
 android-barcode = [
     "accompanist-permissions",
     "mlkit-barcode-scanning",
-    "zxing-core",
 ]
 common-thirdParty = [
     "okio",
@@ -156,4 +155,5 @@ common-thirdParty = [
     "multiplatform-settings-coroutines",
     "compose-material3-windowsizeclass",
     "material-kolor",
+    "qrose",
 ]

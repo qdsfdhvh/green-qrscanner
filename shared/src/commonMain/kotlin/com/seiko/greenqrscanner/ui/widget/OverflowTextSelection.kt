@@ -1,6 +1,7 @@
 package com.seiko.greenqrscanner.ui.widget
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -8,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -28,7 +30,11 @@ fun OverflowTextSelection(
                     text,
                     maxLines = maxLines,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.clickable(onClick = onFullContentClick),
+                    modifier = Modifier.clickable(
+                        onClick = onFullContentClick,
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ),
                 )
             }
         } else {
