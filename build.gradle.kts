@@ -21,6 +21,14 @@ spotless {
 }
 
 allprojects {
+    configurations.all {
+        resolutionStrategy {
+            exclude("io.github.aakira", "napier")
+            exclude("androidx.fragment", "fragment")
+            exclude("androidx.lifecycle", "lifecycle-livedata")
+            exclude("androidx.vectordrawable")
+        }
+    }
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             allWarningsAsErrors.set(false)
